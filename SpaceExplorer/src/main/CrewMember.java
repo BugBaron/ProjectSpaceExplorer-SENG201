@@ -1,29 +1,26 @@
 package main;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.Random;
 
 import main.Ship;
 
 public abstract class CrewMember {
 	
 	private Ship ship;
-	private Map <String, Integer> status;
+	private HashMap <String, Integer> status;
 	private int numActions;
-	private final int[] SEARCHING_PROBABILITIES = {2, 2, 2, 2, 2};
+	
+	// The probabilities are coded to bee relative
+	private final int[] SEARCHING_PROBABILITIES = {1, 1, 1, 1, 1};
 	
 	// Variables which are modified upon being created by sub-classes
 	// Variables which are in all-caps are not modified after the sub-class is constructed
-	private Map <String, Integer> MAX_STAT;
+	private HashMap <String, Integer> MAX_STAT;
 	private int REPAIR_AMOUNT;
 	private boolean spacePlague;
 	private String name;
-	private Map <String, String> TYPE_INFO;
+	private HashMap <String, String> TYPE_INFO;
 	
 	
 	/**
@@ -46,7 +43,7 @@ public abstract class CrewMember {
 	 * Retrieves the status of the crew member
 	 * @return a map containing the "Health", "Nutrition" and "Energy" of the crew member
 	 */
-	public Map <String, Integer> getStatus() {
+	public HashMap <String, Integer> getStatus() {
 		return status;
 	}
 	
@@ -108,12 +105,28 @@ public abstract class CrewMember {
 	
 	/**
 	 * Searches a planet for spaceship parts, money, food or medical items.
-	 * If an item is found it is added to the ship inventory
-	 * 
-	 * Incomplete
+	 * Adding the items to the inventory is handled by the GameEnvironment class which would call this
+	 * @return a FindableItem representing what was found
 	 */
-	public void searchPlanet() {
-		return;
+	public FindableItem searchPlanet() {
+		Random r = new Random();
+		int totalSum = 0;
+		for (int i: SEARCHING_PROBABILITIES) {
+			totalSum = totalSum + i;
+		}
+		int randInt = r.nextInt(totalSum);
+		int currentVar = 0;
+		FindableItem[] findableList = {FindableItem.SHIP_PARTS, FindableItem.FOOD_ITEMS, 
+				FindableItem.MEDICAL_ITEMS, FindableItem.MONEY, FindableItem.NONE};
+		
+		// Finds the item to return based on what the searching probabilities are
+		for (int i = 0; i < findableList.length; i++) {
+			currentVar = currentVar + SEARCHING_PROBABILITIES[i];
+			if (randInt < currentVar) {
+				return findableList[i];
+			}
+		}
+		return FindableItem.NONE;
 	}
 	
 	
@@ -138,7 +151,7 @@ public abstract class CrewMember {
 		System.out.println((i + 1) + ") Back to Crew Member Actions");
 		System.out.flush();
 
-		int choice = ship.getInt(0, i + 1);
+		int choice = ship.collectInt(0, i + 1);
 		
 		if (choice < (i + 1)) {
 			Consumable item = (Consumable) keys[choice - 1];
@@ -216,7 +229,7 @@ public abstract class CrewMember {
 	 * Gets a map to describe the type of crew member this is
 	 * @return a map containing the crew members "Type", "Strength" and "Weakness"
 	 */
-	public Map <String, String> getTypeInfo() {
+	public HashMap <String, String> getTypeInfo() {
 		return TYPE_INFO;
 	}
 	
@@ -225,7 +238,7 @@ public abstract class CrewMember {
 	 * Gets a map to describe the maximum stats of the crew member
 	 * @return a map containing the crew members maximum "Health", "Energy" and "Nutrition"
 	 */
-	public Map <String, Integer> getMaxStats() {
+	public HashMap <String, Integer> getMaxStats() {
 		return MAX_STAT;
 	}
 	
@@ -275,7 +288,7 @@ public abstract class CrewMember {
 	 * @param name a string containing the crew members name
 	 * @param typeInfo a map containing the "Type", "Strength" and "Weakness" of the crew member
 	 */
-	void setInitialVariables(Map <String, Integer> maxStat, int repairAmount, boolean hasPlague, String newName, Map <String, String> typeInfo) {
+	void setInitialVariables(HashMap <String, Integer> maxStat, int repairAmount, boolean hasPlague, String newName, HashMap <String, String> typeInfo) {
 		MAX_STAT = maxStat;
 		REPAIR_AMOUNT = repairAmount;
 		spacePlague = hasPlague;
