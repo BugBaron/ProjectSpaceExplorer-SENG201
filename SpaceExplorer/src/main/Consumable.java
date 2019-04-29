@@ -1,3 +1,5 @@
+package main;
+
 public class Consumable {
 	
 	private int price;
@@ -75,7 +77,7 @@ public class Consumable {
 	}
 	
 	/**
-	 * Applies the item to a crewmember
+	 * Applies the item to a crew member
 	 * @param person a specific crew member who gains the uses of the item
 	 */
 	public void useItem(CrewMember person) {
