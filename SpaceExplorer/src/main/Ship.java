@@ -15,11 +15,11 @@ public class Ship {
 	private int money;
 	private HashMap<Consumable, Integer> inventory;
 	private int shipShields;
-	private int MAX_SHIP_SHIELDS = 10;
+	private final int MAX_SHIP_SHIELDS = 10;
 	private int score;
-	public Scanner in;
+	private Scanner in;
 	
-	public static Consumable SPACE_PLAGUE_CURE = new Consumable();
+	public final Consumable SPACE_PLAGUE_CURE = new Consumable();
 	
 	
 	public Ship() {
@@ -132,10 +132,10 @@ public class Ship {
 	
 	
 	/**
-	 * Collects input for a general menu selection
+	 * Collects an integer input for a general menu selection
 	 * @return an integer received from the user
 	 */
-	public int getInt(int minValue, int maxValue) {
+	public int collectInt(int minValue, int maxValue) {
 		int choice = 0;
 		while (choice == 0) {
 			try {
@@ -143,7 +143,7 @@ public class Ship {
 				
 				// If the choice is not in the required range
 				if (!(choice > minValue - 1 && choice < maxValue + 1)) {
-					System.out.println("Please input a number to select an option");
+					System.out.println("Please input a number between " + minValue + " and " + maxValue);
 					choice = 0;
 				}
 			// If the choice is not an integer
@@ -154,5 +154,23 @@ public class Ship {
 			}
 		}
 		return choice;
+	}
+	
+	/**
+	 * Collects a string input for a general user interaction
+	 * @return a string received from the user
+	 */
+	public String collectString() {
+		return in.nextLine();
+	}
+	
+	/**
+	 * A string representation of the ship including its name and shield level
+	 * @return a string representation of the ship
+	 */
+	public String toString() {
+		String returnString = shipName + "\n";
+		returnString = returnString + "Shield level: " + shipShields + "/" + MAX_SHIP_SHIELDS;
+		return returnString;
 	}
 }

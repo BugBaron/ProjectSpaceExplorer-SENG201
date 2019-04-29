@@ -3,13 +3,13 @@ package test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.HashMap;
-import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
 import main.CrewMember;
 import main.Ship;
-import main.Consumable;
+
+
 
 abstract class CrewMemberTest {
 	
@@ -26,7 +26,7 @@ abstract class CrewMemberTest {
 	@Test
 	void testGetStatus() {
 		assertTrue(crewMember.getStatus().equals(crewMember.getMaxStats()));
-		Map <String, Integer> currentStats = crewMember.getStatus();
+		HashMap <String, Integer> currentStats = crewMember.getStatus();
 		crewMember.addHealth(-1);
 		crewMember.addEnergy(-1);
 		crewMember.addNutrition(-1);
@@ -82,7 +82,16 @@ abstract class CrewMemberTest {
 
 	@Test
 	void testSearchPlanet() {
-		fail("Not yet implemented");
+		System.out.println(crewMember.searchPlanet().toString());
+		System.out.println(crewMember.searchPlanet().toString());
+		System.out.println(crewMember.searchPlanet().toString());
+		System.out.println(crewMember.searchPlanet().toString());
+		System.out.println(crewMember.searchPlanet().toString());
+		System.out.println(crewMember.searchPlanet().toString());
+		System.out.println(crewMember.searchPlanet().toString());
+		System.out.println(crewMember.searchPlanet().toString());
+		System.out.println(crewMember.searchPlanet().toString());
+		System.out.println(crewMember.searchPlanet().toString());
 	}
 
 	@Test
@@ -101,11 +110,11 @@ abstract class CrewMemberTest {
 		crewMember.useItem();
 		assertFalse(initialInventory.equals(newShip.getInventory().clone()));
 		assertFalse(crewMember.getHasSpacePlague());
-		newShip.in.close();
-		//System.out.println("---------- testUseItem TEST DONT USE ITEM ----------");
+		System.out.println("---------- testUseItem TEST DONT USE ITEM ----------");
 		newShip.getInventory().put(newShip.SPACE_PLAGUE_CURE, 2);
-		/*crewMember.useItem();
-		assertTrue(initialInventory.equals(newShip.getInventory().clone()));*/
+		initialInventory = newShip.getInventory();
+		crewMember.useItem();
+		assertTrue(initialInventory.equals(newShip.getInventory().clone()));
 		System.out.println("---------- testUseItem END TEST ----------");
 	}
 
