@@ -84,8 +84,8 @@ public class Consumable {
 		person.addHealth(healthRestore);
 		person.addEnergy(energyRestore);
 		person.addNutrition(nutritionRestore);
-		if (this.cureSpacePlague == true) {
-			person.setHasSpacePlague(true);
+		if (cureSpacePlague) {
+			person.setHasSpacePlague(false);
 		}
 	}
 	

@@ -1,8 +1,5 @@
 /**
- * 
- */
-/**
- * @author DanJH
+ * @author Daniel Harris
  *
  */
 module spaceExplorer {
