@@ -5,14 +5,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import java.util.Map;
 
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.AfterAll;
+//import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.BeforeAll;
+//import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import main.CrewMember;
-import main.Human;
-import main.Ship;
+import main.CrewMemberTypes.Human;
 import test.CrewMemberTest;
 
 class HumanTest extends CrewMemberTest {

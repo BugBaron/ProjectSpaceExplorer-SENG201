@@ -1,5 +1,6 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -7,7 +8,7 @@ import main.Ship;
 
 public abstract class CrewMember {
 	
-	private Ship ship;
+	protected Ship ship;
 	private HashMap <String, Integer> status;
 	private int numActions;
 	
@@ -15,25 +16,26 @@ public abstract class CrewMember {
 	private final int[] SEARCHING_PROBABILITIES = {1, 1, 1, 1, 1};
 	
 	// Variables which are modified upon being created by sub-classes
-	// Variables which are in all-caps are not modified after the sub-class is constructed
-	private HashMap <String, Integer> MAX_STAT;
-	private int REPAIR_AMOUNT;
-	private boolean spacePlague;
-	private String name;
-	private HashMap <String, String> TYPE_INFO;
+	// All-caps variables are not modified after the sub-class is constructed
+	protected HashMap <String, Integer> MAX_STAT;
+	protected int REPAIR_AMOUNT;
+	protected boolean spacePlague;
+	protected String name;
+	protected HashMap <String, String> TYPE_INFO;
 	
 	
 	/**
 	 * Initialize the class as default with a certain ship. Called by subclasses
 	 */
-	CrewMember(Ship currentShip) {
+	protected CrewMember(Ship currentShip) {
 		ship = currentShip;
+		status = new HashMap <String, Integer>();
 	}
 	
 	
 	/**
-	 * Does all things related to ending the day, such as losing health, energy, and
-	 * other actions which are class specific
+	 * Does all things related to ending the day, such as losing health, 
+	 * energy, and other actions which are class specific.
 	 * Defined in the subclass
 	 */
 	public abstract void endDay();
@@ -41,7 +43,8 @@ public abstract class CrewMember {
 	
 	/**
 	 * Retrieves the status of the crew member
-	 * @return a map containing the "Health", "Nutrition" and "Energy" of the crew member
+	 * @return a map containing the "Health", "Nutrition" and "Energy" of the 
+	 * crew member
 	 */
 	public HashMap <String, Integer> getStatus() {
 		return status;
@@ -49,18 +52,32 @@ public abstract class CrewMember {
 	
 	
 	/**
+	 * A helper function for addHealth, addEnergy and addNutrition
+	 * @param amount the amount to add. Can be negative to decrease the stat
+	 */
+	private void addStats(int amount, String stat) {
+		int newStat = amount + status.get(stat);
+		if (newStat <= 0) {
+			// Here the attribute has been reduced to or beyond zero
+			status.put(stat, 0);
+			if (stat == "Health") {
+				kill();
+			}
+		} else if (newStat < MAX_STAT.get(stat)) {
+			// The general case
+			status.put(stat, newStat);
+		} else {
+			// Here the attribute has been increased above the maximum
+			status.put(stat, MAX_STAT.get(stat));
+		}
+	}
+	
+	/**
 	 * Adds health to this crew member
 	 * @param amount the amount to increase the health by, can be negative to decrease health
 	 */
 	public void addHealth(int amount) {
-		if (amount + status.get("Health") < 0) {
-			status.put("Health", 0);
-			kill();
-		} else if (amount + status.get("Health") < MAX_STAT.get("Health")) {
-			status.put("Health", amount + status.get("Health"));
-		} else {
-			status.put("Health", MAX_STAT.get("Health"));
-		}
+		addStats(amount, "Health");
 	}
 	
 	
@@ -69,13 +86,7 @@ public abstract class CrewMember {
 	 * @param amount the amount to increase the energy by, can be negative to decrease energy
 	 */
 	public void addEnergy(int amount) {
-		if (amount + status.get("Energy") < 0) {
-			status.put("Energy", 0);
-		} else if (amount + status.get("Energy") < MAX_STAT.get("Energy")) {
-			status.put("Energy", amount + status.get("Energy"));
-		} else {
-			status.put("Energy", MAX_STAT.get("Energy"));
-		}
+		addStats(amount, "Energy");
 	}
 	
 	
@@ -84,13 +95,7 @@ public abstract class CrewMember {
 	 * @param amount the amount to increase the nutrition by, can be negative to decrease nutrition
 	 */
 	public void addNutrition(int amount) {
-		if (amount + status.get("Nutrition") < 0) {
-			status.put("Nutrition", 0);
-		} else if (amount + status.get("Nutrition") < MAX_STAT.get("Nutrition")) {
-			status.put("Nutrition", amount + status.get("Nutrition"));
-		} else {
-			status.put("Nutrition", MAX_STAT.get("Nutrition"));
-		}
+		addStats(amount, "Nutrition");
 	}
 	
 	
@@ -116,16 +121,24 @@ public abstract class CrewMember {
 		}
 		int randInt = r.nextInt(totalSum);
 		int currentVar = 0;
-		FindableItem[] findableList = {FindableItem.SHIP_PARTS, FindableItem.FOOD_ITEMS, 
-				FindableItem.MEDICAL_ITEMS, FindableItem.MONEY, FindableItem.NONE};
+		// List of possibilities that are available
+		FindableItem[] findableList = {FindableItem.SHIP_PARTS, 
+				FindableItem.FOOD_ITEMS, FindableItem.MEDICAL_ITEMS, 
+				FindableItem.MONEY, FindableItem.NONE};
 		
 		// Finds the item to return based on what the searching probabilities are
 		for (int i = 0; i < findableList.length; i++) {
 			currentVar = currentVar + SEARCHING_PROBABILITIES[i];
+			/* If the random variable is between the current integer of 
+			 * SEARCHING_PROBABILITIES and the previous one then return the
+			 * relevant FindableItem
+			 */
 			if (randInt < currentVar) {
 				return findableList[i];
 			}
 		}
+		
+		completeAction();
 		return FindableItem.NONE;
 	}
 	
@@ -162,6 +175,8 @@ public abstract class CrewMember {
 			if (inventory.get(item) == 0) {
 				inventory.remove(item);
 			}
+			
+			completeAction();
 			return true;
 		} else {
 			return false;
@@ -182,8 +197,7 @@ public abstract class CrewMember {
 	 * Repairs the ship by "REPAIR_AMOUNT"
 	 */
 	public void repairShip() {
-		--numActions;
-		addEnergy(-1);
+		completeAction();
 		ship.addShipShields(REPAIR_AMOUNT);
 	}
 	
@@ -193,8 +207,41 @@ public abstract class CrewMember {
 	 * 
 	 * Incomplete
 	 */
-	public void pilotShip() {
-		return;
+	public boolean pilotShip() {
+		ArrayList<CrewMember> crewMembers = ship.getCrewMembers();
+		
+		int i;
+		ArrayList<CrewMember> membersWithActions = new ArrayList<CrewMember>();
+		int size = crewMembers.size();
+		for (i = 0; i < size; i++) {
+			CrewMember person = crewMembers.get(i);
+			if (person.getActions() > 0 && this != person) {
+				membersWithActions.add(person);
+				int index = membersWithActions.size();
+				System.out.println(index + ") " + person.getName() + ", " + person.TYPE_INFO.get("Type"));
+			}
+			
+		}
+		
+		int index = membersWithActions.size();
+		System.out.println((index + 1) + ") Back to Crew Member Actions");
+		System.out.flush();
+
+		int choice = ship.collectInt(0, index + 2);
+		
+		if (choice < (index + 1)) {
+			CrewMember person = membersWithActions.get(choice - 1);
+			person.completeAction();
+			completeAction();
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public void completeAction() {
+		--numActions;
+		addEnergy(-1);
 	}
 	
 	
@@ -254,15 +301,6 @@ public abstract class CrewMember {
 	
 	
 	/**
-	 * Gets the ship and returns it
-	 * @return the ship that this crew member is on
-	 */
-	Ship getShip() {
-		return ship;
-	}
-	
-	
-	/**
 	 * Gets a string representation for the crew member
 	 * @return a string representing the class
 	 */
@@ -281,33 +319,10 @@ public abstract class CrewMember {
 	
 	
 	/**
-	 * Sets the variables that the class should start with from the subclass
-	 * @param maxStat a map containing the maximum "Health", "Energy" and "Nutrition" of this crew member
-	 * @param repairAmount an integer representing how much the ship is repaired by this crew member
-	 * @param hasPlague a boolean representing whether the crew member starts with the space plague
-	 * @param name a string containing the crew members name
-	 * @param typeInfo a map containing the "Type", "Strength" and "Weakness" of the crew member
-	 */
-	void setInitialVariables(HashMap <String, Integer> maxStat, int repairAmount, boolean hasPlague, String newName, HashMap <String, String> typeInfo) {
-		MAX_STAT = maxStat;
-		REPAIR_AMOUNT = repairAmount;
-		spacePlague = hasPlague;
-		name = newName;
-		TYPE_INFO = typeInfo;
-		
-		status = new HashMap <String, Integer>();
-		status.put("Health", MAX_STAT.get("Health"));
-		status.put("Energy", MAX_STAT.get("Energy"));
-		status.put("Nutrition", MAX_STAT.get("Nutrition"));
-		numActions = 0;
-	}
-	
-	
-	/**
 	 * Sets the number of actions available for this crew member
 	 * @param actions the number of actions the crew member should have
 	 */
-	void setActions(int actions) {
+	protected void setActions(int actions) {
 		numActions = actions;
 	}
 	
