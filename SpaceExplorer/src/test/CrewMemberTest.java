@@ -13,7 +13,7 @@ import main.Ship;
 
 abstract class CrewMemberTest {
 	
-	static Ship newShip = new Ship();
+	Ship newShip = new Ship();
 	CrewMember crewMember;
 	
 	void setCrewMember(CrewMember newMember) {

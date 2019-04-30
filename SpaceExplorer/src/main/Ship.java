@@ -133,6 +133,8 @@ public class Ship {
 	
 	/**
 	 * Collects an integer input for a general menu selection
+	 * @param minValue the minimum value that the user can choose from
+	 * @param maxValue the maximum value that the user can choose from
 	 * @return an integer received from the user
 	 */
 	public int collectInt(int minValue, int maxValue) {
