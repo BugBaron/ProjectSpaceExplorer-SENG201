@@ -2,6 +2,6 @@
  * @author Daniel Harris
  *
  */
-module spaceExplorer {
+module SpaceExplorer {
 	requires org.junit.jupiter.api;
 }
