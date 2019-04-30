@@ -1,5 +1,6 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -7,7 +8,7 @@ import main.Ship;
 
 public abstract class CrewMember {
 	
-	Ship ship;
+	protected Ship ship;
 	private HashMap <String, Integer> status;
 	private int numActions;
 	
@@ -16,17 +17,17 @@ public abstract class CrewMember {
 	
 	// Variables which are modified upon being created by sub-classes
 	// All-caps variables are not modified after the sub-class is constructed
-	HashMap <String, Integer> MAX_STAT;
-	int REPAIR_AMOUNT;
-	boolean spacePlague;
-	String name;
-	HashMap <String, String> TYPE_INFO;
+	protected HashMap <String, Integer> MAX_STAT;
+	protected int REPAIR_AMOUNT;
+	protected boolean spacePlague;
+	protected String name;
+	protected HashMap <String, String> TYPE_INFO;
 	
 	
 	/**
 	 * Initialize the class as default with a certain ship. Called by subclasses
 	 */
-	CrewMember(Ship currentShip) {
+	protected CrewMember(Ship currentShip) {
 		ship = currentShip;
 		status = new HashMap <String, Integer>();
 	}
@@ -136,6 +137,8 @@ public abstract class CrewMember {
 				return findableList[i];
 			}
 		}
+		
+		completeAction();
 		return FindableItem.NONE;
 	}
 	
@@ -172,6 +175,8 @@ public abstract class CrewMember {
 			if (inventory.get(item) == 0) {
 				inventory.remove(item);
 			}
+			
+			completeAction();
 			return true;
 		} else {
 			return false;
@@ -192,8 +197,7 @@ public abstract class CrewMember {
 	 * Repairs the ship by "REPAIR_AMOUNT"
 	 */
 	public void repairShip() {
-		--numActions;
-		addEnergy(-1);
+		completeAction();
 		ship.addShipShields(REPAIR_AMOUNT);
 	}
 	
@@ -203,8 +207,41 @@ public abstract class CrewMember {
 	 * 
 	 * Incomplete
 	 */
-	public void pilotShip() {
-		return;
+	public boolean pilotShip() {
+		ArrayList<CrewMember> crewMembers = ship.getCrewMembers();
+		
+		int i;
+		ArrayList<CrewMember> membersWithActions = new ArrayList<CrewMember>();
+		int size = crewMembers.size();
+		for (i = 0; i < size; i++) {
+			CrewMember person = crewMembers.get(i);
+			if (person.getActions() > 0 && this != person) {
+				membersWithActions.add(person);
+				int index = membersWithActions.size();
+				System.out.println(index + ") " + person.getName() + ", " + person.TYPE_INFO.get("Type"));
+			}
+			
+		}
+		
+		int index = membersWithActions.size();
+		System.out.println((index + 1) + ") Back to Crew Member Actions");
+		System.out.flush();
+
+		int choice = ship.collectInt(0, index + 2);
+		
+		if (choice < (index + 1)) {
+			CrewMember person = membersWithActions.get(choice - 1);
+			person.completeAction();
+			completeAction();
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public void completeAction() {
+		--numActions;
+		addEnergy(-1);
 	}
 	
 	
@@ -285,7 +322,7 @@ public abstract class CrewMember {
 	 * Sets the number of actions available for this crew member
 	 * @param actions the number of actions the crew member should have
 	 */
-	void setActions(int actions) {
+	protected void setActions(int actions) {
 		numActions = actions;
 	}
 	

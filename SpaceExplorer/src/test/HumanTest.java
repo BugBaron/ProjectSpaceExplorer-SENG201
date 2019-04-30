@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import main.CrewMember;
-import main.Human;
+import main.CrewMemberTypes.Human;
 import test.CrewMemberTest;
 
 class HumanTest extends CrewMemberTest {
