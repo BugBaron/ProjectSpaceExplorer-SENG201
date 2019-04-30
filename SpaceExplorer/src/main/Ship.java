@@ -19,7 +19,7 @@ public class Ship {
 	private int score;
 	private Scanner in;
 	
-	public final Consumable SPACE_PLAGUE_CURE = new Consumable();
+	public final Consumable SPACE_PLAGUE_CURE = new Consumable("Space Plague Cure");
 	
 	
 	public Ship() {
