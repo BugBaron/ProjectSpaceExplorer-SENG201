@@ -99,21 +99,25 @@ abstract class CrewMemberTest {
 		crewMember.setHasSpacePlague(true);
 		newShip.getInventory().put(newShip.SPACE_PLAGUE_CURE, 2);
 		System.out.println("---------- testUseItem START TEST ----------");
+		int initialActions = crewMember.getActions();
 		Object initialInventory = newShip.getInventory().clone();
 		System.out.println("---------- testUseItem TEST USE ITEM TWICE ----------");
-		crewMember.useItem();
+		assertTrue(crewMember.useItem());
 		assertFalse(initialInventory.equals(newShip.getInventory().clone()));
 		assertFalse(crewMember.getHasSpacePlague());
+		assertEquals(crewMember.getActions(), initialActions);
 		
 		crewMember.setHasSpacePlague(true);
 		initialInventory = newShip.getInventory().clone();
-		crewMember.useItem();
+		assertTrue(crewMember.useItem());
 		assertFalse(initialInventory.equals(newShip.getInventory().clone()));
 		assertFalse(crewMember.getHasSpacePlague());
+		System.out.println("---------- testUseItem TEST NO ITEMS IN INVENTORY ----------");
+		assertFalse(crewMember.useItem());
 		System.out.println("---------- testUseItem TEST DONT USE ITEM ----------");
 		newShip.getInventory().put(newShip.SPACE_PLAGUE_CURE, 2);
 		initialInventory = newShip.getInventory();
-		crewMember.useItem();
+		assertFalse(crewMember.useItem());
 		assertTrue(initialInventory.equals(newShip.getInventory().clone()));
 		System.out.println("---------- testUseItem END TEST ----------");
 	}
@@ -134,7 +138,25 @@ abstract class CrewMemberTest {
 
 	@Test
 	void testPilotShip() {
-		fail("Not yet implemented");
+		CrewMember newMember = new main.CrewMemberTypes.Human(newShip, "Second Human");
+		newShip.getCrewMembers().add(crewMember);
+		newShip.getCrewMembers().add(newMember);
+		System.out.println("---------- testPilotShip START TEST ----------");
+		int initialActions = crewMember.getActions() + newMember.getActions();
+		System.out.println("---------- testPilotShip TEST PILOT FROM Donald Trump ----------");
+		assertTrue(crewMember.pilotShip());
+		assertEquals(crewMember.getActions() + newMember.getActions(), initialActions - 2);
+		System.out.println("---------- testPilotShip TEST PILOT FROM Second Human ----------");
+		assertTrue(newMember.pilotShip());
+		assertEquals(crewMember.getActions() + newMember.getActions(), initialActions - 4);
+		System.out.println("---------- testPilotShip TEST NO OPTIONS ----------");
+		assertFalse(crewMember.pilotShip());
+		assertFalse(newMember.pilotShip());
+		newMember.endDay();
+		crewMember.endDay();
+		System.out.println("---------- testPilotShip TEST DONT CHOOSE ANYONE ----------");
+		assertFalse(crewMember.pilotShip());
+		System.out.println("---------- testPilotShip END TEST ----------");
 	}
 
 	@Test

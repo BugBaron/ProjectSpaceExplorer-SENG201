@@ -30,6 +30,7 @@ public abstract class CrewMember {
 	protected CrewMember(Ship currentShip) {
 		ship = currentShip;
 		status = new HashMap <String, Integer>();
+		numActions = 2;
 	}
 	
 	
@@ -126,6 +127,8 @@ public abstract class CrewMember {
 				FindableItem.FOOD_ITEMS, FindableItem.MEDICAL_ITEMS, 
 				FindableItem.MONEY, FindableItem.NONE};
 		
+		completeAction();
+		
 		// Finds the item to return based on what the searching probabilities are
 		for (int i = 0; i < findableList.length; i++) {
 			currentVar = currentVar + SEARCHING_PROBABILITIES[i];
@@ -138,7 +141,6 @@ public abstract class CrewMember {
 			}
 		}
 		
-		completeAction();
 		return FindableItem.NONE;
 	}
 	
@@ -161,10 +163,15 @@ public abstract class CrewMember {
 			String description = item.getDescription();
 			System.out.println((i + 1) + ") " + classification + " item: " + name + ", " + description + ", Quantity: " + inventory.get(item));
 		}
+		if (i == 0) {
+			System.out.println("No items in the ship inventory!");
+			System.out.println("Returning to Crew Member Actions...");
+			return false;
+		}
 		System.out.println((i + 1) + ") Back to Crew Member Actions");
 		System.out.flush();
 
-		int choice = ship.collectInt(0, i + 1);
+		int choice = ship.collectInt(1, i + 1);
 		
 		if (choice < (i + 1)) {
 			Consumable item = (Consumable) keys[choice - 1];
@@ -224,10 +231,15 @@ public abstract class CrewMember {
 		}
 		
 		int index = membersWithActions.size();
+		if (index == 0) {
+			System.out.println("No other crew members have any remaining actions!");
+			System.out.println("Returning to Crew Member Actions...");
+			return false;
+		}
 		System.out.println((index + 1) + ") Back to Crew Member Actions");
 		System.out.flush();
 
-		int choice = ship.collectInt(0, index + 2);
+		int choice = ship.collectInt(1, index + 1);
 		
 		if (choice < (index + 1)) {
 			CrewMember person = membersWithActions.get(choice - 1);
