@@ -5,45 +5,46 @@ import java.util.HashMap;
 import main.CrewMember;
 import main.Ship;
 
-public class Human extends CrewMember {
+public class Unicorn extends CrewMember {
 
 	
 	/**
 	 * Class constructor
 	 * @param tempShip the ship to create this crew member for
 	 */
-	public Human(Ship tempShip) {
+	public Unicorn(Ship tempShip) {
 		super(tempShip);
-		createDefaultHuman();
+		createDefaultUnicorn();
 	}
 		
 	
 	/**
-	 * Class constructor which allows for a custom name for the human
+	 * Class constructor which allows for a custom name for the unicorn
 	 * @param tempShip the ship to create this crew member for
 	 * @param tempName what the name of the crew member should be
 	 */
-	public Human(Ship tempShip, String tempName) {
+	public Unicorn(Ship tempShip, String tempName) {
 		super(tempShip);
-		createDefaultHuman();
+		createDefaultUnicorn();
 		super.name = tempName;
 	}
 	
 	
-	private void createDefaultHuman() {
+	private void createDefaultUnicorn() {
 		HashMap <String, Integer> maxStats = new HashMap <String, Integer>();
-		maxStats.put("Health", 8);
+		maxStats.put("Health", 10);
 		maxStats.put("Energy", 10);
 		maxStats.put("Nutrition", 10);
 		
 		HashMap <String, String> typeInfo = new HashMap <String, String>();
-		typeInfo.put("Type", "Human");
-		typeInfo.put("Strength", "1 health restored at end of each day");
-		typeInfo.put("Weakness", "2 less maximum health (8 Health)");
+		typeInfo.put("Type", "Unicorn");
+		typeInfo.put("Strength", "2 energy restored at end of each day");
+		typeInfo.put("Weakness", "Starts with the space plague");
 
 		super.MAX_STAT = maxStats;
-		super.name = "Donald Trump";
+		super.name = "Rapidash";
 		super.TYPE_INFO = typeInfo;
+		super.spacePlague = true;
 		super.getStatus().put("Health", maxStats.get("Health"));
 		super.getStatus().put("Energy", maxStats.get("Energy"));
 		super.getStatus().put("Nutrition", maxStats.get("Nutrition"));
@@ -56,7 +57,7 @@ public class Human extends CrewMember {
 	 */
 	@Override
 	public void endDay() {
-		super.addHealth(-1);
+		super.addHealth(-2);
 		super.setActions(2);
 		if (super.getStatus().get("Energy") == 0) {
 			super.addHealth(-1);
@@ -71,6 +72,7 @@ public class Human extends CrewMember {
 		if (super.ship.getShipShields() == 0) {
 			super.addHealth(-1);
 		}
+		super.addEnergy(2);
 	}
 
 

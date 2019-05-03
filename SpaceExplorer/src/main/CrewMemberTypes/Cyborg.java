@@ -5,45 +5,48 @@ import java.util.HashMap;
 import main.CrewMember;
 import main.Ship;
 
-public class Human extends CrewMember {
+public class Cyborg extends CrewMember {
 
 	
 	/**
 	 * Class constructor
 	 * @param tempShip the ship to create this crew member for
 	 */
-	public Human(Ship tempShip) {
+	public Cyborg(Ship tempShip) {
 		super(tempShip);
-		createDefaultHuman();
+		createDefaultCyborg();
 	}
 		
 	
 	/**
-	 * Class constructor which allows for a custom name for the human
+	 * Class constructor which allows for a custom name for the cyborg
 	 * @param tempShip the ship to create this crew member for
 	 * @param tempName what the name of the crew member should be
 	 */
-	public Human(Ship tempShip, String tempName) {
+	public Cyborg(Ship tempShip, String tempName) {
 		super(tempShip);
-		createDefaultHuman();
+		createDefaultCyborg();
 		super.name = tempName;
 	}
 	
 	
-	private void createDefaultHuman() {
+	private void createDefaultCyborg() {
 		HashMap <String, Integer> maxStats = new HashMap <String, Integer>();
-		maxStats.put("Health", 8);
+		maxStats.put("Health", 10);
 		maxStats.put("Energy", 10);
 		maxStats.put("Nutrition", 10);
 		
 		HashMap <String, String> typeInfo = new HashMap <String, String>();
-		typeInfo.put("Type", "Human");
-		typeInfo.put("Strength", "1 health restored at end of each day");
-		typeInfo.put("Weakness", "2 less maximum health (8 Health)");
+		typeInfo.put("Type", "Cyborg");
+		typeInfo.put("Strength", "40% chance of finding a part when searching a planet");
+		typeInfo.put("Weakness", "10% chance to find food, medical supplies or money (10% for each)");
 
 		super.MAX_STAT = maxStats;
-		super.name = "Donald Trump";
+		super.name = "Elon Musk";
 		super.TYPE_INFO = typeInfo;
+		int[] newProbabilities = {4, 1, 1, 1, 3};
+		super.SEARCHING_PROBABILITIES = newProbabilities;
+		
 		super.getStatus().put("Health", maxStats.get("Health"));
 		super.getStatus().put("Energy", maxStats.get("Energy"));
 		super.getStatus().put("Nutrition", maxStats.get("Nutrition"));
@@ -56,7 +59,7 @@ public class Human extends CrewMember {
 	 */
 	@Override
 	public void endDay() {
-		super.addHealth(-1);
+		super.addHealth(-2);
 		super.setActions(2);
 		if (super.getStatus().get("Energy") == 0) {
 			super.addHealth(-1);

@@ -5,44 +5,44 @@ import java.util.HashMap;
 import main.CrewMember;
 import main.Ship;
 
-public class Human extends CrewMember {
+public class Alien extends CrewMember {
 
 	
 	/**
 	 * Class constructor
 	 * @param tempShip the ship to create this crew member for
 	 */
-	public Human(Ship tempShip) {
+	public Alien(Ship tempShip) {
 		super(tempShip);
-		createDefaultHuman();
+		createDefaultAlien();
 	}
 		
 	
 	/**
-	 * Class constructor which allows for a custom name for the human
+	 * Class constructor which allows for a custom name for the alien
 	 * @param tempShip the ship to create this crew member for
 	 * @param tempName what the name of the crew member should be
 	 */
-	public Human(Ship tempShip, String tempName) {
+	public Alien(Ship tempShip, String tempName) {
 		super(tempShip);
-		createDefaultHuman();
+		createDefaultAlien();
 		super.name = tempName;
 	}
 	
 	
-	private void createDefaultHuman() {
+	private void createDefaultAlien() {
 		HashMap <String, Integer> maxStats = new HashMap <String, Integer>();
-		maxStats.put("Health", 8);
+		maxStats.put("Health", 12);
 		maxStats.put("Energy", 10);
-		maxStats.put("Nutrition", 10);
+		maxStats.put("Nutrition", 8);
 		
 		HashMap <String, String> typeInfo = new HashMap <String, String>();
-		typeInfo.put("Type", "Human");
-		typeInfo.put("Strength", "1 health restored at end of each day");
-		typeInfo.put("Weakness", "2 less maximum health (8 Health)");
+		typeInfo.put("Type", "Alien");
+		typeInfo.put("Strength", "2 more maximum health (12 Health)");
+		typeInfo.put("Weakness", "2 less maximum nutrition (8 Nutrition)");
 
 		super.MAX_STAT = maxStats;
-		super.name = "Donald Trump";
+		super.name = "Steve Jobs";
 		super.TYPE_INFO = typeInfo;
 		super.getStatus().put("Health", maxStats.get("Health"));
 		super.getStatus().put("Energy", maxStats.get("Energy"));
@@ -56,7 +56,7 @@ public class Human extends CrewMember {
 	 */
 	@Override
 	public void endDay() {
-		super.addHealth(-1);
+		super.addHealth(-2);
 		super.setActions(2);
 		if (super.getStatus().get("Energy") == 0) {
 			super.addHealth(-1);

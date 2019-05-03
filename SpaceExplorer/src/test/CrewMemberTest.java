@@ -105,6 +105,7 @@ abstract class CrewMemberTest {
 		assertTrue(crewMember.useItem());
 		assertFalse(initialInventory.equals(newShip.getInventory().clone()));
 		assertFalse(crewMember.getHasSpacePlague());
+		initialActions--;
 		assertEquals(crewMember.getActions(), initialActions);
 		
 		crewMember.setHasSpacePlague(true);
@@ -112,6 +113,8 @@ abstract class CrewMemberTest {
 		assertTrue(crewMember.useItem());
 		assertFalse(initialInventory.equals(newShip.getInventory().clone()));
 		assertFalse(crewMember.getHasSpacePlague());
+		initialActions--;
+		assertEquals(crewMember.getActions(), initialActions);
 		System.out.println("---------- testUseItem TEST NO ITEMS IN INVENTORY ----------");
 		assertFalse(crewMember.useItem());
 		System.out.println("---------- testUseItem TEST DONT USE ITEM ----------");

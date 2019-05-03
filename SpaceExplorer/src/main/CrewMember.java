@@ -12,16 +12,15 @@ public abstract class CrewMember {
 	private HashMap <String, Integer> status;
 	private int numActions;
 	
-	// The probabilities are coded to bee relative
-	private final int[] SEARCHING_PROBABILITIES = {1, 1, 1, 1, 1};
-	
 	// Variables which are modified upon being created by sub-classes
 	// All-caps variables are not modified after the sub-class is constructed
 	protected HashMap <String, Integer> MAX_STAT;
-	protected int REPAIR_AMOUNT;
-	protected boolean spacePlague;
+	protected int REPAIR_AMOUNT = 2;
+	protected boolean spacePlague = false;
 	protected String name;
 	protected HashMap <String, String> TYPE_INFO;
+	// The probabilities are coded to be relative
+	protected int[] SEARCHING_PROBABILITIES = {1, 1, 1, 1, 1};
 	
 	
 	/**
@@ -252,7 +251,7 @@ public abstract class CrewMember {
 	}
 	
 	public void completeAction() {
-		--numActions;
+		numActions--;
 		addEnergy(-1);
 	}
 	
