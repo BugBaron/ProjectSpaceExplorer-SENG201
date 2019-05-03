@@ -1,5 +1,4 @@
 package main;
-
 public class Consumable {
 	
 	private int price;
@@ -84,7 +83,7 @@ public class Consumable {
 		person.addHealth(healthRestore);
 		person.addEnergy(energyRestore);
 		person.addNutrition(nutritionRestore);
-		if (cureSpacePlague) {
+		if (this.cureSpacePlague == true) {
 			person.setHasSpacePlague(false);
 		}
 	}
@@ -99,7 +98,7 @@ public class Consumable {
 	
 	/**
 	 * Retrieves the description of the item
-	 * @return description the details of what the item does in english terms rather than code
+	 * @return description the details of what the item does in English rather than code
 	 */
 	public String getDescription() {
 		return description;
@@ -113,3 +112,4 @@ public class Consumable {
 		return classification;
 	}
 }
+
