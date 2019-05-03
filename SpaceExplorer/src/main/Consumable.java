@@ -76,7 +76,7 @@ public class Consumable {
 	}
 	
 	/**
-	 * Applies the item to a crewmember
+	 * Applies the item to a crew member
 	 * @param person a specific crew member who gains the uses of the item
 	 */
 	public void useItem(CrewMember person) {
@@ -98,7 +98,7 @@ public class Consumable {
 	
 	/**
 	 * Retrieves the description of the item
-	 * @return description the details of what the item does in english terms rather than code
+	 * @return description the details of what the item does in English rather than code
 	 */
 	public String getDescription() {
 		return description;
