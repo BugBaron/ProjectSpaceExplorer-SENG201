@@ -150,11 +150,19 @@ public abstract class CrewMember {
 	 */
 	public boolean useItem() {
 		HashMap<Consumable, Integer> inventory = ship.getInventory();
-		
+		// Converts the inventory keys to an array
 		Object[] keys = inventory.keySet().toArray();
 		
-		int i;
+		// Returns to previous menu if there are no items in the inventory
 		int size = inventory.size();
+		if (size == 0) {
+			System.out.println("No items in the ship inventory!");
+			System.out.println("Returning to Crew Member Actions...");
+			return false;
+		}
+		
+		// Displays all the items in the inventory as options
+		int i;
 		for (i = 0; i < size; i++) {
 			Consumable item = (Consumable) keys[i];
 			String classification = item.getClassification();
@@ -162,16 +170,14 @@ public abstract class CrewMember {
 			String description = item.getDescription();
 			System.out.println((i + 1) + ") " + classification + " item: " + name + ", " + description + ", Quantity: " + inventory.get(item));
 		}
-		if (i == 0) {
-			System.out.println("No items in the ship inventory!");
-			System.out.println("Returning to Crew Member Actions...");
-			return false;
-		}
+
 		System.out.println((i + 1) + ") Back to Crew Member Actions");
 		System.out.flush();
 
+		// Collects the user input
 		int choice = ship.collectInt(1, i + 1);
 		
+		// Uses the selected item and reduces the quantity of that item in the inventory
 		if (choice < (i + 1)) {
 			Consumable item = (Consumable) keys[choice - 1];
 			
@@ -196,6 +202,7 @@ public abstract class CrewMember {
 	public void sleep() {
 		--numActions;
 		addEnergy(4);
+		addNutrition(-1);
 	}
 	
 	
@@ -210,36 +217,38 @@ public abstract class CrewMember {
 	
 	/**
 	 * Finds another crew member and pilots the ship to another planet with them
-	 * 
-	 * Incomplete
 	 */
 	public boolean pilotShip() {
 		ArrayList<CrewMember> crewMembers = ship.getCrewMembers();
 		
-		int i;
+		// This part displays options for all other crew members that have actions remaining
 		ArrayList<CrewMember> membersWithActions = new ArrayList<CrewMember>();
-		int size = crewMembers.size();
-		for (i = 0; i < size; i++) {
+		for (int i = 0; i < crewMembers.size(); i++) {
 			CrewMember person = crewMembers.get(i);
+			
+			// Ensure that only other crew members that have actions are shown
 			if (person.getActions() > 0 && this != person) {
 				membersWithActions.add(person);
 				int index = membersWithActions.size();
 				System.out.println(index + ") " + person.getName() + ", " + person.TYPE_INFO.get("Type"));
 			}
-			
 		}
 		
 		int index = membersWithActions.size();
+		// Returns to the previous menu if there are no other crew members to pilot the ship with
 		if (index == 0) {
 			System.out.println("No other crew members have any remaining actions!");
 			System.out.println("Returning to Crew Member Actions...");
 			return false;
 		}
+		
 		System.out.println((index + 1) + ") Back to Crew Member Actions");
 		System.out.flush();
 
+		// Collects the user input
 		int choice = ship.collectInt(1, index + 1);
 		
+		// Completes the action for this crew member and the other chosen one
 		if (choice < (index + 1)) {
 			CrewMember person = membersWithActions.get(choice - 1);
 			person.completeAction();
@@ -253,6 +262,7 @@ public abstract class CrewMember {
 	public void completeAction() {
 		numActions--;
 		addEnergy(-1);
+		addNutrition(-1);
 	}
 	
 	

@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Map;
 
-import org.junit.jupiter.api.AfterEach;
+//import org.junit.jupiter.api.AfterEach;
 //import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.BeforeAll;
@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 
 import main.CrewMember;
 import main.CrewMemberTypes.Human;
-import test.CrewMemberTest;
 
 class HumanTest extends CrewMemberTest {
 
@@ -24,9 +23,6 @@ class HumanTest extends CrewMemberTest {
 		newHuman = super.crewMember;
 	}
 
-	@AfterEach
-	void tearDown() throws Exception {
-	}
 
 	@Test
 	@Override
@@ -82,9 +78,9 @@ class HumanTest extends CrewMemberTest {
 	@Override
 	void testGetMaxStats() {
 		Map <String, Integer> maxStats = newHuman.getMaxStats();
-		assertTrue(maxStats.get("Health") == 8);
-		assertTrue(maxStats.get("Energy") == 10);
-		assertTrue(maxStats.get("Nutrition") == 10);
+		assertEquals((int) maxStats.get("Health"), 8);
+		assertEquals((int) maxStats.get("Energy"), 10);
+		assertEquals((int) maxStats.get("Nutrition"), 10);
 	}
 
 	
@@ -116,9 +112,11 @@ class HumanTest extends CrewMemberTest {
 		newHuman.endDay();
 		int initialShields = newShip.getShipShields();
 		int initialEnergy = newHuman.getStatus().get("Energy");
+		int initialNutrition = newHuman.getStatus().get("Nutrition");
 		int numActions = newHuman.getActions();
 		newHuman.repairShip();
 		assertTrue(initialEnergy - newHuman.getStatus().get("Energy") == 1);
+		assertTrue(initialNutrition - newHuman.getStatus().get("Nutrition") == 1);
 		assertTrue(numActions - newHuman.getActions() ==  1);
 		assertTrue(newShip.getShipShields() - initialShields == 2);
 		newShip.addShipShields(-2);

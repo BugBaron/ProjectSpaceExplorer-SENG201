@@ -82,16 +82,9 @@ abstract class CrewMemberTest {
 
 	@Test
 	void testSearchPlanet() {
-		System.out.println(crewMember.searchPlanet().toString());
-		System.out.println(crewMember.searchPlanet().toString());
-		System.out.println(crewMember.searchPlanet().toString());
-		System.out.println(crewMember.searchPlanet().toString());
-		System.out.println(crewMember.searchPlanet().toString());
-		System.out.println(crewMember.searchPlanet().toString());
-		System.out.println(crewMember.searchPlanet().toString());
-		System.out.println(crewMember.searchPlanet().toString());
-		System.out.println(crewMember.searchPlanet().toString());
-		System.out.println(crewMember.searchPlanet().toString());
+		for (int i = 0; i < 10; i++) {
+			System.out.println(crewMember.searchPlanet().toString());
+		}
 	}
 
 	@Test
