@@ -10,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import main.CrewMember;
+import main.CrewMemberTypes.CrewMember;
 import main.CrewMemberTypes.Robot;
 
 class RobotTest extends CrewMemberTest {

@@ -6,8 +6,8 @@ import java.util.HashMap;
 
 import org.junit.jupiter.api.Test;
 
-import main.CrewMember;
 import main.Ship;
+import main.CrewMemberTypes.CrewMember;
 
 
 

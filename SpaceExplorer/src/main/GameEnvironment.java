@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Random;
 
+import main.CrewMemberTypes.CrewMember;
+
 public class GameEnvironment {
 	
 	private int partsToFind;

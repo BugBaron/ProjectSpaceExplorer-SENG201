@@ -1,32 +1,34 @@
-package main;
+package main.CrewMemberTypes;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
+import main.Consumable;
+import main.FindableItem;
 import main.Ship;
 
 public abstract class CrewMember {
 	
-	protected Ship ship;
+	Ship ship;
 	private HashMap <String, Integer> status;
 	private int numActions;
 	
 	// Variables which are modified upon being created by sub-classes
 	// All-caps variables are not modified after the sub-class is constructed
-	protected HashMap <String, Integer> MAX_STAT;
-	protected int REPAIR_AMOUNT = 2;
-	protected boolean spacePlague = false;
-	protected String name;
-	protected HashMap <String, String> TYPE_INFO;
+	HashMap <String, Integer> MAX_STAT;
+	int REPAIR_AMOUNT = 2;
+	boolean spacePlague = false;
+	String name;
+	HashMap <String, String> TYPE_INFO;
 	// The probabilities are coded to be relative
-	protected int[] SEARCHING_PROBABILITIES = {1, 1, 1, 1, 1};
+	int[] SEARCHING_PROBABILITIES = {1, 1, 1, 1, 1};
 	
 	
 	/**
 	 * Initialize the class as default with a certain ship. Called by subclasses
 	 */
-	protected CrewMember(Ship currentShip) {
+	CrewMember(Ship currentShip) {
 		ship = currentShip;
 		status = new HashMap <String, Integer>();
 		numActions = 2;
@@ -343,7 +345,7 @@ public abstract class CrewMember {
 	 * Sets the number of actions available for this crew member
 	 * @param actions the number of actions the crew member should have
 	 */
-	protected void setActions(int actions) {
+	void setActions(int actions) {
 		numActions = actions;
 	}
 	

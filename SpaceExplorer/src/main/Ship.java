@@ -6,6 +6,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 import main.Consumable;
+import main.CrewMemberTypes.CrewMember;
 
 
 public class Ship {

@@ -2,7 +2,6 @@ package main.CrewMemberTypes;
 
 import java.util.HashMap;
 
-import main.CrewMember;
 import main.Ship;
 
 public class Robot extends CrewMember {

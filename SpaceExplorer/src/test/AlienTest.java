@@ -10,8 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 //import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import main.CrewMember;
 import main.CrewMemberTypes.Alien;
+import main.CrewMemberTypes.CrewMember;
 
 class AlienTest extends CrewMemberTest {
 

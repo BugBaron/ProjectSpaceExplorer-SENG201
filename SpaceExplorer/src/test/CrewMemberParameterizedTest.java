@@ -17,8 +17,8 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.stream.Stream;
 
-import main.CrewMember;
 import main.Ship;
+import main.CrewMemberTypes.CrewMember;
 
 class CrewMemberParameterizedTest {
 	

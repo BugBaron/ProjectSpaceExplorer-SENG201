@@ -1,4 +1,7 @@
 package main;
+
+import main.CrewMemberTypes.CrewMember;
+
 public class Consumable {
 	
 	private int price;

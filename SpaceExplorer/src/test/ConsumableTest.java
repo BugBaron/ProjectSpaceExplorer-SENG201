@@ -7,8 +7,8 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 
 import main.Consumable;
-import main.CrewMember;
 import main.Ship;
+import main.CrewMemberTypes.CrewMember;
 import main.CrewMemberTypes.Human;
 
 class ConsumableTest {
