@@ -1,8 +1,6 @@
 package main;
 
 import java.util.HashMap;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 import java.util.ArrayList;
 
 import main.Consumable;
@@ -18,33 +16,45 @@ public class Ship {
 	private int shipShields;
 	private final int MAX_SHIP_SHIELDS = 10;
 	private int score;
-	private Scanner in;
 	
 	public final Consumable SPACE_PLAGUE_CURE = new Consumable("Space Plague Cure");
 	
 	
+	/**
+	 * Class constructor for ship. Creates a ship with the default name 'The Milano'
+	 */
 	public Ship() {
 		shipName = "The Milano";
 		crewMembers = new ArrayList<CrewMember>();
 		money = 100;
 		shipShields = 5;
 		score = 0;
-		in = new Scanner(System.in);
 		
 		inventory = new HashMap<Consumable, Integer>();
-		inventory.put(SPACE_PLAGUE_CURE, 2);
 	}
 	
+	
+	/**
+	 * Class constructor for ship with the ship name as the specified string
+	 * @param name the name of the ship
+	 */
 	public Ship(String name) {
 		shipName = name;
 		crewMembers = new ArrayList<CrewMember>();
 		money = 100;
 		shipShields = 5;
 		score = 0;
-		in = new Scanner(System.in);
 		
 		inventory = new HashMap<Consumable, Integer>();
-		inventory.put(SPACE_PLAGUE_CURE, 2);
+	}
+
+
+	/**
+	 * Gets the name of this ship
+	 * @return the name of this ship
+	 */
+	public String getName() {
+		return shipName;
 	}
 	
 	
@@ -89,6 +99,33 @@ public class Ship {
 	
 	
 	/**
+	 * Adds an item to this ships inventory
+	 * @param item the item to add to the inventory
+	 */
+	public void addItem(Consumable item) {
+		if (inventory.containsKey(item)) {
+			inventory.put(item, inventory.get(item) + 1);
+		} else {
+			inventory.put(item, 1);
+		}
+	}
+	
+	
+	/**
+	 * Removes an item from this ships inventory
+	 * @param item the item to be removed from the inventory
+	 */
+	public void removeItem(Consumable item) {
+		if (inventory.containsKey(item)) {
+			switch(inventory.get(item)) {
+				case 1:	inventory.remove(item);	break;
+				default: inventory.put(item, inventory.get(item) - 1);
+			}
+		}
+	}
+	
+	
+	/**
 	 * Gets the shield level of the ship
 	 * @return the shield level of the ship
 	 */
@@ -129,43 +166,7 @@ public class Ship {
 	public void addScore(int amount) {
 		score = score + amount;
 	}
-	
-	
-	
-	/**
-	 * Collects an integer input for a general menu selection
-	 * @param minValue the minimum value that the user can choose from
-	 * @param maxValue the maximum value that the user can choose from
-	 * @return an integer received from the user
-	 */
-	public int collectInt(int minValue, int maxValue) {
-		int choice = -1;
-		while (choice == -1) {
-			try {
-				choice = in.nextInt();
-				
-				// If the choice is not in the required range
-				if (!(choice > minValue - 1 && choice < maxValue + 1)) {
-					System.out.println("Please input a number between " + minValue + " and " + maxValue);
-					choice = -1;
-				}
-			// If the choice is not an integer
-			} catch (InputMismatchException e) {
-				System.out.println("Please input a number to select an option");
-				choice = -1;
-				in.next();
-			}
-		}
-		return choice;
-	}
-	
-	/**
-	 * Collects a string input for a general user interaction
-	 * @return a string received from the user
-	 */
-	public String collectString() {
-		return in.nextLine();
-	}
+
 	
 	/**
 	 * A string representation of the ship including its name and shield level
@@ -175,14 +176,5 @@ public class Ship {
 		String returnString = shipName + "\n";
 		returnString = returnString + "Shield level: " + shipShields + "/" + MAX_SHIP_SHIELDS;
 		return returnString;
-	}
-	
-	
-	/**
-	 * Used in testing to allow tests to be done without user input
-	 * @param newScanner the scanner to replace the current scanner with
-	 */
-	public void setScanner(Scanner newScanner) {
-		in = newScanner;
 	}
 }
