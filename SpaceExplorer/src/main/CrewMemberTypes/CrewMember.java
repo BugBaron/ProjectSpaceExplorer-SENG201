@@ -1,11 +1,6 @@
 package main.CrewMemberTypes;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
-
-import main.Consumable;
-import main.FindableItem;
 import main.Ship;
 
 public abstract class CrewMember {
@@ -22,6 +17,7 @@ public abstract class CrewMember {
 	String name;
 	HashMap <String, String> TYPE_INFO;
 	// The probabilities are coded to be relative
+	// Chance of finding a {part, food item, medical item, money, nothing}
 	int[] SEARCHING_PROBABILITIES = {1, 1, 1, 1, 1};
 	
 	
@@ -64,6 +60,9 @@ public abstract class CrewMember {
 			status.put(stat, 0);
 			if (stat == "Health") {
 				kill();
+			} else if (newStat < 0) {
+				// Removes score by how much below zero the stat goes to
+				ship.addScore(newStat);
 			}
 		} else if (newStat < MAX_STAT.get(stat)) {
 			// The general case
@@ -111,155 +110,23 @@ public abstract class CrewMember {
 	
 	
 	/**
-	 * Searches a planet for spaceship parts, money, food or medical items.
-	 * Adding the items to the inventory is handled by the GameEnvironment class which would call this
-	 * @return a FindableItem representing what was found
+	 * Gets a list containing the probabilities of finding each
+	 * kind of item when searching a planet
+	 * @return a list of probabilities
 	 */
-	public FindableItem searchPlanet() {
-		Random r = new Random();
-		int totalSum = 0;
-		for (int i: SEARCHING_PROBABILITIES) {
-			totalSum = totalSum + i;
-		}
-		int randInt = r.nextInt(totalSum);
-		int currentVar = 0;
-		// List of possibilities that are available
-		FindableItem[] findableList = {FindableItem.SHIP_PARTS, 
-				FindableItem.FOOD_ITEMS, FindableItem.MEDICAL_ITEMS, 
-				FindableItem.MONEY, FindableItem.NONE};
-		
-		completeAction();
-		
-		// Finds the item to return based on what the searching probabilities are
-		for (int i = 0; i < findableList.length; i++) {
-			currentVar = currentVar + SEARCHING_PROBABILITIES[i];
-			/* If the random variable is between the current integer of 
-			 * SEARCHING_PROBABILITIES and the previous one then return the
-			 * relevant FindableItem
-			 */
-			if (randInt < currentVar) {
-				return findableList[i];
-			}
-		}
-		
-		return FindableItem.NONE;
+	public int[] getSearchingProbabilities() {
+		return SEARCHING_PROBABILITIES;
 	}
 	
 	
 	/**
-	 * Finds an item to use in the inventory and uses it
-	 * @return a boolean representing whether or not an item was used
+	 * Gets the amount by which this crew member repairs the ship by
+	 * @return the repair amount
 	 */
-	public boolean useItem() {
-		HashMap<Consumable, Integer> inventory = ship.getInventory();
-		// Converts the inventory keys to an array
-		Object[] keys = inventory.keySet().toArray();
-		
-		// Returns to previous menu if there are no items in the inventory
-		int size = inventory.size();
-		if (size == 0) {
-			System.out.println("No items in the ship inventory!");
-			System.out.println("Returning to Crew Member Actions...");
-			return false;
-		}
-		
-		// Displays all the items in the inventory as options
-		int i;
-		for (i = 0; i < size; i++) {
-			Consumable item = (Consumable) keys[i];
-			String classification = item.getClassification();
-			String name = item.getName();
-			String description = item.getDescription();
-			System.out.println((i + 1) + ") " + classification + " item: " + name + ", " + description + ", Quantity: " + inventory.get(item));
-		}
+	public int getRepairAmount() {
+		return REPAIR_AMOUNT;
+	}
 
-		System.out.println((i + 1) + ") Back to Crew Member Actions");
-		System.out.flush();
-
-		// Collects the user input
-		int choice = ship.collectInt(1, i + 1);
-		
-		// Uses the selected item and reduces the quantity of that item in the inventory
-		if (choice < (i + 1)) {
-			Consumable item = (Consumable) keys[choice - 1];
-			
-			item.useItem(this);
-			
-			inventory.put(item, inventory.get(item) - 1);
-			if (inventory.get(item) == 0) {
-				inventory.remove(item);
-			}
-			
-			completeAction();
-			return true;
-		} else {
-			return false;
-		}
-	}
-	
-	
-	/** 
-	 * Makes the crew member sleep and gain 4 energy
-	 */
-	public void sleep() {
-		--numActions;
-		addEnergy(4);
-		addNutrition(-1);
-	}
-	
-	
-	/**
-	 * Repairs the ship by "REPAIR_AMOUNT"
-	 */
-	public void repairShip() {
-		completeAction();
-		ship.addShipShields(REPAIR_AMOUNT);
-	}
-	
-	
-	/**
-	 * Finds another crew member and pilots the ship to another planet with them
-	 */
-	public boolean pilotShip() {
-		ArrayList<CrewMember> crewMembers = ship.getCrewMembers();
-		
-		// This part displays options for all other crew members that have actions remaining
-		ArrayList<CrewMember> membersWithActions = new ArrayList<CrewMember>();
-		for (int i = 0; i < crewMembers.size(); i++) {
-			CrewMember person = crewMembers.get(i);
-			
-			// Ensure that only other crew members that have actions are shown
-			if (person.getActions() > 0 && this != person) {
-				membersWithActions.add(person);
-				int index = membersWithActions.size();
-				System.out.println(index + ") " + person.getName() + ", " + person.TYPE_INFO.get("Type"));
-			}
-		}
-		
-		int index = membersWithActions.size();
-		// Returns to the previous menu if there are no other crew members to pilot the ship with
-		if (index == 0) {
-			System.out.println("No other crew members have any remaining actions!");
-			System.out.println("Returning to Crew Member Actions...");
-			return false;
-		}
-		
-		System.out.println((index + 1) + ") Back to Crew Member Actions");
-		System.out.flush();
-
-		// Collects the user input
-		int choice = ship.collectInt(1, index + 1);
-		
-		// Completes the action for this crew member and the other chosen one
-		if (choice < (index + 1)) {
-			CrewMember person = membersWithActions.get(choice - 1);
-			person.completeAction();
-			completeAction();
-			return true;
-		} else {
-			return false;
-		}
-	}
 	
 	public void completeAction() {
 		numActions--;
@@ -315,8 +182,6 @@ public abstract class CrewMember {
 	
 	/**
 	 * Kills this crew member
-	 * 
-	 * Incomplete
 	 */
 	private void kill() {
 		ship.getCrewMembers().remove(this);

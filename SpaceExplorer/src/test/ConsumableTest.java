@@ -25,28 +25,28 @@ class ConsumableTest {
 	
 	@Test
 	void testGetName() {
-		assertEquals(spacePlagueCure.getName(), "Space Plague Cure");
-		assertEquals(bandAid.getName(), "Band-Aid");
-		assertEquals(firstAidKit.getName(), "First Aid Kit");
-		assertEquals(spaceRation.getName(), "Space Ration");
-		assertEquals(water.getName(), "Water");
-		assertEquals(banana.getName(), "Banana");
-		assertEquals(alienMeat.getName(), "Alien Meat");
-		assertEquals(coffee.getName(), "Coffee");
-		assertEquals(egg.getName(), "Egg");
+		assertEquals("Space Plague Cure", spacePlagueCure.getName());
+		assertEquals("Band-Aid", bandAid.getName());
+		assertEquals("First Aid Kit", firstAidKit.getName());
+		assertEquals("Space Ration", spaceRation.getName());
+		assertEquals("Water", water.getName());
+		assertEquals("Banana", banana.getName());
+		assertEquals("Alien Meat", alienMeat.getName());
+		assertEquals("Coffee", coffee.getName());
+		assertEquals("Egg", egg.getName());
 	}
 	
 	@Test
 	void testGetPrice() {
-		assertEquals(spacePlagueCure.getPrice(), 25);
-		assertEquals(bandAid.getPrice(), 10);
-		assertEquals(firstAidKit.getPrice(), 23);
-		assertEquals(spaceRation.getPrice(), 18);
-		assertEquals(water.getPrice(), 10);
-		assertEquals(banana.getPrice(), 10);
-		assertEquals(alienMeat.getPrice(), 22);
-		assertEquals(coffee.getPrice(), 13);
-		assertEquals(egg.getPrice(), 14);
+		assertEquals(25, spacePlagueCure.getPrice());
+		assertEquals(10, bandAid.getPrice());
+		assertEquals(23, firstAidKit.getPrice());
+		assertEquals(18, spaceRation.getPrice());
+		assertEquals(10, water.getPrice());
+		assertEquals(10, banana.getPrice());
+		assertEquals(22, alienMeat.getPrice());
+		assertEquals(13, coffee.getPrice());
+		assertEquals(14, egg.getPrice());
 	}
 	
 	@Test
@@ -54,9 +54,9 @@ class ConsumableTest {
 		String spacePlagueCureDescription = "Cures the Space Plague";
 		String bandAidDescription = "Restores 2 Health";
 		String firstAidKitDescription = "Restores 5 Health";
-		assertEquals(spacePlagueCure.getDescription(), spacePlagueCureDescription);
-		assertEquals(bandAid.getDescription(), bandAidDescription);
-		assertEquals(firstAidKit.getDescription(), firstAidKitDescription);
+		assertEquals(spacePlagueCureDescription, spacePlagueCure.getDescription());
+		assertEquals(bandAidDescription, bandAid.getDescription());
+		assertEquals(firstAidKitDescription, firstAidKit.getDescription());
 	}
 	
 	@Test
@@ -67,31 +67,31 @@ class ConsumableTest {
 		String alienMeatDescription = "Restores 5 Nutrition";
 		String coffeeDescription = "Restores 2 Nutrition and 1 Energy";
 		String eggDescription = "Restores 3 Nutrition";
-		assertEquals(spaceRation.getDescription(), spaceRationDescription);
-		assertEquals(water.getDescription(),waterDescription);
-		assertEquals(banana.getDescription(), bananaDescription);
-		assertEquals(alienMeat.getDescription(), alienMeatDescription);
-		assertEquals(coffee.getDescription(), coffeeDescription);
-		assertEquals(egg.getDescription(), eggDescription);
+		assertEquals(spaceRationDescription, spaceRation.getDescription());
+		assertEquals(waterDescription, water.getDescription());
+		assertEquals(bananaDescription, banana.getDescription());
+		assertEquals(alienMeatDescription, alienMeat.getDescription());
+		assertEquals(coffeeDescription, coffee.getDescription());
+		assertEquals(eggDescription, egg.getDescription());
 	}
 	
 	@Test
 	void testMedicalGetClassification() {
 		String medical = "Medical Item";
-		assertEquals(spacePlagueCure.getClassification(), medical);
-		assertEquals(bandAid.getClassification(), medical);
-		assertEquals(firstAidKit.getClassification(), medical);
+		assertEquals(medical, spacePlagueCure.getClassification());
+		assertEquals(medical, bandAid.getClassification());
+		assertEquals(medical, firstAidKit.getClassification());
 	}
 	
 	@Test
 	void testFoodGetClassification() {
 		String food = "Food Item";
-		assertEquals(spaceRation.getClassification(), food);
-		assertEquals(water.getClassification(), food);
-		assertEquals(banana.getClassification(), food);
-		assertEquals(alienMeat.getClassification(), food);
-		assertEquals(coffee.getClassification(), food);
-		assertEquals(egg.getClassification(), food);
+		assertEquals(food, spaceRation.getClassification());
+		assertEquals(food, water.getClassification());
+		assertEquals(food, banana.getClassification());
+		assertEquals(food, alienMeat.getClassification());
+		assertEquals(food, coffee.getClassification(), food);
+		assertEquals(food, egg.getClassification());
 	}
 	
 	@Test
@@ -100,7 +100,7 @@ class ConsumableTest {
 		CrewMember member = new Human(ship);
 		member.setHasSpacePlague(true);
 		spacePlagueCure.useItem(member);
-		assertEquals(member.getHasSpacePlague(), false);
+		assertEquals(false, member.getHasSpacePlague());
 		HashMap<String, Integer> status = member.getStatus();
 		assertTrue(status.get("Health")==8); //Ensure variables remain unchanged
 		assertTrue(status.get("Nutrition")==10); //Ensure variables remain unchanged
@@ -117,7 +117,7 @@ class ConsumableTest {
 		assertTrue(status.get("Health")==8);
 		assertTrue(status.get("Nutrition")==10); //Ensure variables remain unchanged
 		assertTrue(status.get("Energy")==10); //Ensure variables remain unchanged
-		assertEquals(member.getHasSpacePlague(), false); //Ensure variables remain unchanged
+		assertEquals(false, member.getHasSpacePlague()); //Ensure variables remain unchanged
 	}
 	
 	@Test
@@ -130,7 +130,7 @@ class ConsumableTest {
 		assertTrue(status.get("Health")==8);
 		assertTrue(status.get("Nutrition")==10); //Ensure variables remain unchanged
 		assertTrue(status.get("Energy")==10); //Ensure variables remain unchanged
-		assertEquals(member.getHasSpacePlague(), false); //Ensure variables remain unchanged
+		assertEquals(false, member.getHasSpacePlague()); //Ensure variables remain unchanged
 	}
 	
 	@Test
@@ -143,7 +143,7 @@ class ConsumableTest {
 		assertTrue(status.get("Health")==8); //Ensure variables remain unchanged
 		assertTrue(status.get("Nutrition")==10); 
 		assertTrue(status.get("Energy")==10); //Ensure variables remain unchanged
-		assertEquals(member.getHasSpacePlague(), false); //Ensure variables remain unchanged
+		assertEquals(false, member.getHasSpacePlague()); //Ensure variables remain unchanged
 	}
 	
 	@Test
@@ -156,7 +156,7 @@ class ConsumableTest {
 		assertTrue(status.get("Health")==8); //Ensure variables remain unchanged
 		assertTrue(status.get("Nutrition")==10); 
 		assertTrue(status.get("Energy")==10); //Ensure variables remain unchanged
-		assertEquals(member.getHasSpacePlague(), false); //Ensure variables remain unchanged
+		assertEquals(false, member.getHasSpacePlague()); //Ensure variables remain unchanged
 	}
 	
 	@Test
@@ -169,7 +169,7 @@ class ConsumableTest {
 		assertTrue(status.get("Health")==8); //Ensure variables remain unchanged
 		assertTrue(status.get("Nutrition")==10); 
 		assertTrue(status.get("Energy")==10); //Ensure variables remain unchanged
-		assertEquals(member.getHasSpacePlague(), false); //Ensure variables remain unchanged
+		assertEquals(false, member.getHasSpacePlague()); //Ensure variables remain unchanged
 	}
 	
 	@Test
@@ -182,7 +182,7 @@ class ConsumableTest {
 		assertTrue(status.get("Health")==8); //Ensure variables remain unchanged
 		assertTrue(status.get("Nutrition")==10); 
 		assertTrue(status.get("Energy")==10); //Ensure variables remain unchanged
-		assertEquals(member.getHasSpacePlague(), false); //Ensure variables remain unchanged
+		assertEquals(false, member.getHasSpacePlague()); //Ensure variables remain unchanged
 	}
 
 	@Test
@@ -196,7 +196,7 @@ class ConsumableTest {
 		assertTrue(status.get("Health")==8); //Ensure variables remain unchanged
 		assertTrue(status.get("Nutrition")==10); 
 		assertTrue(status.get("Energy")==10); 
-		assertEquals(member.getHasSpacePlague(), false); //Ensure variables remain unchanged
+		assertEquals(false, member.getHasSpacePlague()); //Ensure variables remain unchanged
 	}
 	
 	@Test
@@ -209,6 +209,6 @@ class ConsumableTest {
 		assertTrue(status.get("Health")==8); //Ensure variables remain unchanged
 		assertTrue(status.get("Nutrition")==10); 
 		assertTrue(status.get("Energy")==10); //Ensure variables remain unchanged
-		assertEquals(member.getHasSpacePlague(), false); //Ensure variables remain unchanged
+		assertEquals(false, member.getHasSpacePlague()); //Ensure variables remain unchanged
 	}
 }
