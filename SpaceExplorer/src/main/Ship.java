@@ -15,7 +15,11 @@ public class Ship {
 	private HashMap<Consumable, Integer> inventory;
 	private int shipShields;
 	private final int MAX_SHIP_SHIELDS = 10;
-	private int score;
+	
+	// This is the total score excluding what was earned today
+	private int totalScore;
+	// This is the daily score
+	private int dailyScore;
 	
 	public final Consumable SPACE_PLAGUE_CURE = new Consumable("Space Plague Cure");
 	
@@ -28,7 +32,8 @@ public class Ship {
 		crewMembers = new ArrayList<CrewMember>();
 		money = 100;
 		shipShields = 5;
-		score = 0;
+		totalScore = 0;
+		dailyScore = 0;
 		
 		inventory = new HashMap<Consumable, Integer>();
 	}
@@ -43,7 +48,8 @@ public class Ship {
 		crewMembers = new ArrayList<CrewMember>();
 		money = 100;
 		shipShields = 5;
-		score = 0;
+		totalScore = 0;
+		dailyScore = 0;
 		
 		inventory = new HashMap<Consumable, Integer>();
 	}
@@ -151,11 +157,23 @@ public class Ship {
 
 
 	/**
-	 * Gets the score currently obtained by this ship
+	 * Gets the score obtained by this ship today and resets it to zero for a new day
 	 * @return the current score
 	 */
-	public int getScore() {
-		return score;
+	public int getDailyScore() {
+		int returnScore = dailyScore;
+		totalScore = totalScore + dailyScore;
+		dailyScore = 0;
+		return returnScore;
+	}
+	
+	
+	/**
+	 * Gets the total score currently obtained by this ship
+	 * @return the total score
+	 */
+	public int getTotalScore() {
+		return totalScore + dailyScore;
 	}
 	
 	
@@ -164,7 +182,7 @@ public class Ship {
 	 * @param amount the amount to increase the score
 	 */
 	public void addScore(int amount) {
-		score = score + amount;
+		dailyScore = dailyScore + amount;
 	}
 
 	

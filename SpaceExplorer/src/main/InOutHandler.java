@@ -26,7 +26,8 @@ public class InOutHandler {
 		int choice = -1;
 		while (choice == -1) {
 			try {
-				choice = scanner.nextInt();
+				String line = scanner.nextLine();
+				choice = Integer.parseInt(line);
 				
 				// If the choice is not in the required range
 				if (!(choice > minValue - 1 && choice < maxValue + 1)) {
@@ -34,10 +35,9 @@ public class InOutHandler {
 					choice = -1;
 				}
 			// If the choice is not an integer
-			} catch (InputMismatchException e) {
+			} catch (NumberFormatException e) {
 				System.out.println("Please input a number to select an option");
 				choice = -1;
-				scanner.next();
 			}
 		}
 		return choice;

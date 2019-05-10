@@ -1,7 +1,6 @@
 package main;
 
 import java.util.Arrays;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -38,19 +37,27 @@ public class GameEnvironment {
 	private final Integer[] FINDABLE_MONEY = {10, 20, 30};
 	
 	
+	public static void main(String[] args) {
+		GameEnvironment gameEnvironment = new GameEnvironment();
+		gameEnvironment.createGame();
+		
+	}
+	
+	
 	/**
-	 * Sets up default variables for a new game, and calls createGame to get the user-chosen variables
+	 * Class constructor for the GameEnvironment
 	 */
 	public GameEnvironment() {
-		// shop = new Shop(items)
 		inOut = new InOutHandler();
-		partsHere = true;
-		dayNumber = 1;
-		currentPlanet = 0;
 	}
 	
 	
 	public void createGame() {
+		// TODO shop = new Shop(items)
+		partsHere = true;
+		dayNumber = 1;
+		currentPlanet = 0;
+		
 		inOut.print("How many in-game days would you like the game to last? (3-10)");
 		maxDays = inOut.collectInt(3, 10);
 		partsToFind = 2 * maxDays / 3;
@@ -59,46 +66,193 @@ public class GameEnvironment {
 		int numMembers = inOut.collectInt(2, 4);
 		
 		ArrayList<CrewMember> selectedMembers = new ArrayList<CrewMember>();
+		ArrayList<String> names = new ArrayList<String>();
 		ArrayList<CrewMember> availableList = new ArrayList<CrewMember>(Arrays.asList(new Human(ship), new Robot(ship), new Cyborg(ship), 
 					new Alien(ship), new Lizard(ship), new Unicorn(ship)));
 		for (int i = 0; i < numMembers; i++) {
 			inOut.print("Choose crew member " + (i + 1) + ":");
 			for (CrewMember person : availableList) {
-				ArrayList<String> typeList = (ArrayList<String>) person.getTypeInfo().values();
-				String typeString = Arrays.toString(typeList.toArray());
-				inOut.print(availableList.indexOf(person) + ") " + typeString.substring(1, typeString.length()));
+				HashMap<String, String> typeInfo = person.getTypeInfo();
+				inOut.print((availableList.indexOf(person) + 1) + ") " + typeInfo.get("Type") + ", " 
+				+ typeInfo.get("Strength") + ", " + typeInfo.get("Weakness"));
 			}
 			CrewMember selectedPerson = availableList.get(inOut.collectInt(1, 6) - 1);
 			inOut.print("What would you like to name this " + selectedPerson.getTypeInfo().get("Type") + "?");
 			String name = inOut.collectString();
-			try {
-				selectedMembers.add(selectedPerson.getClass().getConstructor(ship.getClass(), String.class).newInstance(ship, name));
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			selectedMembers.add(selectedPerson);
+			names.add(name);
 		}
 		
 		inOut.print("What would you like the name of your ship to be?");
-		ship = new Ship(inOut.collectString());
+		String shipName = inOut.collectString();
+		if (shipName.length() == 0) {
+			ship = new Ship();
+		} else {
+			ship = new Ship(shipName);
+		}
 		
-		//startGameLoop()		
+		for (int i = 0; i < selectedMembers.size(); i++) {
+			String type = selectedMembers.get(i).getTypeInfo().get("Type");
+			String name = names.get(i);
+			ArrayList<CrewMember> shipMembers = ship.getCrewMembers();
+			CrewMember crewMember;
+			switch (type) {
+			case "Human": if (name.length() == 0) { crewMember = new Human(ship); } 
+				else {crewMember = new Human(ship, name); } break;
+			case "Robot": if (name.length() == 0) { crewMember = new Robot(ship); } 
+				else {crewMember = new Robot(ship, name); } break;
+			case "Cyborg": if (name.length() == 0) { crewMember = new Cyborg(ship); } 
+				else {crewMember = new Cyborg(ship, name); } break;
+			case "Alien": if (name.length() == 0) { crewMember = new Alien(ship); } 
+				else {crewMember = new Alien(ship, name); } break;
+			case "Lizard": if (name.length() == 0) { crewMember = new Lizard(ship); } 
+				else {crewMember = new Lizard(ship, name); } break;
+			case "Unicorn": if (name.length() == 0) { crewMember = new Unicorn(ship); } 
+				else {crewMember = new Unicorn(ship, name); } break;
+			default: crewMember = new Human(ship);
+			}
+			shipMembers.add(crewMember);
+		}
+		
+		gameLoop();
 	}
 	
 	
+	public void gameLoop() {
+		inOut.print("Day number: " + dayNumber + "/" + maxDays);
+		inOut.print("1) View Crew Member and/or do a Crew Member Action");
+		inOut.print("2) View Spaceship status");
+		inOut.print("3) Visit the nearest space outpost");
+		inOut.print("4) Continue to next day");
+		int choice = inOut.collectInt(1, 4);
+		
+		switch (choice) {
+		case 1: selectCrewMember(); break;
+		case 2:	inOut.print(ship.getName());
+			inOut.print("Shield level: " + ship.getShipShields() + "/10");
+			inOut.print("Spaceship pieces found: " + partsFound + "/" + partsToFind);
+			inOut.print("1) Back to control panel");
+			inOut.collectInt(1, 1); // TODO better way of doing this?
+			gameLoop();
+		case 3:	gotoPlanet(); break;
+		case 4:	newDay(); break;
+		default: gameLoop();
+		}
+		
+	}
+	
+	
+	public void selectCrewMember() {
+		ArrayList<CrewMember> crewMembers = ship.getCrewMembers();
+		int index = 0;
+		
+		// This part displays options for all crew members that have actions remaining
+		ArrayList<CrewMember> membersWithActions = new ArrayList<CrewMember>();
+		ArrayList<CrewMember> membersWithoutActions = new ArrayList<CrewMember>();
+		for (int i = 0; i < crewMembers.size(); i++) {
+			CrewMember person = crewMembers.get(i);
+			
+			// Ensure that only crew members that have actions are shown
+			if (person.getActions() > 0) {
+				membersWithActions.add(person);
+				index = membersWithActions.size();
+				inOut.print(index + ") " + person.getName() + ", " + person.getTypeInfo().get("Type"));
+			} else { // Add crew members without actions to another list
+				membersWithoutActions.add(person);
+			}
+		}
+		
+		// This part displays options for crew members without actions remaining
+		for (int i = 0; i < membersWithoutActions.size(); i++) {
+			CrewMember person = membersWithoutActions.get(i);
+			inOut.print((index + i + 1) + ") " + person.getName() + ", " + person.getTypeInfo().get("Type") 
+					+ " (No actions remaining)");
+		}
+		
+		inOut.print((crewMembers.size() + 1) + ") Back to control panel");
+
+		// Collects the user input
+		int choice = inOut.collectInt(1, crewMembers.size() + 1);
+		
+		// Completes the action for this crew member and the other chosen one
+		if (choice < (index + 1)) {
+			completeAction(membersWithActions.get(choice - 1));
+		} else if (choice < (crewMembers.size() + 1)) {
+			inOut.print(membersWithoutActions.get(choice - index - 1).toString());
+			inOut.print("");
+			inOut.print("Actions remaining: 0");
+			inOut.print("1) Back to Crew Member selection");
+			inOut.collectInt(1, 1); // TODO again is there a better way of doing this?
+			selectCrewMember();
+		} else {
+			gameLoop();
+		}
+		
+	}
+	
+	
+	public void completeAction(CrewMember crewMember) {
+		inOut.print(crewMember.toString());
+		inOut.print("");
+		inOut.print("Actions remaining: " + crewMember.getActions());
+		inOut.print("1) Eat food or use medical supplies");
+		inOut.print("2) Sleep");
+		inOut.print("3) Repair Ship Shields");
+		inOut.print("4) Search planet");
+		inOut.print("5) Pilot the ship to a new planet");
+		inOut.print("6) Back to Crew Member selection");
+		int choice = inOut.collectInt(1, 6);
+		
+		switch (choice) {
+		case 1: if (useItem(crewMember)) { 
+				gameLoop(); 
+			} else { 
+				completeAction(crewMember); 
+			}; 
+			break;
+		case 2: sleep(crewMember); gameLoop(); break;
+		case 3: repairShip(crewMember); gameLoop(); break;
+		case 4: if (!searchPlanet(crewMember)) gameLoop(); break;
+		case 5: if (pilotShip(crewMember)) { 
+				gameLoop(); 
+			} else { 
+				completeAction(crewMember); 
+			}; 
+			break;
+		default: selectCrewMember();
+		}
+	}
+	
+	public void gotoPlanet() {
+		
+	}
+
+
 	/**
 	 * Conducts all processes related to ending the day
 	 */
 	public void newDay() {
 		// End the day for each user. Also add to the score if the crew member has max status
-		for (CrewMember person : ship.getCrewMembers()) {
-			person.endDay();
+		int i;
+		int size = ship.getCrewMembers().size();
+		int removedMembers = 0;
+		for (i = 0; i < size; i++) {
+			CrewMember person = ship.getCrewMembers().get(i - removedMembers);
 			HashMap <String, Integer> status = person.getStatus();
 			HashMap <String, Integer> maxStatus = person.getMaxStats();
 			if (status.get("Health") == maxStatus.get("Health")) ship.addScore(10);
 			if (status.get("Energy") == maxStatus.get("Energy")) ship.addScore(10);
-			if (status.get("Nutrition") == maxStatus.get("Nutrition")) ship.addScore(10);			
+			if (status.get("Nutrition") == maxStatus.get("Nutrition")) ship.addScore(10);
+			person.endDay();
+			if (!ship.getCrewMembers().contains(person)) removedMembers = removedMembers + 1;
 		}
+		dayNumber = dayNumber + 1;
 		ship.addMoney(20);
+		
+		// Ends the game if there are no more crew members left alive, or if the last day ended
+		if (ship.getCrewMembers().size() == 0 || dayNumber > maxDays) {
+			endGame(false);
+		}
 		
 		int sumAttackProbability = Arrays.stream(ATTACK_PROBABILITY).sum();
 		int randInt = (new Random()).nextInt(sumAttackProbability);
@@ -120,15 +274,21 @@ public class GameEnvironment {
 				person.setHasSpacePlague(true);
 			}
 		}
+		partsHere = true;
+		inOut.print("Daily Score: " + ship.getDailyScore());
+		inOut.print("1) Continue");
+		inOut.collectInt(1, 1); // TODO is there a better way to allow the player to continue?
+		
+		gameLoop();
 	}
 	
 	
 	/**
 	 * Searches a planet for spaceship parts, money, food or medical items.
 	 * @param crewMember the crew member to search with
-	 * @return a FindableItem representing what was found
+	 * @return whether or not the game has ended as a result of this action
 	 */
-	public void searchPlanet(CrewMember crewMember) {
+	public boolean searchPlanet(CrewMember crewMember) {
 		Random r = new Random();
 		int[] searchProbability = crewMember.getSearchingProbabilities();
 		int totalSum = Arrays.stream(searchProbability).sum();
@@ -138,25 +298,38 @@ public class GameEnvironment {
 		
 		// Finds the item to return based on what the searching probabilities are
 		if (randInt < searchProbability[0]) {
-			inOut.print(crewMember.getName() + " found a ship part!");
-			inOut.print("You now have " + partsFound + " out of " + partsToFind + 
-					" parts");
-		} else if (randInt < searchProbability[2]) {
+			if (partsHere) {
+				inOut.print(crewMember.getName() + " found a ship part!");
+				partsFound = partsFound + 1;
+				ship.addScore(100);
+				if (partsFound == partsToFind) {
+					endGame(true);
+				} else {
+					inOut.print("You now have " + partsFound + " out of " + partsToFind + 
+							" parts");
+					partsHere = false;
+				}
+			} else {
+				inOut.print(crewMember.getName() + " didn't find anything!");
+			}
+			
+		} else if (randInt < searchProbability[0] + searchProbability[1] + searchProbability[2]) {
 			Consumable foundItem;
-			if (randInt < searchProbability[1]) {
+			if (randInt < searchProbability[0] + searchProbability[1]) {
 				foundItem = (Consumable) pickRandom(FOOD_ITEMS);
 			} else {
 				foundItem = (Consumable) pickRandom(MEDICAL_ITEMS);
 			}
 			ship.addItem(foundItem);
 			inOut.print(crewMember.getName() + " found a " + foundItem.getName() + "!");
-		} else if (randInt < searchProbability[3]) {
+		} else if (randInt < totalSum - searchProbability[4]) {
 			int moneyFound = (Integer) pickRandom(FINDABLE_MONEY);
 			inOut.print(crewMember.getName() + " found $" + moneyFound + "!");
 			ship.addMoney(moneyFound);
 		} else {
 			inOut.print(crewMember.getName() + " didn't find anything!");
 		}
+		return false;
 	}
 	
 	
@@ -194,7 +367,6 @@ public class GameEnvironment {
 		}
 
 		inOut.print((i + 1) + ") Back to Crew Member Actions");
-		System.out.flush();
 
 		// Collects the user input
 		int choice = inOut.collectInt(1, i + 1);
@@ -268,7 +440,6 @@ public class GameEnvironment {
 		}
 		
 		inOut.print((index + 1) + ") Back to Crew Member Actions");
-		System.out.flush();
 
 		// Collects the user input
 		int choice = inOut.collectInt(1, index + 1);
@@ -294,6 +465,29 @@ public class GameEnvironment {
 		} else {
 			return false;
 		}
+	}
+	
+	
+	public void endGame(boolean isVictory) {
+		if (isVictory) {
+			inOut.print("You have piloted the ship " + ship.getName() + " to victory"); 
+			inOut.print("and found all the missing parts of your ship!");
+			inOut.print("Well done!");
+		} else if (ship.getCrewMembers().size() == 0) {
+			inOut.print("Oh no! All of the members of your crew have died!");
+			inOut.print("The " + ship.getName() + " repair mission ends in tragedy");
+		} else {
+			inOut.print("It has been " + maxDays + " days");
+			inOut.print(ship.getName() + " is now damaged beyond repair");
+		}
+		inOut.print("");
+		inOut.print("Final Score: " + ship.getTotalScore());
+		inOut.print("");
+		inOut.print("Would you like to play again?");
+		inOut.print("1) Yes!");
+		inOut.print("2) No, thank you");
+		if (inOut.collectInt(1, 2) == 1) createGame();
+		
 	}
 	
 	

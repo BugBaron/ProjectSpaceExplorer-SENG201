@@ -81,13 +81,16 @@ class ShipTest {
 
 	@Test
 	void testAddAndGetScore() {
-		assertEquals(0, ship.getScore());
+		assertEquals(0, ship.getTotalScore());
 		ship.addScore(50);
-		assertEquals(50, ship.getScore());
+		assertEquals(50, ship.getTotalScore());
 		ship.addScore(-30);
-		assertEquals(20, ship.getScore());
+		assertEquals(20, ship.getTotalScore());
 		ship.addScore(-30);
-		assertEquals(-10, ship.getScore());
+		assertEquals(-10, ship.getTotalScore());
+		assertEquals(-10, ship.getDailyScore());
+		assertEquals(-10, ship.getTotalScore());
+		assertEquals(0, ship.getDailyScore());
 	}
 
 	@Test
