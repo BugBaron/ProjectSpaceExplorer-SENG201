@@ -65,7 +65,7 @@ public class Inventory {
 	/**
 	 * Gets the quantity of an item in the inventory
 	 * @param item an item in the inventory
-	 * @return 
+	 * @return the quantity of the item in the inventory
 	 */
 	public int get(Consumable item) {
 		if (items.containsKey(item)) {

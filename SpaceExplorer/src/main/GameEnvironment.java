@@ -284,7 +284,7 @@ public class GameEnvironment {
 				String name = item.getName();
 				String description = item.getDescription();
 				inOut.print(classification + " item: " + name + ", " 
-				+ description + ", Quantity in Stock: " + inventory.get(item));
+				+ description + ", Quantity: " + inventory.get(item));
 			}
 		inOut.print("Press enter to continue");
 		inOut.collectString();
@@ -474,7 +474,8 @@ public class GameEnvironment {
 	
 	
 	/**
-	 * Repairs the ship by "REPAIR_AMOUNT"
+	 * Repairs the ship by the repair amount that the crew member has
+	 * @param crewMember the crew member to complete the action
 	 */
 	public void repairShip(CrewMember crewMember) {
 		crewMember.completeAction();
@@ -484,6 +485,8 @@ public class GameEnvironment {
 	
 	/**
 	 * Finds another crew member and pilots the ship to another planet with them
+	 * @param crewMember the crew member to complete the action
+	 * @return whether another crew member was chosen or not
 	 */
 	public boolean pilotShip(CrewMember crewMember) {
 		ArrayList<CrewMember> crewMembers = ship.getCrewMembers();
@@ -538,6 +541,11 @@ public class GameEnvironment {
 	}
 	
 	
+	/**
+	 * Prints an end game screen for the player after they have found all the parts,
+	 * lost all their crew members or run out of time
+	 * @param isVictory whether or not the player won the game
+	 */
 	public void endGame(boolean isVictory) {
 		if (isVictory) {
 			inOut.print("You have piloted the ship " + ship.getName() + " to victory"); 
@@ -578,10 +586,10 @@ public class GameEnvironment {
 	 * @param list an Object array to chose an item from
 	 * @return a random item from the array
 	 */
-	public Object pickRandom(Object[] objects) {
+	public Object pickRandom(Object[] list) {
 		Random randomVar = new Random();
-		int randInt = randomVar.nextInt(objects.length);
-		return objects[randInt];
+		int randInt = randomVar.nextInt(list.length);
+		return list[randInt];
 	}
 	
 	

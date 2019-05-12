@@ -2,9 +2,7 @@ package main;
 
 import java.util.ArrayList;
 
-import main.Consumable;
 import main.CrewMemberTypes.CrewMember;
-
 
 public class Ship {
 	
@@ -14,12 +12,10 @@ public class Ship {
 	private int shipShields;
 	private final int MAX_SHIP_SHIELDS = 10;
 	
-	// This is the total score excluding what was earned today
+	/** This is the total score excluding what was earned today */
 	private int totalScore;
-	// This is the daily score
+	/** This is the daily score */
 	private int dailyScore;
-	
-	public final Consumable SPACE_PLAGUE_CURE = new Consumable("Space Plague Cure");
 	
 	
 	/**
