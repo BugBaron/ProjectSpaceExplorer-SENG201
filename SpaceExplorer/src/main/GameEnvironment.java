@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Iterator;
 
 import main.CrewMemberTypes.Alien;
 import main.CrewMemberTypes.CrewMember;
@@ -15,7 +16,8 @@ import main.CrewMemberTypes.Unicorn;
 
 public class GameEnvironment {
 	private Ship ship;
-	private Shop shop;
+	private Inventory inventory;
+	private Inventory shop;
 	private InOutHandler inOut;
 	private int partsToFind;
 	private int partsFound;
@@ -40,7 +42,6 @@ public class GameEnvironment {
 	public static void main(String[] args) {
 		GameEnvironment gameEnvironment = new GameEnvironment();
 		gameEnvironment.createGame();
-		
 	}
 	
 	
@@ -53,7 +54,7 @@ public class GameEnvironment {
 	
 	
 	public void createGame() {
-		// TODO shop = new Shop(items)
+		shop = new Shop();
 		partsHere = true;
 		dayNumber = 1;
 		currentPlanet = 0;
@@ -134,11 +135,10 @@ public class GameEnvironment {
 			inOut.print("1) Back to control panel");
 			inOut.collectInt(1, 1); // TODO better way of doing this?
 			gameLoop();
-		case 3:	gotoPlanet(); break;
+		case 3:	goToOutpost(); break;
 		case 4:	newDay(); break;
 		default: gameLoop();
 		}
-		
 	}
 	
 	
@@ -223,8 +223,54 @@ public class GameEnvironment {
 		}
 	}
 	
-	public void gotoPlanet() {
+	public void viewShop() {
+		ArrayList<Consumable> keys = shop.getKeys();
+		Integer size = keys.size();
+		// Displays all the items in the shop as options
+		int i;
+			for (i = 0; i < size; i++) {
+				Consumable item = keys.get(i);
+				String classification = item.getClassification();
+				String name = item.getName();
+				String description = item.getDescription();
+				inOut.print((i + 1) + ") " + classification + " item: " + name + ", " 
+				+ description + ", Quantity in Stock: " + shop.get(item) 
+				+ ", Price: " + item.getPrice());
+			}
+		inOut.print((i + 1) + ") Back to Outpost");
+		int choice = inOut.collectInt(1, i);
+		// TODO Not quite sure how to use this input in relation to SellItem Shop Method
+	}
+	
+	public void viewInventory() {
+		ArrayList<Consumable> keys = inventory.getKeys();
+		Integer size = keys.size();
+		// Displays all the items in the shop as options
+		int i;
+			for (i = 0; i < size; i++) {
+				Consumable item = keys.get(i);
+				String classification = item.getClassification();
+				String name = item.getName();
+				String description = item.getDescription();
+				inOut.print(classification + " item: " + name + ", " 
+				+ description + ", Quantity in Stock: " + inventory.get(item));
+			}
+		inOut.print("1) Back to Outpost");
+		int choice = inOut.collectInt(1, 1);
+		goToOutpost();
+	}
+	
+	public void goToOutpost() {
+		inOut.print("1) View Objects For Sale");
+		inOut.print("2) View Inventory");
+		inOut.print("3) Back to Control Panel");
+		int choice = inOut.collectInt(1,  3);
 		
+		switch (choice) {
+		case 1: viewShop(); break;
+		case 2: viewInventory(); break;
+		default: gameLoop();
+		}
 	}
 
 
