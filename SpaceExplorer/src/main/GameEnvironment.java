@@ -40,7 +40,6 @@ public class GameEnvironment {
 	public static void main(String[] args) {
 		GameEnvironment gameEnvironment = new GameEnvironment();
 		gameEnvironment.createGame();
-		
 	}
 	
 	
@@ -53,7 +52,7 @@ public class GameEnvironment {
 	
 	
 	public void createGame() {
-		// TODO shop = new Shop(items)
+		shop = new Shop();
 		partsHere = true;
 		dayNumber = 1;
 		currentPlanet = 0;
@@ -224,7 +223,7 @@ public class GameEnvironment {
 	}
 	
 	public void gotoPlanet() {
-		
+		shop = new Shop();
 	}
 
 
