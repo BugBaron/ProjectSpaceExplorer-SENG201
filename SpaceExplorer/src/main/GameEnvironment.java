@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.Iterator;
 
 import main.CrewMemberTypes.Alien;
 import main.CrewMemberTypes.CrewMember;
@@ -54,7 +53,8 @@ public class GameEnvironment {
 	
 	
 	public void createGame() {
-		shop = new Shop();
+		shop = new Inventory(true);
+		inventory = new Inventory(false);
 		partsHere = true;
 		dayNumber = 1;
 		currentPlanet = 0;
@@ -132,8 +132,8 @@ public class GameEnvironment {
 		case 2:	inOut.print(ship.getName());
 			inOut.print("Shield level: " + ship.getShipShields() + "/10");
 			inOut.print("Spaceship pieces found: " + partsFound + "/" + partsToFind);
-			inOut.print("1) Back to control panel");
-			inOut.collectInt(1, 1); // TODO better way of doing this?
+			inOut.print("Press enter to return to the control panel");
+			inOut.collectString();
 			gameLoop();
 		case 3:	goToOutpost(); break;
 		case 4:	newDay(); break;
@@ -181,8 +181,8 @@ public class GameEnvironment {
 			inOut.print(membersWithoutActions.get(choice - index - 1).toString());
 			inOut.print("");
 			inOut.print("Actions remaining: 0");
-			inOut.print("1) Back to Crew Member selection");
-			inOut.collectInt(1, 1); // TODO again is there a better way of doing this?
+			inOut.print("Press enter to Crew Member selection");
+			inOut.collectString();
 			selectCrewMember();
 		} else {
 			gameLoop();
@@ -226,6 +226,7 @@ public class GameEnvironment {
 	public void viewShop() {
 		ArrayList<Consumable> keys = shop.getKeys();
 		Integer size = keys.size();
+		
 		// Displays all the items in the shop as options
 		int i;
 			for (i = 0; i < size; i++) {
@@ -234,12 +235,42 @@ public class GameEnvironment {
 				String name = item.getName();
 				String description = item.getDescription();
 				inOut.print((i + 1) + ") " + classification + " item: " + name + ", " 
-				+ description + ", Quantity in Stock: " + shop.get(item) 
-				+ ", Price: " + item.getPrice());
+				+ description + ", " + shop.get(item) 
+				+ " in stock, $" + item.getPrice());
 			}
 		inOut.print((i + 1) + ") Back to Outpost");
-		int choice = inOut.collectInt(1, i);
-		// TODO Not quite sure how to use this input in relation to SellItem Shop Method
+		int choice = inOut.collectInt(1, i + 1);
+		
+		
+		// TODO this is a real mess of a section
+		if (choice != i + 1) {
+			Consumable item = keys.get(choice - 1);
+			boolean isPurchasing = true;
+			while (isPurchasing && shop.get(item) != 0) {
+				inOut.print(item.getName());
+				inOut.print(item.getDescription());
+				inOut.print("Price: $" + item.getPrice());
+				inOut.print("Quantity: " + shop.get(item));
+				
+				if (item.getPrice() > ship.getMoney()) {
+					inOut.print("You cannot afford this item");
+					inOut.print("Press enter to return to the shop");
+					inOut.collectString();
+					viewShop();
+				} else {
+					inOut.print("1) Purchase item");
+					inOut.print("2) Back to shop");
+					switch (inOut.collectInt(1, 2)) {
+					case 1: shop.removeItem(item); inventory.addItem(item); 
+						ship.addMoney(-item.getPrice()); break;
+					case 2: isPurchasing = false; break;
+					}
+				} 
+				viewShop();
+			} 
+		} else {
+			goToOutpost();
+		}
 	}
 	
 	public void viewInventory() {
@@ -255,8 +286,8 @@ public class GameEnvironment {
 				inOut.print(classification + " item: " + name + ", " 
 				+ description + ", Quantity in Stock: " + inventory.get(item));
 			}
-		inOut.print("1) Back to Outpost");
-		int choice = inOut.collectInt(1, 1);
+		inOut.print("Press enter to continue");
+		inOut.collectString();
 		goToOutpost();
 	}
 	
@@ -302,14 +333,13 @@ public class GameEnvironment {
 		
 		int sumAttackProbability = Arrays.stream(ATTACK_PROBABILITY).sum();
 		int randInt = (new Random()).nextInt(sumAttackProbability);
-		HashMap <Consumable, Integer> inventory = ship.getInventory();
 		if (randInt < ATTACK_PROBABILITY[0] && inventory.size() > 0) {
-			Consumable key = (Consumable) pickRandom(inventory.keySet().toArray());
+			Consumable key = (Consumable) pickRandom(inventory.getKeys());
 			inOut.print("Aliens have attacked your ship! They stole your " + 
 					key.getName() + "!");
-			inOut.print("You now have " + (inventory.get(key) - 1) + " " + 
+			inventory.removeItem(key);
+			inOut.print("You now have " + (inventory.get(key)) + " " + 
 					key.getName() + "(s) remaining");
-			ship.removeItem(key);
 		} else if (randInt < ATTACK_PROBABILITY[1]) {
 			ArrayList<CrewMember> healthyCrewMembers = new ArrayList<CrewMember>();
 			healthyCrewMembers.addAll(ship.getCrewMembers());
@@ -322,8 +352,8 @@ public class GameEnvironment {
 		}
 		partsHere = true;
 		inOut.print("Daily Score: " + ship.getDailyScore());
-		inOut.print("1) Continue");
-		inOut.collectInt(1, 1); // TODO is there a better way to allow the player to continue?
+		inOut.print("Press enter to continue");
+		inOut.collectString();
 		
 		gameLoop();
 	}
@@ -366,7 +396,7 @@ public class GameEnvironment {
 			} else {
 				foundItem = (Consumable) pickRandom(MEDICAL_ITEMS);
 			}
-			ship.addItem(foundItem);
+			inventory.addItem(foundItem);
 			inOut.print(crewMember.getName() + " found a " + foundItem.getName() + "!");
 		} else if (randInt < totalSum - searchProbability[4]) {
 			int moneyFound = (Integer) pickRandom(FINDABLE_MONEY);
@@ -385,13 +415,7 @@ public class GameEnvironment {
 	 * @return a boolean representing whether or not an item was used
 	 */
 	public boolean useItem(CrewMember crewMember) {
-		HashMap<Consumable, Integer> inventory = ship.getInventory();
-		// Converts the inventory keys to an array
-		ArrayList<Consumable> keys = new ArrayList<Consumable>();
-		inventory.keySet().stream()
-				.sorted((a, b) -> (a.getClassification() + a.getName()).compareTo(
-						b.getClassification() + b.getName()))
-				.forEach(x -> keys.add(x));
+		ArrayList<Consumable> keys = inventory.getKeys();
 		
 		// Returns to previous menu if there are no items in the inventory
 		int size = keys.size();
@@ -423,7 +447,7 @@ public class GameEnvironment {
 			
 			item.useItem(crewMember);
 			
-			ship.removeItem(item);
+			inventory.removeItem(item);
 			
 			crewMember.completeAction();
 			inOut.print(crewMember.getName() + " used a " + item.getName());
@@ -542,7 +566,7 @@ public class GameEnvironment {
 	 * @param list an ArrayList to chose a crew member from
 	 * @return a random crew member from the list
 	 */
-	public Object pickRandom(ArrayList<CrewMember> list) {
+	public Object pickRandom(ArrayList<?> list) {
 		Random randomVar = new Random();
 		int randInt = randomVar.nextInt(list.size());
 		return list.get(randInt);

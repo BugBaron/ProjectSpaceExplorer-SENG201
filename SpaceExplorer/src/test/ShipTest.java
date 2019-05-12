@@ -50,25 +50,6 @@ class ShipTest {
 	}
 
 	@Test
-	void testInventory() {
-		HashMap<Consumable, Integer> dummyInventory = new HashMap<Consumable, Integer>();
-		assertEquals(dummyInventory, ship.getInventory());
-		Consumable bandAid = new Consumable("Band-Aid");
-		dummyInventory.put(bandAid, 1);
-		ship.addItem(bandAid);
-		assertEquals(dummyInventory, ship.getInventory());
-		dummyInventory.put(bandAid, 2);
-		ship.addItem(bandAid);
-		assertEquals(dummyInventory, ship.getInventory());
-		dummyInventory.put(bandAid, 1);
-		ship.removeItem(bandAid);
-		assertEquals(dummyInventory, ship.getInventory());
-		dummyInventory.remove(bandAid);
-		ship.removeItem(bandAid);
-		assertEquals(dummyInventory, ship.getInventory());
-	}
-
-	@Test
 	void testAddAndGetShipShields() {
 		assertEquals(5, ship.getShipShields());
 		ship.addShipShields(10);

@@ -23,48 +23,48 @@ public class Consumable {
 		case "Space Plague Cure": price = 25;
 			cureSpacePlague = true;
 			description = "Cures the Space Plague"; 
-			classification = "Medical Item";
+			classification = "Medical";
 			break;
 		case "Band-Aid": price = 10;
 			healthRestore = 2;
 			description = "Restores 2 Health"; 
-			classification = "Medical Item";
+			classification = "Medical";
 			break;
 		case "First Aid Kit": price = 23;
 			healthRestore = 5;
 			description = "Restores 5 Health";
-			classification = "Medical Item";
+			classification = "Medical";
 			break;
 		case "Space Ration": price = 18;
 			nutritionRestore = 4;
 			description = "Restores 4 Nutrition";
-			classification = "Food Item";
+			classification = "Food";
 			break;
 		case "Water": price = 10;
 			nutritionRestore = 2;
 			description = "Restores 2 Nutrition";
-			classification = "Food Item";
+			classification = "Food";
 			break;
 		case "Banana": price = 10;
 			nutritionRestore = 2;
 			description = "Restores 2 Nutrition";
-			classification = "Food Item";
+			classification = "Food";
 			break;
 		case "Alien Meat": price = 22;
 			nutritionRestore = 5;
 			description = "Restores 5 Nutrition";
-			classification = "Food Item";
+			classification = "Food";
 			break;
 		case "Coffee": price = 13;
 			nutritionRestore = 2;
 			energyRestore = 1;
 			description = "Restores 2 Nutrition and 1 Energy";
-			classification = "Food Item";
+			classification = "Food";
 			break;
 		case "Egg": price = 14;
 			nutritionRestore = 3;
 			description = "Restores 3 Nutrition";
-			classification = "Food Item";
+			classification = "Food";
 			break;
 		default: System.out.println(name + " is not a valid consumable");
 		}		
@@ -108,7 +108,7 @@ public class Consumable {
 	}
 	
 	/**
-	 * Retrieves the classification of the item: either Food Item or Medical Item
+	 * Retrieves the classification of the item: either Food or Medical
 	 * @return classification which category the item fits in
 	 */
 	public String getClassification() {

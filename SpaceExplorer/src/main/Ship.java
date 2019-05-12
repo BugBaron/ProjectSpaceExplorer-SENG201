@@ -1,6 +1,5 @@
 package main;
 
-import java.util.HashMap;
 import java.util.ArrayList;
 
 import main.Consumable;
@@ -12,7 +11,6 @@ public class Ship {
 	private String shipName;
 	private ArrayList<CrewMember> crewMembers;
 	private int money;
-	private HashMap<Consumable, Integer> inventory;
 	private int shipShields;
 	private final int MAX_SHIP_SHIELDS = 10;
 	
@@ -34,8 +32,6 @@ public class Ship {
 		shipShields = 5;
 		totalScore = 0;
 		dailyScore = 0;
-		
-		inventory = new HashMap<Consumable, Integer>();
 	}
 	
 	
@@ -50,8 +46,6 @@ public class Ship {
 		shipShields = 5;
 		totalScore = 0;
 		dailyScore = 0;
-		
-		inventory = new HashMap<Consumable, Integer>();
 	}
 
 
@@ -92,42 +86,6 @@ public class Ship {
 	 */
 	public ArrayList<CrewMember> getCrewMembers() {
 		return crewMembers;
-	}
-	
-	
-	/**
-	 * Gets a map containing the items currently in the inventory of this ship, including their quantities
-	 * @return a map from each consumable to their quantity in this ships inventory
-	 */
-	public HashMap<Consumable, Integer> getInventory() {
-		return inventory;
-	}
-	
-	
-	/**
-	 * Adds an item to this ships inventory
-	 * @param item the item to add to the inventory
-	 */
-	public void addItem(Consumable item) {
-		if (inventory.containsKey(item)) {
-			inventory.put(item, inventory.get(item) + 1);
-		} else {
-			inventory.put(item, 1);
-		}
-	}
-	
-	
-	/**
-	 * Removes an item from this ships inventory
-	 * @param item the item to be removed from the inventory
-	 */
-	public void removeItem(Consumable item) {
-		if (inventory.containsKey(item)) {
-			switch(inventory.get(item)) {
-				case 1:	inventory.remove(item);	break;
-				default: inventory.put(item, inventory.get(item) - 1);
-			}
-		}
 	}
 	
 	

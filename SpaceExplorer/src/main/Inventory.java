@@ -7,6 +7,35 @@ public class Inventory {
 	
 	private HashMap<Consumable, Integer> items;
 	
+	/**
+	 * Class constructor, with no additional entries
+	 * @param isShop whether or not to make this a shop inventory
+	 */
+	public Inventory(boolean isShop) {
+		items = new HashMap<Consumable, Integer>();
+		if (isShop) {
+			Consumable spacePlagueCure = new Consumable("Space Plague Cure");
+			Consumable bandAid = new Consumable("Band-Aid");
+			Consumable firstAidKit = new Consumable("First Aid Kit");
+			Consumable spaceRation = new Consumable("Space Ration");
+			Consumable water = new Consumable("Water");
+			Consumable banana = new Consumable("Banana");
+			Consumable alienMeat = new Consumable("Alien Meat");
+			Consumable coffee = new Consumable("Coffee");
+			Consumable egg = new Consumable("Egg");
+			
+			items.put(spacePlagueCure, 1);
+			items.put(bandAid, 1);
+			items.put(firstAidKit, 1);
+			items.put(spaceRation, 1);
+			items.put(water, 1);
+			items.put(banana, 1);
+			items.put(alienMeat, 1);
+			items.put(coffee, 1);
+			items.put(egg, 1);
+		}
+	}
+	
 	
 	/**
 	 * Class constructor 
@@ -22,6 +51,28 @@ public class Inventory {
 	 */
 	public HashMap<Consumable, Integer> getItems() {
 		return items;
+	}
+	
+	
+	/**
+	 * Gets the number of items in the inventory
+	 * @return the number of items in the inventory
+	 */
+	public int size() {
+		return items.size();
+	}
+	
+	/**
+	 * Gets the quantity of an item in the inventory
+	 * @param item an item in the inventory
+	 * @return 
+	 */
+	public int get(Consumable item) {
+		if (items.containsKey(item)) {
+			return items.get(item);
+		} else {
+			return 0;
+		}
 	}
 	
 	
