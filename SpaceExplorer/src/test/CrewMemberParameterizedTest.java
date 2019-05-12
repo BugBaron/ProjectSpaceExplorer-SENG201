@@ -8,8 +8,8 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+//import java.io.File;
+//import java.io.FileNotFoundException;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,7 +25,7 @@ class CrewMemberParameterizedTest {
 	private static ArrayList<ArrayList<Object>> testCases;
 	
 	@BeforeAll
-	private static void setUpBeforeAll() throws FileNotFoundException {
+	private static void setUpBeforeAll() {
 		newShip = new Ship();
 		testCases = new ArrayList<ArrayList<Object>>(12);
 		testCases.add(CrewMemberTypeParams.getHuman(newShip, ""));
