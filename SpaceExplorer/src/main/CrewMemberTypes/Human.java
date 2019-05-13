@@ -25,6 +25,9 @@ public class Human extends CrewMember {
 	public Human(Ship tempShip, String tempName) {
 		super(tempShip);
 		createDefaultHuman();
+		if (tempName.matches("[0-9]+")) {
+			tempName = "Human #" + tempName; 
+		}
 		super.name = tempName;
 	}
 	
@@ -41,7 +44,8 @@ public class Human extends CrewMember {
 		typeInfo.put("Weakness", "2 less maximum health (8 Health)");
 
 		super.MAX_STAT = maxStats;
-		super.name = "Donald Trump";
+		String name = "Donald Trump";
+		super.name = name;
 		super.TYPE_INFO = typeInfo;
 		super.getStatus().put("Health", maxStats.get("Health"));
 		super.getStatus().put("Energy", maxStats.get("Energy"));
