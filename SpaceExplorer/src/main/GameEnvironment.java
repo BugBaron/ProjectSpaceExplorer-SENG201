@@ -329,33 +329,33 @@ public class GameEnvironment {
 		// Ends the game if there are no more crew members left alive, or if the last day ended
 		if (ship.getCrewMembers().size() == 0 || dayNumber > maxDays) {
 			endGame(false);
-		}
-		
-		int sumAttackProbability = Arrays.stream(ATTACK_PROBABILITY).sum();
-		int randInt = (new Random()).nextInt(sumAttackProbability);
-		if (randInt < ATTACK_PROBABILITY[0] && inventory.size() > 0) {
-			Consumable key = (Consumable) pickRandom(inventory.getKeys());
-			inOut.print("Aliens have attacked your ship! They stole your " + 
-					key.getName() + "!");
-			inventory.removeItem(key);
-			inOut.print("You now have " + (inventory.get(key)) + " " + 
-					key.getName() + "(s) remaining");
-		} else if (randInt < ATTACK_PROBABILITY[1]) {
-			ArrayList<CrewMember> healthyCrewMembers = new ArrayList<CrewMember>();
-			healthyCrewMembers.addAll(ship.getCrewMembers());
-			healthyCrewMembers.removeIf(x -> x.getHasSpacePlague());
-			if (healthyCrewMembers.size() > 0) {
-				CrewMember person = (CrewMember) pickRandom(healthyCrewMembers);
-				inOut.print(person.getName() + " has contracted the space plague!");
-				person.setHasSpacePlague(true);
+		} else {
+			int sumAttackProbability = Arrays.stream(ATTACK_PROBABILITY).sum();
+			int randInt = (new Random()).nextInt(sumAttackProbability);
+			if (randInt < ATTACK_PROBABILITY[0] && inventory.size() > 0) {
+				Consumable key = (Consumable) pickRandom(inventory.getKeys());
+				inOut.print("Aliens have attacked your ship! They stole your " + 
+						key.getName() + "!");
+				inventory.removeItem(key);
+				inOut.print("You now have " + (inventory.get(key)) + " " + 
+						key.getName() + "(s) remaining");
+			} else if (randInt < ATTACK_PROBABILITY[1]) {
+				ArrayList<CrewMember> healthyCrewMembers = new ArrayList<CrewMember>();
+				healthyCrewMembers.addAll(ship.getCrewMembers());
+				healthyCrewMembers.removeIf(x -> x.getHasSpacePlague());
+				if (healthyCrewMembers.size() > 0) {
+					CrewMember person = (CrewMember) pickRandom(healthyCrewMembers);
+					inOut.print(person.getName() + " has contracted the space plague!");
+					person.setHasSpacePlague(true);
+				}
 			}
+			partsHere = true;
+			inOut.print("Daily Score: " + ship.getDailyScore());
+			inOut.print("Press enter to continue");
+			inOut.collectString();
+			
+			gameLoop();
 		}
-		partsHere = true;
-		inOut.print("Daily Score: " + ship.getDailyScore());
-		inOut.print("Press enter to continue");
-		inOut.collectString();
-		
-		gameLoop();
 	}
 	
 	
