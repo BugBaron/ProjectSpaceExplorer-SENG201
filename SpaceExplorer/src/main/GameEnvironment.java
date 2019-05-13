@@ -1,6 +1,7 @@
 package main;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -81,7 +82,22 @@ public class GameEnvironment {
 			inOut.print("What would you like to name this " + selectedPerson.getTypeInfo().get("Type") + "?");
 			String name = inOut.collectString();
 			selectedMembers.add(selectedPerson);
-			names.add(name);
+			String new_name = name;
+			Integer j = 2;
+			while (names.contains(new_name)) {
+				if (!name.isEmpty()) {
+					new_name = name + " (" + j + ")";
+					j ++;
+				}
+				else if (Collections.frequency(selectedMembers, selectedPerson) > 1)  {
+					Integer number = Collections.frequency(selectedMembers, selectedPerson);
+					new_name = Integer.toString(number);
+				}
+				else {
+					break;
+				}
+			}
+			names.add(new_name);
 		}
 		
 		inOut.print("What would you like the name of your ship to be?");
@@ -261,7 +277,8 @@ public class GameEnvironment {
 					inOut.print("1) Purchase item");
 					inOut.print("2) Back to shop");
 					switch (inOut.collectInt(1, 2)) {
-					case 1: shop.removeItem(item); inventory.addItem(item); 
+					case 1: shop.removeItem(item); inventory.addItem(item);
+						inOut.print("You just purchased a " + item.getName() + "!");
 						ship.addMoney(-item.getPrice()); break;
 					case 2: isPurchasing = false; break;
 					}

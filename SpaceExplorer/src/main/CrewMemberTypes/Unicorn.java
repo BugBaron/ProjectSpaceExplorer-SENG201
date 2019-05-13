@@ -25,6 +25,9 @@ public class Unicorn extends CrewMember {
 	public Unicorn(Ship tempShip, String tempName) {
 		super(tempShip);
 		createDefaultUnicorn();
+		if (tempName.matches("[0-9]+")) {
+			tempName = "Unicorn #" + tempName; 
+		}
 		super.name = tempName;
 	}
 	
