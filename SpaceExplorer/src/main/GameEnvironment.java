@@ -397,6 +397,7 @@ public class GameEnvironment {
 				ship.addScore(100);
 				if (partsFound == partsToFind) {
 					endGame(true);
+					return true;
 				} else {
 					inOut.print("You now have " + partsFound + " out of " + partsToFind + 
 							" parts");
