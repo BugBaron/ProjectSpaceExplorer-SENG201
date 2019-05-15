@@ -2,6 +2,8 @@ package test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -11,52 +13,64 @@ import main.Consumable;
 import main.Inventory;
 
 class InventoryTest {
+	private final Consumable SPACE_PLAGUE_CURE = new Consumable("Space Plague Cure");
+	private final Consumable BAND_AID = new Consumable("Band-Aid");
+	private final Consumable COFFEE = new Consumable("Coffee");
 	
 	private Inventory inventory;
 	@BeforeEach
 	void setUp() {
 		HashMap<Consumable, Integer> tempInventory = new HashMap<Consumable, Integer>();
-		tempInventory.put(new Consumable("Space Plague Cure"), 1);
-		tempInventory.put(new Consumable("Band-Aid"), 2);
+		tempInventory.put(SPACE_PLAGUE_CURE, 1);
+		tempInventory.put(BAND_AID, 2);
 		inventory = new Inventory(tempInventory);
 	}
-
+	
 	@Test
 	void testGetItems() {
 		HashMap<Consumable, Integer> tempInventory = new HashMap<Consumable, Integer>();
-		tempInventory.put(new Consumable("Space Plague Cure"), 1);
-		tempInventory.put(new Consumable("Band-Aid"), 2);
-		assertEquals(tempInventory, inventory);
+		tempInventory.put(SPACE_PLAGUE_CURE, 1);
+		tempInventory.put(BAND_AID, 2);
+		assertEquals(tempInventory, inventory.getItems());
 	}
 
 	@Test
 	void testSize() {
 		assertEquals(2, inventory.size());
-		inventory.getItems().remove(new Consumable("Space Plague Cure"));
+		inventory.getItems().remove(SPACE_PLAGUE_CURE);
 		assertEquals(1, inventory.size());
 	}
 
 	@Test
 	void testGet() {
-		assertEquals(1, inventory.get(new Consumable("Space Plague Cure")));
-		assertEquals(2, inventory.get(new Consumable("Band-aid")));
+		assertEquals(1, inventory.get(SPACE_PLAGUE_CURE));
+		assertEquals(2, inventory.get(BAND_AID));
 	}
 
 	@Test
 	void testAddItem() {
-		inventory.addItem(new Consumable("Space Plague Cure"));
-		assertEquals(2, inventory.get(new Consumable("Space Plague Cure")));
-		inventory.addItem(new Consumable("Space Plague Cure"));
+		inventory.addItem(SPACE_PLAGUE_CURE);
+		assertEquals(2, inventory.get(SPACE_PLAGUE_CURE));
+		inventory.addItem(COFFEE);
+		assertEquals(1, inventory.get(COFFEE));
 	}
 
 	@Test
 	void testRemoveItem() {
-		fail("Not yet implemented");
+		inventory.removeItem(BAND_AID);
+		assertEquals(1, inventory.get(BAND_AID));
+		inventory.removeItem(BAND_AID);
+		assertEquals(0, inventory.get(BAND_AID));
 	}
 
 	@Test
 	void testGetKeys() {
-		fail("Not yet implemented");
+		ArrayList<Consumable> testKeys = new ArrayList<Consumable>(Arrays.asList(BAND_AID, SPACE_PLAGUE_CURE));
+		assertEquals(testKeys, inventory.getKeys());
+		inventory.addItem(COFFEE);
+		inventory.removeItem(SPACE_PLAGUE_CURE);
+		ArrayList<Consumable> newTestKeys = new ArrayList<Consumable>(Arrays.asList(COFFEE, BAND_AID));
+		assertEquals(newTestKeys, inventory.getKeys());
 	}
 
 }

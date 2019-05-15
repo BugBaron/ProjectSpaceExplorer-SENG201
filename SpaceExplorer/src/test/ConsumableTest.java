@@ -13,15 +13,15 @@ import main.CrewMemberTypes.Human;
 
 class ConsumableTest {
 	
-	Consumable spacePlagueCure = new Consumable("Space Plague Cure");
-	Consumable bandAid = new Consumable("Band-Aid");
-	Consumable firstAidKit = new Consumable("First Aid Kit");
-	Consumable spaceRation = new Consumable("Space Ration");
-	Consumable water = new Consumable("Water");
-	Consumable banana = new Consumable("Banana");
-	Consumable alienMeat = new Consumable("Alien Meat");
-	Consumable coffee = new Consumable("Coffee");
-	Consumable egg = new Consumable("Egg");
+	private final Consumable spacePlagueCure = new Consumable("Space Plague Cure");
+	private final Consumable bandAid = new Consumable("Band-Aid");
+	private final Consumable firstAidKit = new Consumable("First Aid Kit");
+	private final Consumable spaceRation = new Consumable("Space Ration");
+	private final Consumable water = new Consumable("Water");
+	private final Consumable banana = new Consumable("Banana");
+	private final Consumable alienMeat = new Consumable("Alien Meat");
+	private final Consumable coffee = new Consumable("Coffee");
+	private final Consumable egg = new Consumable("Egg");
 	
 	@Test
 	void testGetName() {
@@ -77,7 +77,7 @@ class ConsumableTest {
 	
 	@Test
 	void testMedicalGetClassification() {
-		String medical = "Medical Item";
+		String medical = "Medical";
 		assertEquals(medical, spacePlagueCure.getClassification());
 		assertEquals(medical, bandAid.getClassification());
 		assertEquals(medical, firstAidKit.getClassification());
@@ -85,7 +85,7 @@ class ConsumableTest {
 	
 	@Test
 	void testFoodGetClassification() {
-		String food = "Food Item";
+		String food = "Food";
 		assertEquals(food, spaceRation.getClassification());
 		assertEquals(food, water.getClassification());
 		assertEquals(food, banana.getClassification());
