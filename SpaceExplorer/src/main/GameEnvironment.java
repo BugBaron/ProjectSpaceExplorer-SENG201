@@ -53,6 +53,15 @@ public class GameEnvironment {
 	}
 	
 	
+	/**
+	 * Class constructor for the GameEnvironment with the specified InOutHandler
+	 * @param inOut the InOutHandler to use
+	 */
+	public GameEnvironment(InOutHandler inOut) {
+		this.inOut = inOut;
+	}
+	
+	// TODO this needs to be remade to work with the GUI
 	public void createGame() {
 		shop = new Inventory(true);
 		inventory = new Inventory(false);
@@ -60,11 +69,11 @@ public class GameEnvironment {
 		dayNumber = 1;
 		currentPlanet = 0;
 		
-		inOut.print("How many in-game days would you like the game to last? (3-10)");
+		//inOut.print("How many in-game days would you like the game to last? (3-10)");
 		maxDays = inOut.collectInt(3, 10);
 		partsToFind = 2 * maxDays / 3;
 		
-		inOut.print("How many crew members would you like? (2-4)");
+		//inOut.print("How many crew members would you like? (2-4)");
 		int numMembers = inOut.collectInt(2, 4);
 		
 		ArrayList<CrewMember> selectedMembers = new ArrayList<CrewMember>();
@@ -72,14 +81,14 @@ public class GameEnvironment {
 		ArrayList<CrewMember> availableList = new ArrayList<CrewMember>(Arrays.asList(new Human(ship), new Robot(ship), new Cyborg(ship), 
 					new Alien(ship), new Lizard(ship), new Unicorn(ship)));
 		for (int i = 0; i < numMembers; i++) {
-			inOut.print("Choose crew member " + (i + 1) + ":");
+			//inOut.print("Choose crew member " + (i + 1) + ":");
 			for (CrewMember person : availableList) {
 				HashMap<String, String> typeInfo = person.getTypeInfo();
-				inOut.print((availableList.indexOf(person) + 1) + ") " + typeInfo.get("Type") + ", " 
-				+ typeInfo.get("Strength") + ", " + typeInfo.get("Weakness"));
+				//inOut.print((availableList.indexOf(person) + 1) + ") " + typeInfo.get("Type") + ", " 
+				//+ typeInfo.get("Strength") + ", " + typeInfo.get("Weakness"));
 			}
 			CrewMember selectedPerson = availableList.get(inOut.collectInt(1, 6) - 1);
-			inOut.print("What would you like to name this " + selectedPerson.getTypeInfo().get("Type") + "?");
+			//inOut.print("What would you like to name this " + selectedPerson.getTypeInfo().get("Type") + "?");
 			String name = inOut.collectString();
 			selectedMembers.add(selectedPerson);
 			String new_name = name;
@@ -100,7 +109,7 @@ public class GameEnvironment {
 			names.add(new_name);
 		}
 		
-		inOut.print("What would you like the name of your ship to be?");
+		//inOut.print("What would you like the name of your ship to be?");
 		String shipName = inOut.collectString();
 		if (shipName.length() == 0) {
 			ship = new Ship();
@@ -131,10 +140,10 @@ public class GameEnvironment {
 			shipMembers.add(crewMember);
 		}
 		
-		gameLoop();
+		//gameLoop();
 	}
 	
-	
+	// TODO remove this function (obsolete)
 	public void gameLoop() {
 		inOut.print("Day number: " + dayNumber + "/" + maxDays);
 		inOut.print("1) View Crew Member and/or do a Crew Member Action");
@@ -144,7 +153,7 @@ public class GameEnvironment {
 		int choice = inOut.collectInt(1, 4);
 		
 		switch (choice) {
-		case 1: selectCrewMember(); break;
+		case 1: //selectCrewMember(); break;
 		case 2:	inOut.print(ship.getName());
 			inOut.print("Shield level: " + ship.getShipShields() + "/10");
 			inOut.print("Spaceship pieces found: " + partsFound + "/" + partsToFind);
@@ -158,6 +167,12 @@ public class GameEnvironment {
 	}
 	
 	
+	public ArrayList<CrewMember> getCrewMembers() {
+		return ship.getCrewMembers();
+	}
+	
+	// TODO remove this function (obsolete)
+	/*
 	public void selectCrewMember() {
 		ArrayList<CrewMember> crewMembers = ship.getCrewMembers();
 		int index = 0;
@@ -205,8 +220,9 @@ public class GameEnvironment {
 		}
 		
 	}
+	*/
 	
-	
+	// TODO remove this function (obsolete)
 	public void completeAction(CrewMember crewMember) {
 		inOut.print(crewMember.toString());
 		inOut.print("");
@@ -235,7 +251,7 @@ public class GameEnvironment {
 				completeAction(crewMember); 
 			}; 
 			break;
-		default: selectCrewMember();
+		// TODO default: selectCrewMember();
 		}
 	}
 	
@@ -290,6 +306,7 @@ public class GameEnvironment {
 		}
 	}
 	
+	// TODO this needs to be reworked to work with the GUI
 	public void viewInventory() {
 		ArrayList<Consumable> keys = inventory.getKeys();
 		Integer size = keys.size();
@@ -308,6 +325,7 @@ public class GameEnvironment {
 		goToOutpost();
 	}
 	
+	// TODO remove this function (obsolete)
 	public void goToOutpost() {
 		inOut.print("1) View Objects For Sale");
 		inOut.print("2) View Inventory");
@@ -322,6 +340,7 @@ public class GameEnvironment {
 	}
 
 
+	// TODO needs to be edited to remove obsolete sections
 	/**
 	 * Conducts all processes related to ending the day
 	 */
@@ -345,8 +364,10 @@ public class GameEnvironment {
 		
 		// Ends the game if there are no more crew members left alive, or if the last day ended
 		if (ship.getCrewMembers().size() == 0 || dayNumber > maxDays) {
+			inOut.print(true); // Indicates that the game has ended
 			endGame(false);
 		} else {
+			inOut.print(false); // Indicates that the game has not ended
 			int sumAttackProbability = Arrays.stream(ATTACK_PROBABILITY).sum();
 			int randInt = (new Random()).nextInt(sumAttackProbability);
 			if (randInt < ATTACK_PROBABILITY[0] && inventory.size() > 0) {
@@ -367,11 +388,12 @@ public class GameEnvironment {
 				}
 			}
 			partsHere = true;
+			inOut.print(null); // Indicates that the random events have no more messages
 			inOut.print("Daily Score: " + ship.getDailyScore());
-			inOut.print("Press enter to continue");
-			inOut.collectString();
+			// inOut.print("Press enter to continue");
+			// inOut.collectString();
 			
-			gameLoop();
+			// gameLoop();
 		}
 	}
 	
@@ -559,6 +581,7 @@ public class GameEnvironment {
 	}
 	
 	
+	// TODO needs some sections edited to work with the GUI
 	/**
 	 * Prints an end game screen for the player after they have found all the parts,
 	 * lost all their crew members or run out of time
@@ -580,8 +603,8 @@ public class GameEnvironment {
 		inOut.print("Final Score: " + ship.getTotalScore());
 		inOut.print("");
 		inOut.print("Would you like to play again?");
-		inOut.print("1) Yes!");
-		inOut.print("2) No, thank you");
+		//inOut.print("1) Yes!");
+		//inOut.print("2) No, thank you");
 		if (inOut.collectInt(1, 2) == 1) createGame();
 		
 	}

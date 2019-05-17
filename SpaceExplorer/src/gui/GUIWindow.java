@@ -5,37 +5,46 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import java.awt.Dimension;
 import javax.swing.JLabel;
+import javax.swing.JList;
+
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Component;
+
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
 import java.awt.CardLayout;
 import javax.swing.JPanel;
-import javax.swing.JList;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
+import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
-import javax.swing.JTextArea;
-import javax.swing.AbstractListModel;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
+
+import main.GameEnvironment;
+import main.InOutHandler;
+import main.CrewMemberTypes.CrewMember;
+
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
-import javax.swing.DropMode;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class GUIWindow {
 
 	private JFrame frame;
+	private CardLayout layout;
+	private ArrayList<String> messagePaneContents = new ArrayList<String>();
+	private InOutHandler inOut = new InOutHandler();
+	private GameEnvironment gameEnvironment = new GameEnvironment(inOut);
 
+	
 	/**
 	 * Launch the application.
 	 */
@@ -45,6 +54,7 @@ public class GUIWindow {
 				try {
 					GUIWindow window = new GUIWindow();
 					window.frame.setVisible(true);
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -56,7 +66,30 @@ public class GUIWindow {
 	 * Create the application.
 	 */
 	public GUIWindow() {
+		gameEnvironment.createGame();
 		initialize();
+	}
+	
+	/**
+	 * Update the text for the specified message pane
+	 */
+	public void updatePane(JTextPane msgPane) {
+		String text = "";
+		for (int i=0; i < messagePaneContents.size() && i < 3; i++) {
+			text = messagePaneContents.get(messagePaneContents.size() - i) + "\n" + text;
+		}
+		if (messagePaneContents.size() > 3) {
+			text = "...\n" + text;
+		}
+		msgPane.setText(text);
+	}
+	
+	
+	/**
+	 * Changes the layout to the main screen
+	 */
+	private void gotoMainScreen() {
+		layout.show(frame.getContentPane(), "Main Screen");
 	}
 	
 	/**
@@ -68,11 +101,49 @@ public class GUIWindow {
 		frame.getContentPane().setBackground(new Color(25, 25, 112));
 		frame.getContentPane().setForeground(new Color(0, 0, 128));
 		frame.getContentPane().setLayout(new CardLayout(20, 20));
+		layout = (CardLayout) frame.getContentPane().getLayout();
 		
 		JPanel mainScreen = new JPanel();
 		mainScreen.setBackground(new Color(25, 25, 112));
-		frame.getContentPane().add(mainScreen, "name_113972757431300");
+		frame.getContentPane().add(mainScreen, "Main Screen");
 		mainScreen.setLayout(null);
+
+		JPanel crewMembers = new JPanel();
+		crewMembers.setBackground(new Color(25, 25, 112));
+		frame.getContentPane().add(crewMembers, "Crew Members");
+		crewMembers.setLayout(null);
+
+		JPanel useItem = new JPanel();
+		useItem.setBackground(new Color(25, 25, 112));
+		frame.getContentPane().add(useItem, "Use Item");
+		useItem.setLayout(null);
+
+		JPanel pilotShip = new JPanel();
+		pilotShip.setBackground(new Color(25, 25, 112));
+		frame.getContentPane().add(pilotShip, "Pilot Ship");
+		pilotShip.setLayout(null);
+
+		JPanel shipStatus = new JPanel();
+		shipStatus.setBackground(new Color(25, 25, 112));
+		frame.getContentPane().add(shipStatus, "Ship Status");
+		shipStatus.setLayout(null);
+
+		JPanel visitOutpost = new JPanel();
+		visitOutpost.setBackground(new Color(25, 25, 112));
+		frame.getContentPane().add(visitOutpost, "Visit Outpost");
+		visitOutpost.setLayout(null);
+
+		JPanel shopScreen = new JPanel();
+		shopScreen.setLayout(null);
+		shopScreen.setBackground(new Color(25, 25, 112));
+		frame.getContentPane().add(shopScreen, "Shop Screen");
+
+		JPanel inventoryScreen = new JPanel();
+		inventoryScreen.setLayout(null);
+		inventoryScreen.setBackground(new Color(25, 25, 112));
+		frame.getContentPane().add(inventoryScreen, "Inventory Screen");
+		
+		// Main screen
 		
 		JLabel lblControlPanelTitle = new JLabel("Control Panel");
 		lblControlPanelTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -120,7 +191,6 @@ public class GUIWindow {
 		mainScreen.add(btnContinue);
 		
 		JTextPane txtpnMessagePane = new JTextPane();
-		txtpnMessagePane.setEditable(false);
 		txtpnMessagePane.setText("Message pane");
 		txtpnMessagePane.setForeground(new Color(0, 0, 128));
 		txtpnMessagePane.setFont(new Font("MS Gothic", Font.PLAIN, 20));
@@ -134,10 +204,7 @@ public class GUIWindow {
 		lblImageControlPanel.setBounds(303, 80, 283, 174);
 		mainScreen.add(lblImageControlPanel);
 		
-		JPanel crewMembers = new JPanel();
-		crewMembers.setBackground(new Color(25, 25, 112));
-		frame.getContentPane().add(crewMembers, "name_113983805666300");
-		crewMembers.setLayout(null);
+		// Crew members pane
 		
 		JLabel lblCrewMembersTitle = new JLabel("Crew Members");
 		lblCrewMembersTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -208,9 +275,21 @@ public class GUIWindow {
 		lblCrewSelector.setBounds(0, 80, 126, 36);
 		crewMembers.add(lblCrewSelector);
 		
-		JComboBox comboBoxCrewMemberSelection = new JComboBox();
+		JComboBox<CrewMember> comboBoxCrewMemberSelection = new JComboBox<CrewMember>();
 		comboBoxCrewMemberSelection.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		comboBoxCrewMemberSelection.setModel(new DefaultComboBoxModel(new String[] {"Donald Trump, Human", "Robocop, Robot", "The White Wolf, Cyborg", "Chameleos, Lizard"}));
+		// TODO remove comboBoxCrewMemberSelection.setModel(new DefaultComboBoxModel<String>(new String[] {"Donald Trump, Human", "Robocop, Robot", "The White Wolf, Cyborg", "Chameleos, Lizard"}));
+		comboBoxCrewMemberSelection.setRenderer(new BasicComboBoxRenderer() {
+			@Override
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean hasFocus) {
+				super.getListCellRendererComponent(list, value, index, isSelected, hasFocus);
+				if (value instanceof CrewMember) {
+					CrewMember crewMember = (CrewMember) value;
+					setText(crewMember.getName() + ", " + crewMember.getTypeInfo().get("Type"));
+				}
+				
+				return this;	
+			}
+		});
 		comboBoxCrewMemberSelection.setBounds(135, 80, 441, 36);
 		crewMembers.add(comboBoxCrewMemberSelection);
 		
@@ -222,10 +301,7 @@ public class GUIWindow {
 		txtpnCrewMemberInfo.setBounds(303, 125, 283, 128);
 		crewMembers.add(txtpnCrewMemberInfo);
 		
-		JPanel useItem = new JPanel();
-		useItem.setBackground(new Color(25, 25, 112));
-		frame.getContentPane().add(useItem, "name_116775304885600");
-		useItem.setLayout(null);
+		// Use Item Screen
 		
 		JLabel lblUseItemTitle = new JLabel("Use Item");
 		lblUseItemTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -256,8 +332,8 @@ public class GUIWindow {
 		lblItemSelector.setBounds(0, 80, 50, 36);
 		useItem.add(lblItemSelector);
 		
-		JComboBox comboBoxItemSelection = new JComboBox();
-		comboBoxItemSelection.setModel(new DefaultComboBoxModel(new String[] {"Space Plague Cure", "Band-Aid", "First Aid Kit", "Alien Meat", "Space Ration", "Water"}));
+		JComboBox<String> comboBoxItemSelection = new JComboBox<String>();
+		comboBoxItemSelection.setModel(new DefaultComboBoxModel<String>(new String[] {"Space Plague Cure", "Band-Aid", "First Aid Kit", "Alien Meat", "Space Ration", "Water"}));
 		comboBoxItemSelection.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		comboBoxItemSelection.setBounds(60, 80, 222, 36);
 		useItem.add(comboBoxItemSelection);
@@ -286,10 +362,7 @@ public class GUIWindow {
 		txtpnItemInfo.setBounds(0, 126, 283, 128);
 		useItem.add(txtpnItemInfo);
 		
-		JPanel pilotShip = new JPanel();
-		pilotShip.setBackground(new Color(25, 25, 112));
-		frame.getContentPane().add(pilotShip, "name_119415888073800");
-		pilotShip.setLayout(null);
+		// Pilot Ship Screen
 		
 		JLabel lblPilotShipTitle = new JLabel("Pilot Ship");
 		lblPilotShipTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -328,8 +401,8 @@ public class GUIWindow {
 		lblCrewMember2Selector.setBounds(0, 80, 198, 36);
 		pilotShip.add(lblCrewMember2Selector);
 		
-		JComboBox comboBoxCrewMember2Selection = new JComboBox();
-		comboBoxCrewMember2Selection.setModel(new DefaultComboBoxModel(new String[] {"Donald Trump, Human", "Robocop, Robot", "Chameleos, Lizard"}));
+		JComboBox<String> comboBoxCrewMember2Selection = new JComboBox<String>();
+		comboBoxCrewMember2Selection.setModel(new DefaultComboBoxModel<String>(new String[] {"Donald Trump, Human", "Robocop, Robot", "Chameleos, Lizard"}));
 		comboBoxCrewMember2Selection.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		comboBoxCrewMember2Selection.setBounds(208, 80, 368, 36);
 		pilotShip.add(comboBoxCrewMember2Selection);
@@ -350,10 +423,7 @@ public class GUIWindow {
 		txtpnCrewMemberInfoPilotShip.setBounds(303, 126, 283, 128);
 		pilotShip.add(txtpnCrewMemberInfoPilotShip);
 		
-		JPanel shipStatus = new JPanel();
-		shipStatus.setBackground(new Color(25, 25, 112));
-		frame.getContentPane().add(shipStatus, "name_37658506724700");
-		shipStatus.setLayout(null);
+		// Ship Status Screen
 		
 		JLabel lblShipStatus = new JLabel("Ship Status");
 		lblShipStatus.setHorizontalAlignment(SwingConstants.CENTER);
@@ -392,10 +462,7 @@ public class GUIWindow {
 		txtpnShipStatus.setBounds(0, 80, 283, 174);
 		shipStatus.add(txtpnShipStatus);
 		
-		JPanel visitOutpost = new JPanel();
-		visitOutpost.setBackground(new Color(25, 25, 112));
-		frame.getContentPane().add(visitOutpost, "name_43303579242700");
-		visitOutpost.setLayout(null);
+		// Visit Outpost Screen
 		
 		JLabel lblVisitOutpostTitle = new JLabel("Outpost");
 		lblVisitOutpostTitle.setHorizontalAlignment(SwingConstants.CENTER);
@@ -442,12 +509,9 @@ public class GUIWindow {
 		btnViewInventory.setBounds(0, 126, 283, 36);
 		visitOutpost.add(btnViewInventory);
 		
-		JPanel shopScreen = new JPanel();
-		shopScreen.setLayout(null);
-		shopScreen.setBackground(new Color(25, 25, 112));
-		frame.getContentPane().add(shopScreen, "name_43805666209300");
+		// Shop Screen
 		
-		JComboBox comboBoxShopItemSelection = new JComboBox();
+		JComboBox<String> comboBoxShopItemSelection = new JComboBox<String>();
 		comboBoxShopItemSelection.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		comboBoxShopItemSelection.setBounds(60, 80, 222, 36);
 		shopScreen.add(comboBoxShopItemSelection);
@@ -503,10 +567,7 @@ public class GUIWindow {
 		lblImageShopScreen.setBounds(303, 80, 283, 174);
 		shopScreen.add(lblImageShopScreen);
 		
-		JPanel inventoryScreen = new JPanel();
-		inventoryScreen.setLayout(null);
-		inventoryScreen.setBackground(new Color(25, 25, 112));
-		frame.getContentPane().add(inventoryScreen, "name_44043117652400");
+		// Inventory Screen
 		
 		JTextPane txtpnMessagePaneInventoryScreen = new JTextPane();
 		txtpnMessagePaneInventoryScreen.setEditable(false);
@@ -588,6 +649,53 @@ public class GUIWindow {
 		treeInventoryContainers.setCellRenderer(newRenderer);
 		treeInventoryContainers.setBounds(0, 80, 285, 323);
 		inventoryScreen.add(treeInventoryContainers);
+
+		btnViewCrewMember.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layout.show(frame.getContentPane(), "Crew Members");
+				updatePane(txtpnMessagePaneCrewMembers);
+				
+				ArrayList<CrewMember> crewMembers = gameEnvironment.getCrewMembers();
+				CrewMember[] newMembers = new CrewMember[crewMembers.size()];
+				for (int i = 0; i < crewMembers.size(); i++) {
+					newMembers[i] = crewMembers.get(i);
+				}
+				comboBoxCrewMemberSelection.setModel(new DefaultComboBoxModel<CrewMember>(newMembers));
+			}
+		});
+		
+		btnViewShipStatus.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layout.show(frame.getContentPane(), "Ship Status");
+				updatePane(txtpnMessagePaneShipStatus);
+			}
+		});
+
+		btnVisitSpaceOutpost.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layout.show(frame.getContentPane(), "Visit Outpost");
+				updatePane(txtpnMessagePaneVisitOutpost);
+			}
+		});
+		
+		btnContinue.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if ((boolean) inOut.getOutput()) {
+					// The game has ended
+					// TODO add code to change end game screen text based on how they lost
+				} else {
+					// The game has not ended
+					Object output = inOut.getOutput();
+					while (output != null) {
+						messagePaneContents.add((String) output);
+						output = inOut.getOutput();
+					}
+
+					// TODO layout.show(frame.getContentPane(), "Score Screen"); and need 
+					// to change the contents of the label using '(String) inOut.getContents()'
+				}
+			}
+		});
 		
 		frame.setMinimumSize(new Dimension(640, 480));
 		frame.setBounds(100, 100, 450, 300);
