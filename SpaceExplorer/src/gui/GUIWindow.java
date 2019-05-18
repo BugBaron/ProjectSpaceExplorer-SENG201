@@ -26,8 +26,10 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeModel;
 
+import main.Consumable;
 import main.GameEnvironment;
 import main.InOutHandler;
+import main.Inventory;
 import main.CrewMemberTypes.CrewMember;
 
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -35,6 +37,10 @@ import javax.swing.tree.DefaultTreeCellRenderer;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class GUIWindow {
 
@@ -54,7 +60,6 @@ public class GUIWindow {
 				try {
 					GUIWindow window = new GUIWindow();
 					window.frame.setVisible(true);
-					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -76,20 +81,12 @@ public class GUIWindow {
 	public void updatePane(JTextPane msgPane) {
 		String text = "";
 		for (int i=0; i < messagePaneContents.size() && i < 3; i++) {
-			text = messagePaneContents.get(messagePaneContents.size() - i) + "\n" + text;
+			text = messagePaneContents.get(messagePaneContents.size() - i - 1) + "\n" + text;
 		}
 		if (messagePaneContents.size() > 3) {
 			text = "...\n" + text;
 		}
 		msgPane.setText(text);
-	}
-	
-	
-	/**
-	 * Changes the layout to the main screen
-	 */
-	private void gotoMainScreen() {
-		layout.show(frame.getContentPane(), "Main Screen");
 	}
 	
 	/**
@@ -191,9 +188,10 @@ public class GUIWindow {
 		mainScreen.add(btnContinue);
 		
 		JTextPane txtpnMessagePane = new JTextPane();
+		txtpnMessagePane.setEditable(false);
 		txtpnMessagePane.setText("Message pane");
 		txtpnMessagePane.setForeground(new Color(0, 0, 128));
-		txtpnMessagePane.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		txtpnMessagePane.setFont(new Font("MS Gothic", Font.PLAIN, 15));
 		txtpnMessagePane.setBounds(303, 264, 283, 93);
 		mainScreen.add(txtpnMessagePane);
 		
@@ -217,7 +215,7 @@ public class GUIWindow {
 		txtpnMessagePaneCrewMembers.setEditable(false);
 		txtpnMessagePaneCrewMembers.setText("Message pane");
 		txtpnMessagePaneCrewMembers.setForeground(new Color(0, 0, 128));
-		txtpnMessagePaneCrewMembers.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		txtpnMessagePaneCrewMembers.setFont(new Font("MS Gothic", Font.PLAIN, 15));
 		txtpnMessagePaneCrewMembers.setBounds(303, 264, 283, 93);
 		crewMembers.add(txtpnMessagePaneCrewMembers);
 		
@@ -277,7 +275,6 @@ public class GUIWindow {
 		
 		JComboBox<CrewMember> comboBoxCrewMemberSelection = new JComboBox<CrewMember>();
 		comboBoxCrewMemberSelection.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		// TODO remove comboBoxCrewMemberSelection.setModel(new DefaultComboBoxModel<String>(new String[] {"Donald Trump, Human", "Robocop, Robot", "The White Wolf, Cyborg", "Chameleos, Lizard"}));
 		comboBoxCrewMemberSelection.setRenderer(new BasicComboBoxRenderer() {
 			@Override
 			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean hasFocus) {
@@ -294,9 +291,10 @@ public class GUIWindow {
 		crewMembers.add(comboBoxCrewMemberSelection);
 		
 		JTextPane txtpnCrewMemberInfo = new JTextPane();
+		txtpnCrewMemberInfo.setEditable(false);
 		txtpnCrewMemberInfo.setText("Crew member info");
 		txtpnCrewMemberInfo.setForeground(Color.WHITE);
-		txtpnCrewMemberInfo.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		txtpnCrewMemberInfo.setFont(new Font("MS Gothic", Font.PLAIN, 12));
 		txtpnCrewMemberInfo.setBackground(new Color(25, 25, 112));
 		txtpnCrewMemberInfo.setBounds(303, 125, 283, 128);
 		crewMembers.add(txtpnCrewMemberInfo);
@@ -314,7 +312,7 @@ public class GUIWindow {
 		txtpnMessagePaneUseItem.setEditable(false);
 		txtpnMessagePaneUseItem.setText("Message pane");
 		txtpnMessagePaneUseItem.setForeground(new Color(0, 0, 128));
-		txtpnMessagePaneUseItem.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		txtpnMessagePaneUseItem.setFont(new Font("MS Gothic", Font.PLAIN, 15));
 		txtpnMessagePaneUseItem.setBounds(303, 264, 283, 93);
 		useItem.add(txtpnMessagePaneUseItem);
 		
@@ -332,10 +330,21 @@ public class GUIWindow {
 		lblItemSelector.setBounds(0, 80, 50, 36);
 		useItem.add(lblItemSelector);
 		
-		JComboBox<String> comboBoxItemSelection = new JComboBox<String>();
-		comboBoxItemSelection.setModel(new DefaultComboBoxModel<String>(new String[] {"Space Plague Cure", "Band-Aid", "First Aid Kit", "Alien Meat", "Space Ration", "Water"}));
+		JComboBox<Consumable> comboBoxItemSelection = new JComboBox<Consumable>();
 		comboBoxItemSelection.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		comboBoxItemSelection.setBounds(60, 80, 222, 36);
+		comboBoxItemSelection.setRenderer(new BasicComboBoxRenderer() {
+			@Override
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean hasFocus) {
+				super.getListCellRendererComponent(list, value, index, isSelected, hasFocus);
+				if (value instanceof Consumable) {
+					Consumable item = (Consumable) value;
+					setText(item.getName() + ", Quantity: " + gameEnvironment.getInventory().get(item));
+				}
+				
+				return this;	
+			}
+		});
+		comboBoxItemSelection.setBounds(60, 80, 526, 36);
 		useItem.add(comboBoxItemSelection);
 		
 		JButton btnConfirmUseItem = new JButton("Use item");
@@ -349,9 +358,9 @@ public class GUIWindow {
 		JTextPane txtpnCrewMemberInfoUseItem = new JTextPane();
 		txtpnCrewMemberInfoUseItem.setText("Crew member info");
 		txtpnCrewMemberInfoUseItem.setForeground(Color.WHITE);
-		txtpnCrewMemberInfoUseItem.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		txtpnCrewMemberInfoUseItem.setFont(new Font("MS Gothic", Font.PLAIN, 12));
 		txtpnCrewMemberInfoUseItem.setBackground(new Color(25, 25, 112));
-		txtpnCrewMemberInfoUseItem.setBounds(303, 80, 283, 174);
+		txtpnCrewMemberInfoUseItem.setBounds(303, 126, 283, 138);
 		useItem.add(txtpnCrewMemberInfoUseItem);
 		
 		JTextPane txtpnItemInfo = new JTextPane();
@@ -383,7 +392,7 @@ public class GUIWindow {
 		txtpnMessagePanePilotShip.setEditable(false);
 		txtpnMessagePanePilotShip.setText("Message pane");
 		txtpnMessagePanePilotShip.setForeground(new Color(0, 0, 128));
-		txtpnMessagePanePilotShip.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		txtpnMessagePanePilotShip.setFont(new Font("MS Gothic", Font.PLAIN, 15));
 		txtpnMessagePanePilotShip.setBounds(303, 264, 283, 93);
 		pilotShip.add(txtpnMessagePanePilotShip);
 		
@@ -398,16 +407,17 @@ public class GUIWindow {
 		JLabel lblCrewMember2Selector = new JLabel("Second crew member:");
 		lblCrewMember2Selector.setForeground(Color.WHITE);
 		lblCrewMember2Selector.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		lblCrewMember2Selector.setBounds(0, 80, 198, 36);
+		lblCrewMember2Selector.setBounds(0, 80, 200, 36);
 		pilotShip.add(lblCrewMember2Selector);
 		
 		JComboBox<String> comboBoxCrewMember2Selection = new JComboBox<String>();
 		comboBoxCrewMember2Selection.setModel(new DefaultComboBoxModel<String>(new String[] {"Donald Trump, Human", "Robocop, Robot", "Chameleos, Lizard"}));
 		comboBoxCrewMember2Selection.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		comboBoxCrewMember2Selection.setBounds(208, 80, 368, 36);
+		comboBoxCrewMember2Selection.setBounds(200, 80, 379, 36);
 		pilotShip.add(comboBoxCrewMember2Selection);
 		
 		JTextPane txtpnSecondCrewMember = new JTextPane();
+		txtpnSecondCrewMember.setEditable(false);
 		txtpnSecondCrewMember.setBackground(new Color(25, 25, 112));
 		txtpnSecondCrewMember.setForeground(new Color(255, 255, 255));
 		txtpnSecondCrewMember.setFont(new Font("MS Gothic", Font.PLAIN, 20));
@@ -416,9 +426,10 @@ public class GUIWindow {
 		pilotShip.add(txtpnSecondCrewMember);
 		
 		JTextPane txtpnCrewMemberInfoPilotShip = new JTextPane();
+		txtpnCrewMemberInfoPilotShip.setEditable(false);
 		txtpnCrewMemberInfoPilotShip.setText("Crew member info");
 		txtpnCrewMemberInfoPilotShip.setForeground(Color.WHITE);
-		txtpnCrewMemberInfoPilotShip.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		txtpnCrewMemberInfoPilotShip.setFont(new Font("MS Gothic", Font.PLAIN, 12));
 		txtpnCrewMemberInfoPilotShip.setBackground(new Color(25, 25, 112));
 		txtpnCrewMemberInfoPilotShip.setBounds(303, 126, 283, 128);
 		pilotShip.add(txtpnCrewMemberInfoPilotShip);
@@ -442,7 +453,7 @@ public class GUIWindow {
 		txtpnMessagePaneShipStatus.setEditable(false);
 		txtpnMessagePaneShipStatus.setText("Message pane");
 		txtpnMessagePaneShipStatus.setForeground(new Color(0, 0, 128));
-		txtpnMessagePaneShipStatus.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		txtpnMessagePaneShipStatus.setFont(new Font("MS Gothic", Font.PLAIN, 15));
 		txtpnMessagePaneShipStatus.setBounds(303, 264, 283, 93);
 		shipStatus.add(txtpnMessagePaneShipStatus);
 		
@@ -455,6 +466,7 @@ public class GUIWindow {
 		shipStatus.add(btnBackShipStatus);
 		
 		JTextPane txtpnShipStatus = new JTextPane();
+		txtpnShipStatus.setEditable(false);
 		txtpnShipStatus.setText("Ship Status");
 		txtpnShipStatus.setForeground(Color.WHITE);
 		txtpnShipStatus.setFont(new Font("MS Gothic", Font.PLAIN, 20));
@@ -481,7 +493,7 @@ public class GUIWindow {
 		txtpnMessagePaneVisitOutpost.setEditable(false);
 		txtpnMessagePaneVisitOutpost.setText("Message pane");
 		txtpnMessagePaneVisitOutpost.setForeground(new Color(0, 0, 128));
-		txtpnMessagePaneVisitOutpost.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		txtpnMessagePaneVisitOutpost.setFont(new Font("MS Gothic", Font.PLAIN, 15));
 		txtpnMessagePaneVisitOutpost.setBounds(303, 264, 283, 93);
 		visitOutpost.add(txtpnMessagePaneVisitOutpost);
 		
@@ -523,6 +535,7 @@ public class GUIWindow {
 		shopScreen.add(lblShopItemSelector);
 		
 		JTextPane txtpnShopItemInfo = new JTextPane();
+		txtpnShopItemInfo.setEditable(false);
 		txtpnShopItemInfo.setText("Item info");
 		txtpnShopItemInfo.setForeground(Color.WHITE);
 		txtpnShopItemInfo.setFont(new Font("MS Gothic", Font.PLAIN, 20));
@@ -542,7 +555,7 @@ public class GUIWindow {
 		txtpnMessagePaneShopScreen.setEditable(false);
 		txtpnMessagePaneShopScreen.setText("Message pane");
 		txtpnMessagePaneShopScreen.setForeground(new Color(0, 0, 128));
-		txtpnMessagePaneShopScreen.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		txtpnMessagePaneShopScreen.setFont(new Font("MS Gothic", Font.PLAIN, 15));
 		txtpnMessagePaneShopScreen.setBounds(303, 264, 283, 93);
 		shopScreen.add(txtpnMessagePaneShopScreen);
 		
@@ -573,7 +586,7 @@ public class GUIWindow {
 		txtpnMessagePaneInventoryScreen.setEditable(false);
 		txtpnMessagePaneInventoryScreen.setText("Message pane");
 		txtpnMessagePaneInventoryScreen.setForeground(new Color(0, 0, 0));
-		txtpnMessagePaneInventoryScreen.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		txtpnMessagePaneInventoryScreen.setFont(new Font("MS Gothic", Font.PLAIN, 15));
 		txtpnMessagePaneInventoryScreen.setBounds(303, 264, 283, 93);
 		inventoryScreen.add(txtpnMessagePaneInventoryScreen);
 		
@@ -649,7 +662,7 @@ public class GUIWindow {
 		treeInventoryContainers.setCellRenderer(newRenderer);
 		treeInventoryContainers.setBounds(0, 80, 285, 323);
 		inventoryScreen.add(treeInventoryContainers);
-
+		
 		btnViewCrewMember.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				layout.show(frame.getContentPane(), "Crew Members");
@@ -661,6 +674,21 @@ public class GUIWindow {
 					newMembers[i] = crewMembers.get(i);
 				}
 				comboBoxCrewMemberSelection.setModel(new DefaultComboBoxModel<CrewMember>(newMembers));
+				Object item = comboBoxCrewMemberSelection.getSelectedItem();
+				if (item instanceof CrewMember) {
+					CrewMember crewMember = (CrewMember) item;
+					int actions = crewMember.getActions();
+					btnUseItem.setEnabled(actions > 0 && gameEnvironment.getInventory().size() > 0);
+					btnSleep.setEnabled(actions > 0);
+					btnRepairShip.setEnabled(actions > 0);
+					btnSearchPlanet.setEnabled(actions > 0);
+					btnPilotShip.setEnabled(actions > 0);
+					String crewMemberInfo = crewMember.toString() + "\nActions: " + crewMember.getActions();
+					crewMemberInfo.substring(crewMemberInfo.indexOf("\n") + 1);
+					txtpnCrewMemberInfo.setText(crewMemberInfo);
+					txtpnCrewMemberInfoUseItem.setText(crewMemberInfo);
+					txtpnCrewMemberInfoPilotShip.setText(crewMemberInfo);
+				}
 			}
 		});
 		
@@ -680,13 +708,14 @@ public class GUIWindow {
 		
 		btnContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				gameEnvironment.newDay();
 				if ((boolean) inOut.getOutput()) {
 					// The game has ended
 					// TODO add code to change end game screen text based on how they lost
 				} else {
 					// The game has not ended
 					Object output = inOut.getOutput();
-					while (output != null) {
+					while (!(output instanceof Boolean)) {
 						messagePaneContents.add((String) output);
 						output = inOut.getOutput();
 					}
@@ -696,6 +725,121 @@ public class GUIWindow {
 				}
 			}
 		});
+		
+		btnUseItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layout.show(frame.getContentPane(), "Use Item");
+				updatePane(txtpnMessagePaneUseItem);
+				
+				ArrayList<Consumable> keys = gameEnvironment.getInventory().getKeys();
+				Consumable[] items = new Consumable[keys.size()];
+				for (int i = 0; i < keys.size(); i++) {
+					items[i] = keys.get(i);
+				}
+				comboBoxItemSelection.setModel(new DefaultComboBoxModel<Consumable>(items));
+				
+				Object item = comboBoxItemSelection.getSelectedItem();
+				if (item instanceof Consumable) {
+					Consumable newItem = (Consumable) item;
+					String itemInfo = newItem.getName() + "\n" + newItem.getClassification() + " item\n" + 
+							newItem.getDescription() + "\nQuantity: " + gameEnvironment.getInventory().get(newItem);
+					txtpnItemInfo.setText(itemInfo);
+				}
+			}
+		});
+		
+		btnSleep.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gameEnvironment.sleep((CrewMember) comboBoxCrewMemberSelection.getSelectedItem());
+				messagePaneContents.add((String) inOut.getOutput());
+				layout.show(frame.getContentPane(), "Main Screen");
+				updatePane(txtpnMessagePane);
+			}
+		});
+		
+		btnRepairShip.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gameEnvironment.repairShip((CrewMember) comboBoxCrewMemberSelection.getSelectedItem());
+				Object output = inOut.getOutput();
+				while (output != null) {
+					messagePaneContents.add((String) output);
+					output = inOut.getOutput();
+				}
+				layout.show(frame.getContentPane(), "Main Screen");
+				updatePane(txtpnMessagePane);
+			}
+		});
+		
+		btnSearchPlanet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gameEnvironment.searchPlanet((CrewMember) comboBoxCrewMemberSelection.getSelectedItem());
+				Object output = inOut.getOutput();
+				while (output != null) {
+					messagePaneContents.add((String) output);
+					output = inOut.getOutput();
+				}
+				layout.show(frame.getContentPane(), "Main Screen");
+				updatePane(txtpnMessagePane);
+			}
+		});
+		
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layout.show(frame.getContentPane(), "Main Screen");
+				updatePane(txtpnMessagePane);
+			}
+		});
+		
+		comboBoxCrewMemberSelection.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				Object item = comboBoxCrewMemberSelection.getSelectedItem();
+				if (item instanceof CrewMember) {
+					CrewMember crewMember = (CrewMember) item;
+					int actions = crewMember.getActions();
+					btnUseItem.setEnabled(actions > 0 && gameEnvironment.getInventory().size() > 0);
+					btnSleep.setEnabled(actions > 0);
+					btnRepairShip.setEnabled(actions > 0);
+					btnSearchPlanet.setEnabled(actions > 0);
+					btnPilotShip.setEnabled(actions > 0);
+					String crewMemberInfo = crewMember.toString() + "\nActions: " + crewMember.getActions();
+					crewMemberInfo.substring(crewMemberInfo.indexOf("\n") + 1);
+					txtpnCrewMemberInfo.setText(crewMemberInfo);
+					txtpnCrewMemberInfoUseItem.setText(crewMemberInfo);
+					txtpnCrewMemberInfoPilotShip.setText(crewMemberInfo);
+				}
+			}
+		});
+		
+		comboBoxItemSelection.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				Object item = comboBoxItemSelection.getSelectedItem();
+				if (item instanceof Consumable) {
+					Consumable newItem = (Consumable) item;
+					String itemInfo = newItem.getName() + "\n" + newItem.getClassification() + " item\n" + 
+							newItem.getDescription() + "\nQuantity: " + gameEnvironment.getInventory().get(newItem);
+					txtpnItemInfo.setText(itemInfo);
+				}
+			}
+		});
+		
+		btnConfirmUseItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gameEnvironment.useItem((CrewMember) comboBoxCrewMemberSelection.getSelectedItem(), 
+						(Consumable) comboBoxItemSelection.getSelectedItem());
+				messagePaneContents.add((String) inOut.getOutput());
+				layout.show(frame.getContentPane(), "Main Screen");
+				updatePane(txtpnMessagePane);
+			}
+		});
+		
+		btnBackUseItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layout.show(frame.getContentPane(), "Crew Members");
+				updatePane(txtpnMessagePaneCrewMembers);
+			}
+		});
+		
+		
 		
 		frame.setMinimumSize(new Dimension(640, 480));
 		frame.setBounds(100, 100, 450, 300);
