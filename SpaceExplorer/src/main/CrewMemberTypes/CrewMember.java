@@ -194,8 +194,8 @@ public abstract class CrewMember {
 	 */
 	public String toString() {
 		String returnString = name + ", " + TYPE_INFO.get("Type") + "\n";
-		returnString = returnString + "Health: " + status.get("Health") + "/" + MAX_STAT.get("Health") + "\n";
-		returnString = returnString + "Energy: " + status.get("Energy") + "/" + MAX_STAT.get("Energy") + "\n";
+		returnString = returnString + "Health:    " + status.get("Health") + "/" + MAX_STAT.get("Health") + "\n";
+		returnString = returnString + "Energy:    " + status.get("Energy") + "/" + MAX_STAT.get("Energy") + "\n";
 		returnString = returnString + "Nutrition: " + status.get("Nutrition") + "/" + MAX_STAT.get("Nutrition") + "\n";
 		returnString = returnString + "Strength: " + TYPE_INFO.get("Strength") + "\n";
 		returnString = returnString + "Weakness: " + TYPE_INFO.get("Weakness");

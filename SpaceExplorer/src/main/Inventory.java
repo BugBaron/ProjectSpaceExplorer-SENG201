@@ -2,6 +2,7 @@ package main;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 public class Inventory {
 	
@@ -24,15 +25,17 @@ public class Inventory {
 			Consumable coffee = new Consumable("Coffee");
 			Consumable egg = new Consumable("Egg");
 			
-			items.put(spacePlagueCure, 1);
-			items.put(bandAid, 1);
-			items.put(firstAidKit, 1);
-			items.put(spaceRation, 1);
-			items.put(water, 1);
-			items.put(banana, 1);
-			items.put(alienMeat, 1);
-			items.put(coffee, 1);
-			items.put(egg, 1);
+			int[] possibleQuantity = {0, 1, 2};
+			Random randomVar = new Random();
+			items.put(spacePlagueCure, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
+			items.put(bandAid, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
+			items.put(firstAidKit, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
+			items.put(spaceRation, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
+			items.put(water, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
+			items.put(banana, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
+			items.put(alienMeat, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
+			items.put(coffee, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
+			items.put(egg, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
 		}
 	}
 	

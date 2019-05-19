@@ -18,9 +18,12 @@ import java.awt.CardLayout;
 import javax.swing.JPanel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.border.LineBorder;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
+import javax.swing.text.DefaultCaret;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JTree;
@@ -36,11 +39,15 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ItemEvent;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.event.ListSelectionEvent;
 
 public class GUIWindow {
 
@@ -66,7 +73,7 @@ public class GUIWindow {
 			}
 		});
 	}
-
+	
 	/**
 	 * Create the application.
 	 */
@@ -87,11 +94,13 @@ public class GUIWindow {
 			text = "...\n" + text;
 		}
 		msgPane.setText(text);
+		msgPane.setCaretPosition(msgPane.getDocument().getLength());
 	}
 	
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@SuppressWarnings("serial")
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setMinimumSize(new Dimension(640, 480));
@@ -130,10 +139,15 @@ public class GUIWindow {
 		frame.getContentPane().add(visitOutpost, "Visit Outpost");
 		visitOutpost.setLayout(null);
 
-		JPanel shopScreen = new JPanel();
+		/*JPanel shopScreen = new JPanel();
 		shopScreen.setLayout(null);
 		shopScreen.setBackground(new Color(25, 25, 112));
-		frame.getContentPane().add(shopScreen, "Shop Screen");
+		frame.getContentPane().add(shopScreen, "Shop Screen");*/
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(25, 25, 112));
+		frame.getContentPane().add(panel, "Shop Screen");
+		panel.setLayout(null);
 
 		JPanel inventoryScreen = new JPanel();
 		inventoryScreen.setLayout(null);
@@ -149,13 +163,14 @@ public class GUIWindow {
 		lblControlPanelTitle.setBounds(0, 0, 586, 60);
 		mainScreen.add(lblControlPanelTitle);
 		
-		JLabel lblDayNumber = new JLabel("Day number: 3/7");
+		JLabel lblDayNumber = new JLabel(gameEnvironment.getDayString());
 		lblDayNumber.setForeground(Color.WHITE);
 		lblDayNumber.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		lblDayNumber.setBounds(0, 80, 283, 36);
 		mainScreen.add(lblDayNumber);
 		
 		JButton btnViewCrewMember = new JButton("View Crew members");
+		btnViewCrewMember.setFocusable(false);
 		btnViewCrewMember.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
 		btnViewCrewMember.setForeground(Color.WHITE);
 		btnViewCrewMember.setBackground(new Color(25, 25, 112));
@@ -164,6 +179,7 @@ public class GUIWindow {
 		mainScreen.add(btnViewCrewMember);
 		
 		JButton btnViewShipStatus = new JButton("View ship status");
+		btnViewShipStatus.setFocusable(false);
 		btnViewShipStatus.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
 		btnViewShipStatus.setForeground(Color.WHITE);
 		btnViewShipStatus.setBackground(new Color(25, 25, 112));
@@ -172,6 +188,7 @@ public class GUIWindow {
 		mainScreen.add(btnViewShipStatus);
 		
 		JButton btnVisitSpaceOutpost = new JButton("Visit space outpost");
+		btnVisitSpaceOutpost.setFocusable(false);
 		btnVisitSpaceOutpost.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
 		btnVisitSpaceOutpost.setForeground(new Color(255, 255, 255));
 		btnVisitSpaceOutpost.setBackground(new Color(25, 25, 112));
@@ -180,6 +197,7 @@ public class GUIWindow {
 		mainScreen.add(btnVisitSpaceOutpost);
 		
 		JButton btnContinue = new JButton("Continue to next day");
+		btnContinue.setFocusable(false);
 		btnContinue.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
 		btnContinue.setForeground(Color.WHITE);
 		btnContinue.setBackground(new Color(25, 25, 112));
@@ -220,6 +238,7 @@ public class GUIWindow {
 		crewMembers.add(txtpnMessagePaneCrewMembers);
 		
 		JButton btnUseItem = new JButton("Use food/medical supplies");
+		btnUseItem.setFocusable(false);
 		btnUseItem.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
 		btnUseItem.setForeground(Color.WHITE);
 		btnUseItem.setBackground(new Color(25, 25, 112));
@@ -228,6 +247,7 @@ public class GUIWindow {
 		crewMembers.add(btnUseItem);
 		
 		JButton btnSleep = new JButton("Sleep");
+		btnSleep.setFocusable(false);
 		btnSleep.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
 		btnSleep.setForeground(Color.WHITE);
 		btnSleep.setBackground(new Color(25, 25, 112));
@@ -236,6 +256,7 @@ public class GUIWindow {
 		crewMembers.add(btnSleep);
 		
 		JButton btnRepairShip = new JButton("Repair ship shields");
+		btnRepairShip.setFocusable(false);
 		btnRepairShip.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
 		btnRepairShip.setForeground(Color.WHITE);
 		btnRepairShip.setBackground(new Color(25, 25, 112));
@@ -244,6 +265,7 @@ public class GUIWindow {
 		crewMembers.add(btnRepairShip);
 		
 		JButton btnSearchPlanet = new JButton("Search planet");
+		btnSearchPlanet.setFocusable(false);
 		btnSearchPlanet.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
 		btnSearchPlanet.setForeground(Color.WHITE);
 		btnSearchPlanet.setBackground(new Color(25, 25, 112));
@@ -252,6 +274,7 @@ public class GUIWindow {
 		crewMembers.add(btnSearchPlanet);
 		
 		JButton btnPilotShip = new JButton("Pilot ship");
+		btnPilotShip.setFocusable(false);
 		btnPilotShip.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
 		btnPilotShip.setForeground(Color.WHITE);
 		btnPilotShip.setBackground(new Color(25, 25, 112));
@@ -260,6 +283,7 @@ public class GUIWindow {
 		crewMembers.add(btnPilotShip);
 		
 		JButton btnBack = new JButton("Back");
+		btnBack.setFocusable(false);
 		btnBack.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
 		btnBack.setForeground(Color.WHITE);
 		btnBack.setBackground(new Color(25, 25, 112));
@@ -317,6 +341,7 @@ public class GUIWindow {
 		useItem.add(txtpnMessagePaneUseItem);
 		
 		JButton btnBackUseItem = new JButton("Back");
+		btnBackUseItem.setFocusable(false);
 		btnBackUseItem.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
 		btnBackUseItem.setForeground(Color.WHITE);
 		btnBackUseItem.setBackground(new Color(25, 25, 112));
@@ -348,6 +373,7 @@ public class GUIWindow {
 		useItem.add(comboBoxItemSelection);
 		
 		JButton btnConfirmUseItem = new JButton("Use item");
+		btnConfirmUseItem.setFocusable(false);
 		btnConfirmUseItem.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
 		btnConfirmUseItem.setForeground(Color.WHITE);
 		btnConfirmUseItem.setBackground(new Color(25, 25, 112));
@@ -381,6 +407,7 @@ public class GUIWindow {
 		pilotShip.add(lblPilotShipTitle);
 		
 		JButton btnConfirmPilotShip = new JButton("Pilot Ship");
+		btnConfirmPilotShip.setFocusable(false);
 		btnConfirmPilotShip.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
 		btnConfirmPilotShip.setForeground(Color.WHITE);
 		btnConfirmPilotShip.setBackground(new Color(25, 25, 112));
@@ -397,6 +424,7 @@ public class GUIWindow {
 		pilotShip.add(txtpnMessagePanePilotShip);
 		
 		JButton btnBackPilotShip = new JButton("Back");
+		btnBackPilotShip.setFocusable(false);
 		btnBackPilotShip.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
 		btnBackPilotShip.setForeground(Color.WHITE);
 		btnBackPilotShip.setBackground(new Color(25, 25, 112));
@@ -410,8 +438,19 @@ public class GUIWindow {
 		lblCrewMember2Selector.setBounds(0, 80, 200, 36);
 		pilotShip.add(lblCrewMember2Selector);
 		
-		JComboBox<String> comboBoxCrewMember2Selection = new JComboBox<String>();
-		comboBoxCrewMember2Selection.setModel(new DefaultComboBoxModel<String>(new String[] {"Donald Trump, Human", "Robocop, Robot", "Chameleos, Lizard"}));
+		JComboBox<CrewMember> comboBoxCrewMember2Selection = new JComboBox<CrewMember>();
+		comboBoxCrewMember2Selection.setRenderer(new BasicComboBoxRenderer() {
+			@Override
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean hasFocus) {
+				super.getListCellRendererComponent(list, value, index, isSelected, hasFocus);
+				if (value instanceof CrewMember) {
+					CrewMember crewMember = (CrewMember) value;
+					setText(crewMember.getName() + ", " + crewMember.getTypeInfo().get("Type"));
+				}
+				
+				return this;	
+			}
+		});
 		comboBoxCrewMember2Selection.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		comboBoxCrewMember2Selection.setBounds(200, 80, 379, 36);
 		pilotShip.add(comboBoxCrewMember2Selection);
@@ -420,7 +459,7 @@ public class GUIWindow {
 		txtpnSecondCrewMember.setEditable(false);
 		txtpnSecondCrewMember.setBackground(new Color(25, 25, 112));
 		txtpnSecondCrewMember.setForeground(new Color(255, 255, 255));
-		txtpnSecondCrewMember.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		txtpnSecondCrewMember.setFont(new Font("MS Gothic", Font.PLAIN, 12));
 		txtpnSecondCrewMember.setText("Second crew member info");
 		txtpnSecondCrewMember.setBounds(0, 126, 283, 128);
 		pilotShip.add(txtpnSecondCrewMember);
@@ -458,6 +497,7 @@ public class GUIWindow {
 		shipStatus.add(txtpnMessagePaneShipStatus);
 		
 		JButton btnBackShipStatus = new JButton("Back");
+		btnBackShipStatus.setFocusable(false);
 		btnBackShipStatus.setForeground(Color.WHITE);
 		btnBackShipStatus.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		btnBackShipStatus.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
@@ -498,6 +538,7 @@ public class GUIWindow {
 		visitOutpost.add(txtpnMessagePaneVisitOutpost);
 		
 		JButton btnBackVisitOutpost = new JButton("Back");
+		btnBackVisitOutpost.setFocusable(false);
 		btnBackVisitOutpost.setForeground(Color.WHITE);
 		btnBackVisitOutpost.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		btnBackVisitOutpost.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
@@ -506,6 +547,7 @@ public class GUIWindow {
 		visitOutpost.add(btnBackVisitOutpost);
 		
 		JButton btnViewShop = new JButton("View Shop");
+		btnViewShop.setFocusable(false);
 		btnViewShop.setForeground(Color.WHITE);
 		btnViewShop.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		btnViewShop.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
@@ -514,6 +556,7 @@ public class GUIWindow {
 		visitOutpost.add(btnViewShop);
 		
 		JButton btnViewInventory = new JButton("View Inventory");
+		btnViewInventory.setFocusable(false);
 		btnViewInventory.setForeground(Color.WHITE);
 		btnViewInventory.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		btnViewInventory.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
@@ -523,6 +566,80 @@ public class GUIWindow {
 		
 		// Shop Screen
 		
+		JLabel lblShopTitle = new JLabel("Shop");
+		lblShopTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblShopTitle.setForeground(Color.YELLOW);
+		lblShopTitle.setFont(new Font("MS Gothic", Font.PLAIN, 40));
+		lblShopTitle.setBounds(0, 0, 586, 60);
+		panel.add(lblShopTitle);
+		
+		JTextPane txtpnItemInfoShopScreen = new JTextPane();
+		txtpnItemInfoShopScreen.setText("Item info");
+		txtpnItemInfoShopScreen.setForeground(Color.WHITE);
+		txtpnItemInfoShopScreen.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		txtpnItemInfoShopScreen.setEditable(false);
+		txtpnItemInfoShopScreen.setBackground(new Color(25, 25, 112));
+		txtpnItemInfoShopScreen.setBounds(303, 80, 283, 128);
+		panel.add(txtpnItemInfoShopScreen);
+		
+		JTextPane txtpnMessagePaneShopScreen = new JTextPane();
+		txtpnMessagePaneShopScreen.setText("Message pane");
+		txtpnMessagePaneShopScreen.setForeground(new Color(0, 0, 128));
+		txtpnMessagePaneShopScreen.setFont(new Font("MS Gothic", Font.PLAIN, 15));
+		txtpnMessagePaneShopScreen.setEditable(false);
+		txtpnMessagePaneShopScreen.setBounds(303, 264, 283, 93);
+		panel.add(txtpnMessagePaneShopScreen);
+		
+		JButton btnBackShopScreen = new JButton("Back");
+		btnBackShopScreen.setFocusable(false);
+		btnBackShopScreen.setForeground(Color.WHITE);
+		btnBackShopScreen.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		btnBackShopScreen.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
+		btnBackShopScreen.setBackground(new Color(25, 25, 112));
+		btnBackShopScreen.setBounds(303, 367, 283, 36);
+		panel.add(btnBackShopScreen);
+		
+		JButton btnPurchaseItem = new JButton("Purchase item");
+		btnPurchaseItem.setFocusable(false);
+		btnPurchaseItem.setForeground(Color.WHITE);
+		btnPurchaseItem.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		btnPurchaseItem.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
+		btnPurchaseItem.setBackground(new Color(25, 25, 112));
+		btnPurchaseItem.setBounds(303, 218, 283, 36);
+		panel.add(btnPurchaseItem);
+		
+		JList<Consumable> listShopItems = new JList<Consumable>();
+		listShopItems.setCellRenderer(new DefaultListCellRenderer() {
+			@Override
+			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean hasFocus) {
+				super.getListCellRendererComponent(list, value, index, isSelected, hasFocus);
+				if (value instanceof Consumable) {
+					Consumable item = (Consumable) value;
+					String name = item.getName();
+					setText(item.getName() + "," + " ".repeat(17 - name.length()) + "$" + 
+							item.getPrice() + ", " + gameEnvironment.getShop().get(item));
+				}
+				
+				return this;	
+			}
+		});
+		listShopItems.setBackground(new Color(25, 25, 112));
+		listShopItems.setForeground(new Color(255, 255, 255));
+		listShopItems.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
+		listShopItems.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		listShopItems.setVisibleRowCount(9);
+		listShopItems.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		listShopItems.setBounds(0, 80, 283, 277);
+		panel.add(listShopItems);	
+		
+		JLabel lblMoney = new JLabel("Money: $100");
+		lblMoney.setForeground(Color.WHITE);
+		lblMoney.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		lblMoney.setBounds(0, 367, 285, 36);
+		panel.add(lblMoney);
+		
+		//TODO remove
+		/*
 		JComboBox<String> comboBoxShopItemSelection = new JComboBox<String>();
 		comboBoxShopItemSelection.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		comboBoxShopItemSelection.setBounds(60, 80, 222, 36);
@@ -579,7 +696,7 @@ public class GUIWindow {
 		lblImageShopScreen.setVerticalAlignment(SwingConstants.TOP);
 		lblImageShopScreen.setBounds(303, 80, 283, 174);
 		shopScreen.add(lblImageShopScreen);
-		
+		*/
 		// Inventory Screen
 		
 		JTextPane txtpnMessagePaneInventoryScreen = new JTextPane();
@@ -591,6 +708,7 @@ public class GUIWindow {
 		inventoryScreen.add(txtpnMessagePaneInventoryScreen);
 		
 		JButton btnBackInventoryScreen = new JButton("Back");
+		btnBackInventoryScreen.setFocusable(false);
 		btnBackInventoryScreen.setForeground(Color.WHITE);
 		btnBackInventoryScreen.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		btnBackInventoryScreen.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
@@ -618,40 +736,8 @@ public class GUIWindow {
 		treeInventoryContainers.setBackground(new Color(25, 25, 112));
 		treeInventoryContainers.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		treeInventoryContainers.setRootVisible(false);
-		treeInventoryContainers.setModel(new DefaultTreeModel(
-			new DefaultMutableTreeNode("Inventory") {
-				{
-					DefaultMutableTreeNode node_1;
-					node_1 = new DefaultMutableTreeNode("Banana");
-						node_1.add(new DefaultMutableTreeNode("Food item"));
-						node_1.add(new DefaultMutableTreeNode("Restores 2 Nutrition"));
-						node_1.add(new DefaultMutableTreeNode("Quantity: 1"));
-					add(node_1);
-					node_1 = new DefaultMutableTreeNode("Coffee");
-						node_1.add(new DefaultMutableTreeNode("Food item"));
-						node_1.add(new DefaultMutableTreeNode("Restores 2 Nutrition and 1 Energy"));
-						node_1.add(new DefaultMutableTreeNode("Quantity: 1"));
-					add(node_1);
-					node_1 = new DefaultMutableTreeNode("Egg");
-						node_1.add(new DefaultMutableTreeNode("Food item"));
-						node_1.add(new DefaultMutableTreeNode("Restores 3 Nutrition"));
-						node_1.add(new DefaultMutableTreeNode("Quantity: 1"));
-					add(node_1);
-					node_1 = new DefaultMutableTreeNode("Water");
-						node_1.add(new DefaultMutableTreeNode("Food item"));
-						node_1.add(new DefaultMutableTreeNode("Restores 2 Nutrition"));
-						node_1.add(new DefaultMutableTreeNode("Quantity: 1"));
-					add(node_1);
-					node_1 = new DefaultMutableTreeNode("Band-Aid");
-						node_1.add(new DefaultMutableTreeNode("Medical item"));
-						node_1.add(new DefaultMutableTreeNode("Restores 2 Health"));
-						node_1.add(new DefaultMutableTreeNode("Quantity: 1"));
-					add(node_1);
-				}
-			}
-		));
 		DefaultTreeCellRenderer newRenderer = new DefaultTreeCellRenderer();
-		newRenderer.setBorderSelectionColor(new Color(50, 205, 50));
+		newRenderer.setBorderSelectionColor(new Color(25, 25, 112));
 		newRenderer.setLeafIcon(null);
 		newRenderer.setOpenIcon(null);
 		newRenderer.setClosedIcon(null);
@@ -663,8 +749,18 @@ public class GUIWindow {
 		treeInventoryContainers.setBounds(0, 80, 285, 323);
 		inventoryScreen.add(treeInventoryContainers);
 		
-		btnViewCrewMember.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		final class Methods {
+			Methods() {};
+			
+			/** Shows the Main Screen and updates visible widgets */
+			public final void gotoMainScreen() {
+				layout.show(frame.getContentPane(), "Main Screen");
+				updatePane(txtpnMessagePane);
+				lblDayNumber.setText(gameEnvironment.getDayString());
+			}
+			
+			/** Shows the Crew Member screen and updates visible widgets */
+			public final void gotoCrewMember() {
 				layout.show(frame.getContentPane(), "Crew Members");
 				updatePane(txtpnMessagePaneCrewMembers);
 				
@@ -674,6 +770,10 @@ public class GUIWindow {
 					newMembers[i] = crewMembers.get(i);
 				}
 				comboBoxCrewMemberSelection.setModel(new DefaultComboBoxModel<CrewMember>(newMembers));
+			}
+			
+			/** Updates the visible widgets of the Crew Member screen */
+			public final void updateCrewMembers() {
 				Object item = comboBoxCrewMemberSelection.getSelectedItem();
 				if (item instanceof CrewMember) {
 					CrewMember crewMember = (CrewMember) item;
@@ -682,18 +782,65 @@ public class GUIWindow {
 					btnSleep.setEnabled(actions > 0);
 					btnRepairShip.setEnabled(actions > 0);
 					btnSearchPlanet.setEnabled(actions > 0);
-					btnPilotShip.setEnabled(actions > 0);
+					btnPilotShip.setEnabled(actions > 0 && gameEnvironment.getAvailableMembers().size() > 1);
 					String crewMemberInfo = crewMember.toString() + "\nActions: " + crewMember.getActions();
-					crewMemberInfo.substring(crewMemberInfo.indexOf("\n") + 1);
+					crewMemberInfo = crewMemberInfo.substring(crewMemberInfo.indexOf("\n") + 1);
 					txtpnCrewMemberInfo.setText(crewMemberInfo);
 					txtpnCrewMemberInfoUseItem.setText(crewMemberInfo);
 					txtpnCrewMemberInfoPilotShip.setText(crewMemberInfo);
 				}
 			}
+			
+			/** Updates the visible widgets of the Shop Screen */
+			public final void updateShopScreen() {
+				lblMoney.setText("Money: $" + gameEnvironment.getMoney());
+				Consumable initialSelection = listShopItems.getSelectedValue();
+				DefaultListModel<Consumable> list = new DefaultListModel<Consumable>();
+				list.addAll(gameEnvironment.getShop().getKeys());
+				listShopItems.setModel(list);
+				if (gameEnvironment.getShop().getKeys().contains(initialSelection)) {
+					listShopItems.setSelectedValue(initialSelection, false);
+				}
+				updateShopItem();
+			}
+			
+			/** Updates the item info widget of the Shop Screen */
+			public final void updateShopItem() {
+				Object selection = listShopItems.getSelectedValue();
+				String text = "Item info";
+				if (selection instanceof Consumable) {
+					Consumable item = (Consumable) selection;
+					text = item.getName() + "\n" + 
+							item.getDescription() + "\n" +
+							"Price: $" + item.getPrice() + "\n" + 
+							"Quantity: " + gameEnvironment.getShop().get(item);
+					if (gameEnvironment.getMoney() < item.getPrice()) {
+						btnPurchaseItem.setEnabled(false);
+						text = text + "\nYou do not have enough money to purchase this item";
+					} else {
+						btnPurchaseItem.setEnabled(true);
+					}
+				} else {
+					btnPurchaseItem.setEnabled(false);
+				}
+				txtpnItemInfoShopScreen.setText(text);
+			}
+		}
+		
+		final Methods METHODS = new Methods();
+		
+		
+		
+		btnViewCrewMember.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				METHODS.gotoCrewMember();
+				METHODS.updateCrewMembers();
+			}
 		});
 		
 		btnViewShipStatus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				txtpnShipStatus.setText(gameEnvironment.getShipString());
 				layout.show(frame.getContentPane(), "Ship Status");
 				updatePane(txtpnMessagePaneShipStatus);
 			}
@@ -719,6 +866,7 @@ public class GUIWindow {
 						messagePaneContents.add((String) output);
 						output = inOut.getOutput();
 					}
+					lblDayNumber.setText(gameEnvironment.getDayString()); // TODO this is temporary
 
 					// TODO layout.show(frame.getContentPane(), "Score Screen"); and need 
 					// to change the contents of the label using '(String) inOut.getContents()'
@@ -752,8 +900,7 @@ public class GUIWindow {
 			public void actionPerformed(ActionEvent e) {
 				gameEnvironment.sleep((CrewMember) comboBoxCrewMemberSelection.getSelectedItem());
 				messagePaneContents.add((String) inOut.getOutput());
-				layout.show(frame.getContentPane(), "Main Screen");
-				updatePane(txtpnMessagePane);
+				METHODS.gotoMainScreen();
 			}
 		});
 		
@@ -765,8 +912,7 @@ public class GUIWindow {
 					messagePaneContents.add((String) output);
 					output = inOut.getOutput();
 				}
-				layout.show(frame.getContentPane(), "Main Screen");
-				updatePane(txtpnMessagePane);
+				METHODS.gotoMainScreen();
 			}
 		});
 		
@@ -778,35 +924,37 @@ public class GUIWindow {
 					messagePaneContents.add((String) output);
 					output = inOut.getOutput();
 				}
-				layout.show(frame.getContentPane(), "Main Screen");
-				updatePane(txtpnMessagePane);
+				METHODS.gotoMainScreen();
+			}
+		});
+		
+		btnPilotShip.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Vector<CrewMember> availableMembers = new Vector(gameEnvironment.getAvailableMembers());
+				availableMembers.remove((CrewMember) comboBoxCrewMemberSelection.getSelectedItem());
+				comboBoxCrewMember2Selection.setModel(new DefaultComboBoxModel<CrewMember>(availableMembers));
+				Object item = comboBoxCrewMember2Selection.getSelectedItem();
+				if (item instanceof CrewMember) {
+					CrewMember crewMember = (CrewMember) item;
+					String crewMemberInfo = crewMember.toString() + "\nActions: " + crewMember.getActions();
+					crewMemberInfo = crewMemberInfo.substring(crewMemberInfo.indexOf("\n") + 1);
+					txtpnSecondCrewMember.setText(crewMemberInfo);
+				}
+				
+				layout.show(frame.getContentPane(), "Pilot Ship");
+				updatePane(txtpnMessagePanePilotShip);
 			}
 		});
 		
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				layout.show(frame.getContentPane(), "Main Screen");
-				updatePane(txtpnMessagePane);
+				METHODS.gotoMainScreen();
 			}
 		});
 		
 		comboBoxCrewMemberSelection.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
-				Object item = comboBoxCrewMemberSelection.getSelectedItem();
-				if (item instanceof CrewMember) {
-					CrewMember crewMember = (CrewMember) item;
-					int actions = crewMember.getActions();
-					btnUseItem.setEnabled(actions > 0 && gameEnvironment.getInventory().size() > 0);
-					btnSleep.setEnabled(actions > 0);
-					btnRepairShip.setEnabled(actions > 0);
-					btnSearchPlanet.setEnabled(actions > 0);
-					btnPilotShip.setEnabled(actions > 0);
-					String crewMemberInfo = crewMember.toString() + "\nActions: " + crewMember.getActions();
-					crewMemberInfo.substring(crewMemberInfo.indexOf("\n") + 1);
-					txtpnCrewMemberInfo.setText(crewMemberInfo);
-					txtpnCrewMemberInfoUseItem.setText(crewMemberInfo);
-					txtpnCrewMemberInfoPilotShip.setText(crewMemberInfo);
-				}
+				METHODS.updateCrewMembers();
 			}
 		});
 		
@@ -827,15 +975,104 @@ public class GUIWindow {
 				gameEnvironment.useItem((CrewMember) comboBoxCrewMemberSelection.getSelectedItem(), 
 						(Consumable) comboBoxItemSelection.getSelectedItem());
 				messagePaneContents.add((String) inOut.getOutput());
-				layout.show(frame.getContentPane(), "Main Screen");
-				updatePane(txtpnMessagePane);
+				METHODS.gotoMainScreen();
 			}
 		});
 		
 		btnBackUseItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				layout.show(frame.getContentPane(), "Crew Members");
-				updatePane(txtpnMessagePaneCrewMembers);
+				METHODS.gotoCrewMember();
+			}
+		});
+		
+		btnConfirmPilotShip.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gameEnvironment.pilotShip((CrewMember) comboBoxCrewMemberSelection.getSelectedItem(), 
+						(CrewMember) comboBoxCrewMember2Selection.getSelectedItem());
+				Object output = inOut.getOutput();
+				while (output != null) {
+					messagePaneContents.add((String) output);
+					output = inOut.getOutput();
+				}
+				METHODS.gotoMainScreen();
+			}
+		});
+		
+		btnBackPilotShip.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				METHODS.gotoCrewMember();
+			}
+		});
+		
+		btnBackShipStatus.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				METHODS.gotoMainScreen();
+			}
+		});
+		
+		btnViewShop.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				METHODS.updateShopScreen();
+				layout.show(frame.getContentPane(), "Shop Screen");
+				updatePane(txtpnMessagePaneShopScreen);
+			}
+		});
+		
+		btnViewInventory.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				treeInventoryContainers.setModel(new DefaultTreeModel(
+						new DefaultMutableTreeNode("Inventory") {{
+							DefaultMutableTreeNode node;
+							for (Consumable item : gameEnvironment.getInventory().getKeys()) {
+								node = new DefaultMutableTreeNode(item.getName());
+								node.add(new DefaultMutableTreeNode(item.getClassification() + " item"));
+								node.add(new DefaultMutableTreeNode(item.getDescription()));
+								node.add(new DefaultMutableTreeNode("Quantity: " + gameEnvironment.getInventory().get(item)));
+								add(node);
+							}
+							
+						}}
+					));
+				layout.show(frame.getContentPane(), "Inventory Screen");
+				updatePane(txtpnMessagePaneInventoryScreen);
+			}
+		});
+		
+		btnBackVisitOutpost.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				METHODS.gotoMainScreen();
+			}
+		});
+		
+		btnPurchaseItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gameEnvironment.purchaseItem(listShopItems.getSelectedValue());
+				METHODS.updateShopScreen();
+				messagePaneContents.add((String) inOut.getOutput());
+				updatePane(txtpnMessagePaneShopScreen);
+			}
+		});
+		
+		btnBackShopScreen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layout.show(frame.getContentPane(), "Visit Outpost");
+				updatePane(txtpnMessagePaneVisitOutpost);
+			}
+		});
+		
+		listShopItems.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				Object item = listShopItems.getSelectedValue();
+				if (item instanceof Consumable) {
+					METHODS.updateShopItem();
+				}
+			}
+		});
+		
+		btnBackInventoryScreen.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				layout.show(frame.getContentPane(), "Visit Outpost");
+				updatePane(txtpnMessagePaneVisitOutpost);
 			}
 		});
 		

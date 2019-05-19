@@ -114,5 +114,14 @@ public class Consumable {
 	public String getClassification() {
 		return classification;
 	}
+	
+	/**
+	 * Tests this consumable for equality with another one
+	 * @param other the consumable to test this consumable with
+	 * @return whether the two consumables are equal
+	 */
+	public boolean equals(Consumable other) {
+		return this.name == other.name;
+	}
 }
 

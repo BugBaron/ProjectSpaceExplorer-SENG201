@@ -78,8 +78,9 @@ public class GameEnvironment {
 		
 		ArrayList<CrewMember> selectedMembers = new ArrayList<CrewMember>();
 		ArrayList<String> names = new ArrayList<String>();
-		ArrayList<CrewMember> availableList = new ArrayList<CrewMember>(Arrays.asList(new Human(ship), new Robot(ship), new Cyborg(ship), 
-					new Alien(ship), new Lizard(ship), new Unicorn(ship)));
+		ArrayList<CrewMember> availableList = new ArrayList<CrewMember>(Arrays.asList(
+				new Human(ship), new Robot(ship), new Cyborg(ship), 
+				new Alien(ship), new Lizard(ship), new Unicorn(ship)));
 		for (int i = 0; i < numMembers; i++) {
 			//inOut.print("Choose crew member " + (i + 1) + ":");
 			for (CrewMember person : availableList) {
@@ -143,118 +144,56 @@ public class GameEnvironment {
 		//gameLoop();
 	}
 	
-	// TODO remove this function (obsolete)
-	public void gameLoop() {
-		inOut.print("Day number: " + dayNumber + "/" + maxDays);
-		inOut.print("1) View Crew Member and/or do a Crew Member Action");
-		inOut.print("2) View Spaceship status");
-		inOut.print("3) Visit the nearest space outpost");
-		inOut.print("4) Continue to next day");
-		int choice = inOut.collectInt(1, 4);
-		
-		switch (choice) {
-		case 1: //selectCrewMember(); break;
-		case 2:	inOut.print(ship.getName());
-			inOut.print("Shield level: " + ship.getShipShields() + "/10");
-			inOut.print("Spaceship pieces found: " + partsFound + "/" + partsToFind);
-			inOut.print("Press enter to return to the control panel");
-			inOut.collectString();
-			gameLoop();
-		case 3:	goToOutpost(); break;
-		case 4:	newDay(); break;
-		default: gameLoop();
-		}
-	}
 	
-	
+	/**
+	 * Gets a list containing all the crew members of the ship
+	 * @return the crew members of the ship
+	 */
 	public ArrayList<CrewMember> getCrewMembers() {
 		return ship.getCrewMembers();
 	}
 	
+	
+	/**
+	 * Gets a list containing all crew members with actions in the ship
+	 * @return the crew members with actions in the ship
+	 */
+	public ArrayList<CrewMember> getAvailableMembers() {
+		ArrayList<CrewMember> availableMembers = new ArrayList<CrewMember>();
+		for (CrewMember crewMember : ship.getCrewMembers()) {
+			if (crewMember.getActions() > 0) availableMembers.add(crewMember);
+		}
+		return availableMembers;
+	}
+	
+	/**
+	 * Gets a string representing the ship status
+	 * @return a string representing the ship status
+	 */
+	public String getShipString() {
+		String returnString = ship.toString() + "\n" + 
+				"Spaceship pieces found: " + partsFound + "/" + partsToFind;
+		return returnString;
+	}
+	
+	
+	/**
+	 * Gets a string to show the number of days completed and the days remaining
+	 * @return a string of the day number
+	 */
+	public String getDayString() {
+		return "Day number: " + dayNumber + "/" + maxDays;
+	}
+	
+	
+	public void purchaseItem(Consumable item) {
+		shop.removeItem(item); 
+		inventory.addItem(item);
+		inOut.print("You just purchased a " + item.getName() + "!");
+		ship.addMoney(-item.getPrice());
+	}
 	// TODO remove this function (obsolete)
 	/*
-	public void selectCrewMember() {
-		ArrayList<CrewMember> crewMembers = ship.getCrewMembers();
-		int index = 0;
-		
-		// This part displays options for all crew members that have actions remaining
-		ArrayList<CrewMember> membersWithActions = new ArrayList<CrewMember>();
-		ArrayList<CrewMember> membersWithoutActions = new ArrayList<CrewMember>();
-		for (int i = 0; i < crewMembers.size(); i++) {
-			CrewMember person = crewMembers.get(i);
-			
-			// Ensure that only crew members that have actions are shown
-			if (person.getActions() > 0) {
-				membersWithActions.add(person);
-				index = membersWithActions.size();
-				inOut.print(index + ") " + person.getName() + ", " + person.getTypeInfo().get("Type"));
-			} else { // Add crew members without actions to another list
-				membersWithoutActions.add(person);
-			}
-		}
-		
-		// This part displays options for crew members without actions remaining
-		for (int i = 0; i < membersWithoutActions.size(); i++) {
-			CrewMember person = membersWithoutActions.get(i);
-			inOut.print((index + i + 1) + ") " + person.getName() + ", " + person.getTypeInfo().get("Type") 
-					+ " (No actions remaining)");
-		}
-		
-		inOut.print((crewMembers.size() + 1) + ") Back to control panel");
-
-		// Collects the user input
-		int choice = inOut.collectInt(1, crewMembers.size() + 1);
-		
-		// Completes the action for this crew member and the other chosen one
-		if (choice < (index + 1)) {
-			completeAction(membersWithActions.get(choice - 1));
-		} else if (choice < (crewMembers.size() + 1)) {
-			inOut.print(membersWithoutActions.get(choice - index - 1).toString());
-			inOut.print("");
-			inOut.print("Actions remaining: 0");
-			inOut.print("Press enter to Crew Member selection");
-			inOut.collectString();
-			selectCrewMember();
-		} else {
-			gameLoop();
-		}
-		
-	}
-	*/
-	
-	// TODO remove this function (obsolete)
-	public void completeAction(CrewMember crewMember) {
-		inOut.print(crewMember.toString());
-		inOut.print("");
-		inOut.print("Actions remaining: " + crewMember.getActions());
-		inOut.print("1) Eat food or use medical supplies");
-		inOut.print("2) Sleep");
-		inOut.print("3) Repair Ship Shields");
-		inOut.print("4) Search planet");
-		inOut.print("5) Pilot the ship to a new planet");
-		inOut.print("6) Back to Crew Member selection");
-		int choice = inOut.collectInt(1, 6);
-		
-		switch (choice) {
-		case 1: if (useItem(crewMember)) { 
-				gameLoop(); 
-			} else { 
-				completeAction(crewMember); 
-			}; 
-			break;
-		case 2: sleep(crewMember); gameLoop(); break;
-		case 3: repairShip(crewMember); gameLoop(); break;
-		case 4: if (!searchPlanet(crewMember)) gameLoop(); break;
-		case 5: if (pilotShip(crewMember)) { 
-				gameLoop(); 
-			} else { 
-				completeAction(crewMember); 
-			}; 
-			break;
-		// TODO default: selectCrewMember();
-		}
-	}
-	
 	public void viewShop() {
 		ArrayList<Consumable> keys = shop.getKeys();
 		Integer size = keys.size();
@@ -302,44 +241,34 @@ public class GameEnvironment {
 				viewShop();
 			} 
 		} else {
-			goToOutpost();
+			//goToOutpost();
 		}
 	}
+	*/
 	
-	// TODO this needs to be reworked to work with the GUI
-	public void viewInventory() {
-		ArrayList<Consumable> keys = inventory.getKeys();
-		Integer size = keys.size();
-		// Displays all the items in the shop as options
-		int i;
-			for (i = 0; i < size; i++) {
-				Consumable item = keys.get(i);
-				String classification = item.getClassification();
-				String name = item.getName();
-				String description = item.getDescription();
-				inOut.print(classification + " item: " + name + ", " 
-				+ description + ", Quantity: " + inventory.get(item));
-			}
-		inOut.print("Press enter to continue");
-		inOut.collectString();
-		goToOutpost();
-	}
-	
-	// TODO remove this function (obsolete)
-	public void goToOutpost() {
-		inOut.print("1) View Objects For Sale");
-		inOut.print("2) View Inventory");
-		inOut.print("3) Back to Control Panel");
-		int choice = inOut.collectInt(1,  3);
-		
-		switch (choice) {
-		case 1: viewShop(); break;
-		case 2: viewInventory(); break;
-		default: gameLoop();
-		}
+	/**
+	 * Gets the inventory of the ship
+	 * @return the inventory of the ship
+	 */
+	public Inventory getInventory() {
+		return inventory;
 	}
 
 
+	/**
+	 * Gets the shop of the planet
+	 * @return the shop of the planet
+	 */
+	public Inventory getShop() {
+		return shop;
+	}
+	
+	
+	public int getMoney() {
+		return ship.getMoney();
+	}
+	
+	
 	// TODO needs to be edited to remove obsolete sections
 	/**
 	 * Conducts all processes related to ending the day
@@ -388,7 +317,7 @@ public class GameEnvironment {
 				}
 			}
 			partsHere = true;
-			inOut.print(null); // Indicates that the random events have no more messages
+			inOut.print(true); // Indicates that the random events have no more messages
 			inOut.print("Daily Score: " + ship.getDailyScore());
 			// inOut.print("Press enter to continue");
 			// inOut.collectString();
@@ -452,49 +381,16 @@ public class GameEnvironment {
 	/**
 	 * Finds an item to use in the inventory and uses it
 	 * @param crewMember the crew member to use the item on
-	 * @return a boolean representing whether or not an item was used
+	 * @param item the item to use
 	 */
-	public boolean useItem(CrewMember crewMember) {
-		ArrayList<Consumable> keys = inventory.getKeys();
-		
-		// Returns to previous menu if there are no items in the inventory
-		int size = keys.size();
-		if (size == 0) {
-			inOut.print("No items in the ship inventory!");
-			inOut.print("Returning to Crew Member Actions...");
-			return false;
-		}
-
-		// Displays all the items in the inventory as options
-		int i;
-		for (i = 0; i < size; i++) {
-			Consumable item = keys.get(i);
-			String classification = item.getClassification();
-			String name = item.getName();
-			String description = item.getDescription();
-			inOut.print((i + 1) + ") " + classification + " item: " + name + ", " 
-			+ description + ", Quantity: " + inventory.get(item));
-		}
-
-		inOut.print((i + 1) + ") Back to Crew Member Actions");
-
-		// Collects the user input
-		int choice = inOut.collectInt(1, i + 1);
-		
+	public void useItem(CrewMember crewMember, Consumable item) {
 		// Uses the selected item and reduces the quantity of that item in the inventory
-		if (choice < (i + 1)) {
-			Consumable item = keys.get(choice - 1);
-			
-			item.useItem(crewMember);
-			
-			inventory.removeItem(item);
-			
-			crewMember.completeAction();
-			inOut.print(crewMember.getName() + " used a " + item.getName());
-			return true;
-		} else {
-			return false;
-		}
+		crewMember.completeAction();
+		item.useItem(crewMember);
+		
+		inventory.removeItem(item);
+		
+		inOut.print(crewMember.getName() + " used a " + item.getName());
 	}
 	
 	
@@ -510,6 +406,8 @@ public class GameEnvironment {
 			crewMember.completeAction();
 			crewMember.addEnergy(5);
 		}
+		inOut.print(crewMember.getName() + " slept and restored to " + 
+				crewMember.getStatus().get("Energy") + " energy");
 	}
 	
 	
@@ -526,57 +424,22 @@ public class GameEnvironment {
 	/**
 	 * Finds another crew member and pilots the ship to another planet with them
 	 * @param crewMember the crew member to complete the action
-	 * @return whether another crew member was chosen or not
+	 * @param person the other crew member to complete the action
 	 */
-	public boolean pilotShip(CrewMember crewMember) {
-		ArrayList<CrewMember> crewMembers = ship.getCrewMembers();
+	public void pilotShip(CrewMember crewMember, CrewMember person) {
+		crewMember.completeAction();
+		person.completeAction();
 		
-		// This part displays options for all other crew members that have actions remaining
-		ArrayList<CrewMember> membersWithActions = new ArrayList<CrewMember>();
-		for (int i = 0; i < crewMembers.size(); i++) {
-			CrewMember person = crewMembers.get(i);
-			
-			// Ensure that only other crew members that have actions are shown
-			if (person.getActions() > 0 && crewMember != person) {
-				membersWithActions.add(person);
-				int index = membersWithActions.size();
-				inOut.print(index + ") " + person.getName() + ", " + person.getTypeInfo().get("Type"));
-			}
-		}
+		currentPlanet++;
+		if (currentPlanet >= PLANET_ARRAY.size()) currentPlanet = 0;
+		inOut.print(crewMember.getName() + " and " + person.getName() + 
+				" flew the ship to " + PLANET_ARRAY.get(currentPlanet));
 		
-		int index = membersWithActions.size();
-		// Returns to the previous menu if there are no other crew members to pilot the ship with
-		if (index == 0) {
-			inOut.print("No other crew members have any remaining actions!");
-			inOut.print("Returning to Crew Member Actions...");
-			return false;
-		}
-		
-		inOut.print((index + 1) + ") Back to Crew Member Actions");
-
-		// Collects the user input
-		int choice = inOut.collectInt(1, index + 1);
-		
-		// Completes the action for this crew member and the other chosen one
-		if (choice < (index + 1)) {
-			CrewMember person = membersWithActions.get(choice - 1);
-			crewMember.completeAction();
-			person.completeAction();
-			
-			currentPlanet++;
-			if (currentPlanet >= PLANET_ARRAY.size()) currentPlanet = 0;
-			inOut.print(crewMember.getName() + " and " + person.getName() + 
-					" flew the ship to " + PLANET_ARRAY.get(currentPlanet));
-			
-			int sumAsteroidProbability = Arrays.stream(ASTEROID_PROBABILITY).sum();
-			int randInt = (new Random()).nextInt(sumAsteroidProbability);
-			if (randInt < ASTEROID_PROBABILITY[0]) {
-				inOut.print("Oh no! You have piloted into an asteroid field! Your ship lost 3 shields!");
-				ship.addShipShields(-3);
-			}
-			return true;
-		} else {
-			return false;
+		int sumAsteroidProbability = Arrays.stream(ASTEROID_PROBABILITY).sum();
+		int randInt = (new Random()).nextInt(sumAsteroidProbability);
+		if (randInt < ASTEROID_PROBABILITY[0]) {
+			inOut.print("Oh no! You have piloted into an asteroid field! Your ship lost 3 shields!");
+			ship.addShipShields(-3);
 		}
 	}
 	
@@ -605,8 +468,7 @@ public class GameEnvironment {
 		inOut.print("Would you like to play again?");
 		//inOut.print("1) Yes!");
 		//inOut.print("2) No, thank you");
-		if (inOut.collectInt(1, 2) == 1) createGame();
-		
+		//if (inOut.collectInt(1, 2) == 1) createGame();
 	}
 	
 	

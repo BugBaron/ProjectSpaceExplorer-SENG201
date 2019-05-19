@@ -1,6 +1,5 @@
 package main;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -64,14 +63,19 @@ public class InOutHandler {
 
 
 	/**
-	 * Adds the specified output to the output list
+	 * Adds the specified output to the output queue
 	 * @param output the output to add
 	 */
 	public void print(Object output) {
-		//System.out.println(output);
 		outputList.add(output);
 	}
 	
+	
+	/**
+	 * Removes the first added item from the output queue and returns it.
+	 * Returns null if there are no remaining items
+	 * @return the first added item in the output queue
+	 */
 	public Object getOutput() {
 		return outputList.poll();
 	}
