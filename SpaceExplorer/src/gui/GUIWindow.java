@@ -138,16 +138,11 @@ public class GUIWindow {
 		visitOutpost.setBackground(new Color(25, 25, 112));
 		frame.getContentPane().add(visitOutpost, "Visit Outpost");
 		visitOutpost.setLayout(null);
-
-		/*JPanel shopScreen = new JPanel();
-		shopScreen.setLayout(null);
-		shopScreen.setBackground(new Color(25, 25, 112));
-		frame.getContentPane().add(shopScreen, "Shop Screen");*/
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(25, 25, 112));
-		frame.getContentPane().add(panel, "Shop Screen");
-		panel.setLayout(null);
+		JPanel shopScreen = new JPanel();
+		shopScreen.setBackground(new Color(25, 25, 112));
+		frame.getContentPane().add(shopScreen, "Shop Screen");
+		shopScreen.setLayout(null);
 
 		JPanel inventoryScreen = new JPanel();
 		inventoryScreen.setLayout(null);
@@ -571,7 +566,7 @@ public class GUIWindow {
 		lblShopTitle.setForeground(Color.YELLOW);
 		lblShopTitle.setFont(new Font("MS Gothic", Font.PLAIN, 40));
 		lblShopTitle.setBounds(0, 0, 586, 60);
-		panel.add(lblShopTitle);
+		shopScreen.add(lblShopTitle);
 		
 		JTextPane txtpnItemInfoShopScreen = new JTextPane();
 		txtpnItemInfoShopScreen.setText("Item info");
@@ -580,7 +575,7 @@ public class GUIWindow {
 		txtpnItemInfoShopScreen.setEditable(false);
 		txtpnItemInfoShopScreen.setBackground(new Color(25, 25, 112));
 		txtpnItemInfoShopScreen.setBounds(303, 80, 283, 128);
-		panel.add(txtpnItemInfoShopScreen);
+		shopScreen.add(txtpnItemInfoShopScreen);
 		
 		JTextPane txtpnMessagePaneShopScreen = new JTextPane();
 		txtpnMessagePaneShopScreen.setText("Message pane");
@@ -588,7 +583,7 @@ public class GUIWindow {
 		txtpnMessagePaneShopScreen.setFont(new Font("MS Gothic", Font.PLAIN, 15));
 		txtpnMessagePaneShopScreen.setEditable(false);
 		txtpnMessagePaneShopScreen.setBounds(303, 264, 283, 93);
-		panel.add(txtpnMessagePaneShopScreen);
+		shopScreen.add(txtpnMessagePaneShopScreen);
 		
 		JButton btnBackShopScreen = new JButton("Back");
 		btnBackShopScreen.setFocusable(false);
@@ -597,7 +592,7 @@ public class GUIWindow {
 		btnBackShopScreen.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
 		btnBackShopScreen.setBackground(new Color(25, 25, 112));
 		btnBackShopScreen.setBounds(303, 367, 283, 36);
-		panel.add(btnBackShopScreen);
+		shopScreen.add(btnBackShopScreen);
 		
 		JButton btnPurchaseItem = new JButton("Purchase item");
 		btnPurchaseItem.setFocusable(false);
@@ -606,7 +601,7 @@ public class GUIWindow {
 		btnPurchaseItem.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
 		btnPurchaseItem.setBackground(new Color(25, 25, 112));
 		btnPurchaseItem.setBounds(303, 218, 283, 36);
-		panel.add(btnPurchaseItem);
+		shopScreen.add(btnPurchaseItem);
 		
 		JList<Consumable> listShopItems = new JList<Consumable>();
 		listShopItems.setCellRenderer(new DefaultListCellRenderer() {
@@ -630,73 +625,14 @@ public class GUIWindow {
 		listShopItems.setVisibleRowCount(9);
 		listShopItems.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listShopItems.setBounds(0, 80, 283, 277);
-		panel.add(listShopItems);	
+		shopScreen.add(listShopItems);	
 		
 		JLabel lblMoney = new JLabel("Money: $100");
 		lblMoney.setForeground(Color.WHITE);
 		lblMoney.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		lblMoney.setBounds(0, 367, 285, 36);
-		panel.add(lblMoney);
+		shopScreen.add(lblMoney);
 		
-		//TODO remove
-		/*
-		JComboBox<String> comboBoxShopItemSelection = new JComboBox<String>();
-		comboBoxShopItemSelection.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		comboBoxShopItemSelection.setBounds(60, 80, 222, 36);
-		shopScreen.add(comboBoxShopItemSelection);
-		
-		JLabel lblShopItemSelector = new JLabel("Item:");
-		lblShopItemSelector.setForeground(Color.WHITE);
-		lblShopItemSelector.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		lblShopItemSelector.setBounds(0, 80, 50, 36);
-		shopScreen.add(lblShopItemSelector);
-		
-		JTextPane txtpnShopItemInfo = new JTextPane();
-		txtpnShopItemInfo.setEditable(false);
-		txtpnShopItemInfo.setText("Item info");
-		txtpnShopItemInfo.setForeground(Color.WHITE);
-		txtpnShopItemInfo.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		txtpnShopItemInfo.setBackground(new Color(25, 25, 112));
-		txtpnShopItemInfo.setBounds(0, 126, 283, 128);
-		shopScreen.add(txtpnShopItemInfo);
-		
-		JButton btnPurchaseItem = new JButton("Purchase item");
-		btnPurchaseItem.setForeground(Color.WHITE);
-		btnPurchaseItem.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		btnPurchaseItem.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
-		btnPurchaseItem.setBackground(new Color(25, 25, 112));
-		btnPurchaseItem.setBounds(0, 264, 283, 36);
-		shopScreen.add(btnPurchaseItem);
-		
-		JTextPane txtpnMessagePaneShopScreen = new JTextPane();
-		txtpnMessagePaneShopScreen.setEditable(false);
-		txtpnMessagePaneShopScreen.setText("Message pane");
-		txtpnMessagePaneShopScreen.setForeground(new Color(0, 0, 128));
-		txtpnMessagePaneShopScreen.setFont(new Font("MS Gothic", Font.PLAIN, 15));
-		txtpnMessagePaneShopScreen.setBounds(303, 264, 283, 93);
-		shopScreen.add(txtpnMessagePaneShopScreen);
-		
-		JButton btnBackShopScreen = new JButton("Back");
-		btnBackShopScreen.setForeground(Color.WHITE);
-		btnBackShopScreen.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		btnBackShopScreen.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
-		btnBackShopScreen.setBackground(new Color(25, 25, 112));
-		btnBackShopScreen.setBounds(303, 367, 283, 36);
-		shopScreen.add(btnBackShopScreen);
-		
-		JLabel lblShopScreenTitle = new JLabel("Shop");
-		lblShopScreenTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblShopScreenTitle.setForeground(Color.YELLOW);
-		lblShopScreenTitle.setFont(new Font("MS Gothic", Font.PLAIN, 40));
-		lblShopScreenTitle.setBounds(0, 0, 586, 60);
-		shopScreen.add(lblShopScreenTitle);
-		
-		JLabel lblImageShopScreen = new JLabel("");
-		lblImageShopScreen.setIcon(new ImageIcon(GUIWindow.class.getResource("/images/STORAGE.PNG")));
-		lblImageShopScreen.setVerticalAlignment(SwingConstants.TOP);
-		lblImageShopScreen.setBounds(303, 80, 283, 174);
-		shopScreen.add(lblImageShopScreen);
-		*/
 		// Inventory Screen
 		
 		JTextPane txtpnMessagePaneInventoryScreen = new JTextPane();
