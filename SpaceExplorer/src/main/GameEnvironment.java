@@ -41,11 +41,13 @@ public class GameEnvironment {
 	
 	public Inventory createShop() {
 		HashMap<Consumable, Integer> shopList = new HashMap<Consumable, Integer>();
+		int[] possibleQuantity = {0, 1, 2};
+		Random randomVar = new Random();
 		for (Consumable i : FOOD_ITEMS) {
-			shopList.put(i, 1);
+			shopList.put(i, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
 		}
 		for (Consumable i : MEDICAL_ITEMS) {
-			shopList.put(i, 1);
+			shopList.put(i, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
 		}
 		Inventory newShop = new Inventory(shopList);
 		return newShop;
@@ -76,7 +78,7 @@ public class GameEnvironment {
 	// TODO this needs to be remade to work with the GUI
 	public void createGame() {
 		shop = createShop();
-		inventory = new Inventory(false);
+		inventory = new Inventory();
 		partsHere = true;
 		dayNumber = 1;
 		currentPlanet = 0;
@@ -96,7 +98,7 @@ public class GameEnvironment {
 		for (int i = 0; i < numMembers; i++) {
 			//inOut.print("Choose crew member " + (i + 1) + ":");
 			for (CrewMember person : availableList) {
-				HashMap<String, String> typeInfo = person.getTypeInfo();
+				//HashMap<String, String> typeInfo = person.getTypeInfo();
 				//inOut.print((availableList.indexOf(person) + 1) + ") " + typeInfo.get("Type") + ", " 
 				//+ typeInfo.get("Strength") + ", " + typeInfo.get("Weakness"));
 			}

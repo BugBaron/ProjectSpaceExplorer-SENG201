@@ -12,31 +12,8 @@ public class Inventory {
 	 * Class constructor, with no additional entries
 	 * @param isShop whether or not to make this a shop inventory
 	 */
-	public Inventory(boolean isShop) {
+	public Inventory() {
 		items = new HashMap<Consumable, Integer>();
-		if (isShop) {
-			Consumable spacePlagueCure = new Consumable("Space Plague Cure");
-			Consumable bandAid = new Consumable("Band-Aid");
-			Consumable firstAidKit = new Consumable("First Aid Kit");
-			Consumable spaceRation = new Consumable("Space Ration");
-			Consumable water = new Consumable("Water");
-			Consumable banana = new Consumable("Banana");
-			Consumable alienMeat = new Consumable("Alien Meat");
-			Consumable coffee = new Consumable("Coffee");
-			Consumable egg = new Consumable("Egg");
-			
-			int[] possibleQuantity = {0, 1, 2};
-			Random randomVar = new Random();
-			items.put(spacePlagueCure, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
-			items.put(bandAid, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
-			items.put(firstAidKit, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
-			items.put(spaceRation, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
-			items.put(water, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
-			items.put(banana, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
-			items.put(alienMeat, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
-			items.put(coffee, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
-			items.put(egg, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
-		}
 	}
 	
 	

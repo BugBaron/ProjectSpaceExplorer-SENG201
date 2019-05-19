@@ -6,7 +6,6 @@ import java.util.concurrent.ArrayBlockingQueue;
 public class InOutHandler {
 	private Scanner scanner;
 	private ArrayBlockingQueue<Object> outputList = new ArrayBlockingQueue<Object>(20);
-	private ArrayBlockingQueue<Object> inputList = new ArrayBlockingQueue<Object>(20);
 	
 	/**
 	 * Creates a new InOutHandler with System.in as the input and
