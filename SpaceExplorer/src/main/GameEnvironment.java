@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Iterator;
 
 import main.CrewMemberTypes.Alien;
 import main.CrewMemberTypes.CrewMember;
@@ -38,6 +39,17 @@ public class GameEnvironment {
 			new Consumable("Band-Aid"), new Consumable("First Aid Kit")};
 	private final Integer[] FINDABLE_MONEY = {10, 20, 30};
 	
+	public Inventory createShop() {
+		HashMap<Consumable, Integer> shopList = new HashMap<Consumable, Integer>();
+		for (Consumable i : FOOD_ITEMS) {
+			shopList.put(i, 1);
+		}
+		for (Consumable i : MEDICAL_ITEMS) {
+			shopList.put(i, 1);
+		}
+		Inventory newShop = new Inventory(shopList);
+		return newShop;
+	}
 	
 	public static void main(String[] args) {
 		GameEnvironment gameEnvironment = new GameEnvironment();
@@ -63,7 +75,7 @@ public class GameEnvironment {
 	
 	// TODO this needs to be remade to work with the GUI
 	public void createGame() {
-		shop = new Inventory(true);
+		shop = createShop();
 		inventory = new Inventory(false);
 		partsHere = true;
 		dayNumber = 1;
