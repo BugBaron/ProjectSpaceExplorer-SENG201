@@ -1,20 +1,9 @@
 package gui;
 
-import java.awt.EventQueue;
 import javax.swing.JPanel;
-import javax.swing.JFrame;
-import java.awt.Dimension;
 import java.awt.Color;
-import javax.swing.JLabel;
-import java.awt.BorderLayout;
 import java.awt.Font;
-import java.util.ArrayList;
-import java.awt.CardLayout;
-import javax.swing.SwingConstants;
 import javax.swing.JTextPane;
-import javax.swing.JButton;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.LineBorder;
 
 import main.GameEnvironment;
 import main.InOutHandler;

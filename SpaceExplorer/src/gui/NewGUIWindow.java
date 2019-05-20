@@ -4,47 +4,16 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import java.awt.Dimension;
-import javax.swing.JLabel;
-import javax.swing.JList;
 
-import java.awt.Font;
 import java.awt.Color;
-import java.awt.Component;
 
-import javax.swing.JButton;
-import javax.swing.SwingConstants;
-import javax.swing.JTextPane;
 import java.awt.CardLayout;
-import javax.swing.JPanel;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListCellRenderer;
-import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
-import javax.swing.border.LineBorder;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JTree;
-import javax.swing.tree.DefaultTreeModel;
 
-import main.Consumable;
 import main.GameEnvironment;
 import main.InOutHandler;
 import main.CrewMemberTypes.CrewMember;
 
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeCellRenderer;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Vector;
-import java.awt.event.ActionEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.event.ListSelectionEvent;
 
 public class NewGUIWindow {
 

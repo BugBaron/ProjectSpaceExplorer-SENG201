@@ -5,19 +5,12 @@ import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextPane;
 import javax.swing.JTree;
 import javax.swing.SwingConstants;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
 import main.GameEnvironment;
-import main.InOutHandler;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -29,7 +22,6 @@ public class GUIViewInventory extends JPanel {
 	private NewGUIWindow guiWindow;
 	private ArrayList<String> messagePaneContents;
 	private GameEnvironment gameEnvironment;
-	private InOutHandler inOut;
 	/**
 	 * Create the panel.
 	 */
@@ -41,7 +33,6 @@ public class GUIViewInventory extends JPanel {
 		this.guiWindow = guiWindow;
 		gameEnvironment = guiWindow.gameEnvironment;
 		messagePaneContents = guiWindow.messagePaneContents;
-		inOut = gameEnvironment.getInOut();
 		initialize();
 	}
 	

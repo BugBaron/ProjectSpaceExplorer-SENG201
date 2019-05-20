@@ -1,24 +1,16 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
 import main.Consumable;
 import main.GameEnvironment;
-import main.InOutHandler;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 

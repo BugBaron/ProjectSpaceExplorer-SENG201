@@ -4,7 +4,6 @@ import java.awt.Color;
 
 import javax.swing.JPanel;
 import main.GameEnvironment;
-import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 

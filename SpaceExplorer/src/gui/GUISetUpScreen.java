@@ -1,11 +1,6 @@
 package gui;
 
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import java.awt.Dimension;
 import java.awt.Color;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.awt.Font;
