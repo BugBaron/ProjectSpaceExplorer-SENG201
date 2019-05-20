@@ -124,9 +124,9 @@ public class NewGUIWindow {
 		layout = new CardLayout(20, 20);
 		frame.getContentPane().setLayout(layout);
 		
-		frame.getContentPane().add(mainScreen.panel, "Main Screen");
-		frame.getContentPane().add(crewMembersScreen.panel, "Crew Members");
-		frame.getContentPane().add(useItemScreen.panel, "Use Item");
+		frame.getContentPane().add(mainScreen, "Main Screen");
+		frame.getContentPane().add(crewMembersScreen, "Crew Members");
+		frame.getContentPane().add(useItemScreen, "Use Item");
 		
 		JPanel pilotShip = new JPanel();
 		pilotShip.setBackground(new Color(25, 25, 112));
@@ -152,82 +152,6 @@ public class NewGUIWindow {
 		inventoryScreen.setLayout(null);
 		inventoryScreen.setBackground(new Color(25, 25, 112));
 		frame.getContentPane().add(inventoryScreen, "Inventory Screen");
-		
-		// Pilot Ship Screen
-		
-		JLabel lblPilotShipTitle = new JLabel("Pilot Ship");
-		lblPilotShipTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPilotShipTitle.setForeground(Color.YELLOW);
-		lblPilotShipTitle.setFont(new Font("MS Gothic", Font.PLAIN, 40));
-		lblPilotShipTitle.setBounds(0, 0, 586, 60);
-		pilotShip.add(lblPilotShipTitle);
-		
-		JButton btnConfirmPilotShip = new JButton("Pilot Ship");
-		btnConfirmPilotShip.setFocusable(false);
-		btnConfirmPilotShip.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
-		btnConfirmPilotShip.setForeground(Color.WHITE);
-		btnConfirmPilotShip.setBackground(new Color(25, 25, 112));
-		btnConfirmPilotShip.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		btnConfirmPilotShip.setBounds(0, 264, 283, 36);
-		pilotShip.add(btnConfirmPilotShip);
-		
-		JTextPane txtpnMessagePanePilotShip = new JTextPane();
-		txtpnMessagePanePilotShip.setEditable(false);
-		txtpnMessagePanePilotShip.setText("Message pane");
-		txtpnMessagePanePilotShip.setForeground(new Color(0, 0, 128));
-		txtpnMessagePanePilotShip.setFont(new Font("MS Gothic", Font.PLAIN, 15));
-		txtpnMessagePanePilotShip.setBounds(303, 264, 283, 93);
-		pilotShip.add(txtpnMessagePanePilotShip);
-		
-		JButton btnBackPilotShip = new JButton("Back");
-		btnBackPilotShip.setFocusable(false);
-		btnBackPilotShip.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
-		btnBackPilotShip.setForeground(Color.WHITE);
-		btnBackPilotShip.setBackground(new Color(25, 25, 112));
-		btnBackPilotShip.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		btnBackPilotShip.setBounds(303, 367, 283, 36);
-		pilotShip.add(btnBackPilotShip);
-		
-		JLabel lblCrewMember2Selector = new JLabel("Second crew member:");
-		lblCrewMember2Selector.setForeground(Color.WHITE);
-		lblCrewMember2Selector.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		lblCrewMember2Selector.setBounds(0, 80, 200, 36);
-		pilotShip.add(lblCrewMember2Selector);
-		
-		JComboBox<CrewMember> comboBoxCrewMember2Selection = new JComboBox<CrewMember>();
-		comboBoxCrewMember2Selection.setRenderer(new BasicComboBoxRenderer() {
-			@Override
-			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean hasFocus) {
-				super.getListCellRendererComponent(list, value, index, isSelected, hasFocus);
-				if (value instanceof CrewMember) {
-					CrewMember crewMember = (CrewMember) value;
-					setText(crewMember.getName() + ", " + crewMember.getTypeInfo().get("Type"));
-				}
-				
-				return this;	
-			}
-		});
-		comboBoxCrewMember2Selection.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		comboBoxCrewMember2Selection.setBounds(200, 80, 379, 36);
-		pilotShip.add(comboBoxCrewMember2Selection);
-		
-		JTextPane txtpnSecondCrewMember = new JTextPane();
-		txtpnSecondCrewMember.setEditable(false);
-		txtpnSecondCrewMember.setBackground(new Color(25, 25, 112));
-		txtpnSecondCrewMember.setForeground(new Color(255, 255, 255));
-		txtpnSecondCrewMember.setFont(new Font("MS Gothic", Font.PLAIN, 12));
-		txtpnSecondCrewMember.setText("Second crew member info");
-		txtpnSecondCrewMember.setBounds(0, 126, 283, 128);
-		pilotShip.add(txtpnSecondCrewMember);
-		
-		JTextPane txtpnCrewMemberInfoPilotShip = new JTextPane();
-		txtpnCrewMemberInfoPilotShip.setEditable(false);
-		txtpnCrewMemberInfoPilotShip.setText("Crew member info");
-		txtpnCrewMemberInfoPilotShip.setForeground(Color.WHITE);
-		txtpnCrewMemberInfoPilotShip.setFont(new Font("MS Gothic", Font.PLAIN, 12));
-		txtpnCrewMemberInfoPilotShip.setBackground(new Color(25, 25, 112));
-		txtpnCrewMemberInfoPilotShip.setBounds(303, 126, 283, 128);
-		pilotShip.add(txtpnCrewMemberInfoPilotShip);
 		
 		// Ship Status Screen
 		
@@ -577,7 +501,7 @@ public class NewGUIWindow {
 						}}
 					));
 				layout.show(frame.getContentPane(), "Inventory Screen");
-				updatePane(txtpnMessagePaneInventoryScreen);
+				updatePane();
 			}
 		});
 		

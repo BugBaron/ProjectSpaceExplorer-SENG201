@@ -187,13 +187,13 @@ public class GUICrewMembersScreen extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				Vector<CrewMember> availableMembers = new Vector<CrewMember>(gameEnvironment.getAvailableMembers());
 				availableMembers.remove((CrewMember) comboBoxCrewMemberSelection.getSelectedItem());
-				comboBoxCrewMember2Selection.setModel(new DefaultComboBoxModel<CrewMember>(availableMembers));
-				Object item = comboBoxCrewMember2Selection.getSelectedItem();
+				guiWindow.pilotShipScreen.crewMember2Selection.setModel(new DefaultComboBoxModel<CrewMember>(availableMembers));
+				Object item = guiWindow.pilotShipScreen.crewMember2Selection.getSelectedItem();
 				if (item instanceof CrewMember) {
 					CrewMember crewMember = (CrewMember) item;
 					String crewMemberInfo = crewMember.toString() + "\nActions: " + crewMember.getActions();
 					crewMemberInfo = crewMemberInfo.substring(crewMemberInfo.indexOf("\n") + 1);
-					txtpnSecondCrewMember.setText(crewMemberInfo);
+					guiWindow.pilotShipScreen.crewMember2Info.setText(crewMemberInfo);
 				}
 				
 				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Pilot Ship");
