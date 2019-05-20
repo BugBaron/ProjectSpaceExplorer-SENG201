@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.Iterator;
 
 import main.CrewMemberTypes.Alien;
 import main.CrewMemberTypes.CrewMember;
