@@ -56,9 +56,9 @@ public class NewGUIWindow {
 	GUIMainScreen mainScreen = new GUIMainScreen(this);
 	GUICrewMembersScreen crewMembersScreen = new GUICrewMembersScreen(this);
 	GUIUseItemScreen useItemScreen = new GUIUseItemScreen(this);
+	GUIPilotShipScreen pilotShipScreen = new GUIPilotShipScreen(this);
 	
 	private InOutHandler inOut = gameEnvironment.getInOut();
-	private HashMap<String, GUIScreen> screens = new HashMap<String, GUIScreen>();
 	
 	/**
 	 * Launch the application.

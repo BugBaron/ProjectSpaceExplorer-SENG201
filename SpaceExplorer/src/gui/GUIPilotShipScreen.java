@@ -20,7 +20,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
 
-public class GUIPilotShip extends JPanel {
+public class GUIPilotShipScreen extends JPanel {
 
 	JTextPane crewMemberInfo;
 	SpaceMessagePane messagePane;
@@ -35,7 +35,7 @@ public class GUIPilotShip extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public GUIPilotShip(NewGUIWindow guiWindow) {
+	public GUIPilotShipScreen(NewGUIWindow guiWindow) {
 		super();
 		super.setBackground(new Color(25, 25, 112));
 		setLayout(null);
