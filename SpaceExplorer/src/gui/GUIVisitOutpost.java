@@ -13,7 +13,10 @@ import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
+import main.Consumable;
 import main.GameEnvironment;
 import main.InOutHandler;
 import java.awt.event.ActionListener;
@@ -21,11 +24,11 @@ import java.awt.event.ActionEvent;
 
 public class GUIVisitOutpost extends JPanel {
 
+	SpaceMessagePane messagePane;
+	
+	private GameEnvironment gameEnvironment;
 	
 	private NewGUIWindow guiWindow;
-	private ArrayList<String> messagePaneContents;
-	private GameEnvironment gameEnvironment;
-	private InOutHandler inOut;
 	/**
 	 * Create the panel.
 	 */
@@ -36,8 +39,6 @@ public class GUIVisitOutpost extends JPanel {
 		
 		this.guiWindow = guiWindow;
 		gameEnvironment = guiWindow.gameEnvironment;
-		messagePaneContents = guiWindow.messagePaneContents;
-		inOut = gameEnvironment.getInOut();
 		initialize();
 	}
 	
@@ -50,13 +51,13 @@ public class GUIVisitOutpost extends JPanel {
 		lblTitle.setBounds(0, 0, 586, 60);
 		super.add(lblTitle);
 		
-		SpaceLabel lblImage = new SpaceLabel("");
+		JLabel lblImage = new JLabel("");
 		lblImage.setIcon(new ImageIcon(GUIWindow.class.getResource("/images/OUTPOST.png")));
 		lblImage.setVerticalAlignment(SwingConstants.TOP);
 		lblImage.setBounds(303, 80, 283, 174);
 		super.add(lblImage);
 		
-		SpaceMessagePane messagePane = new SpaceMessagePane();
+		messagePane = new SpaceMessagePane();
 		messagePane.setBounds(303, 264, 283, 93);
 		super.add(messagePane);
 		
@@ -75,12 +76,24 @@ public class GUIVisitOutpost extends JPanel {
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Screen");
-				guiWindow.updatePane();
 			}
 		});
 		
 		btnViewInventory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				guiWindow.inventoryScreen.treeInventoryContainers.setModel(new DefaultTreeModel(
+						new DefaultMutableTreeNode("Inventory") {{
+							DefaultMutableTreeNode node;
+							for (Consumable item : gameEnvironment.getInventory().getKeys()) {
+								node = new DefaultMutableTreeNode(item.getName());
+								node.add(new DefaultMutableTreeNode(item.getClassification() + " item"));
+								node.add(new DefaultMutableTreeNode(item.getDescription()));
+								node.add(new DefaultMutableTreeNode("Quantity: " + gameEnvironment.getInventory().get(item)));
+								add(node);
+							}
+							
+						}}
+					));
 				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Inventory Screen");
 				guiWindow.updatePane();
 			}
@@ -88,6 +101,7 @@ public class GUIVisitOutpost extends JPanel {
 		
 		btnViewShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				guiWindow.shopScreen.updateShopScreen();
 				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Shop Screen");
 			}
 		});

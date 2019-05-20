@@ -23,6 +23,9 @@ import java.awt.event.ActionEvent;
 
 public class GUIViewInventory extends JPanel {
 
+	SpaceMessagePane messagePane;
+	JTree treeInventoryContainers;
+	
 	private NewGUIWindow guiWindow;
 	private ArrayList<String> messagePaneContents;
 	private GameEnvironment gameEnvironment;
@@ -46,7 +49,7 @@ public class GUIViewInventory extends JPanel {
 	 * Initialize the contents of the frame
 	 */
 	private void initialize() {
-		SpaceMessagePane messagePane = new SpaceMessagePane();
+		messagePane = new SpaceMessagePane();
 		messagePane.setBounds(303, 264, 283, 93);
 		super.add(messagePane);
 		
@@ -64,7 +67,7 @@ public class GUIViewInventory extends JPanel {
 		lblImage.setBounds(303, 80, 283, 174);
 		super.add(lblImage);
 		
-		JTree treeInventoryContainers = new JTree();
+		treeInventoryContainers = new JTree();
 		treeInventoryContainers.setOpaque(false);
 		treeInventoryContainers.setToggleClickCount(1);
 		treeInventoryContainers.setForeground(new Color(255, 255, 255));

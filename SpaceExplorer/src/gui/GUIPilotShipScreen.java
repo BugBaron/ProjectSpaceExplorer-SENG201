@@ -24,9 +24,9 @@ public class GUIPilotShipScreen extends JPanel {
 
 	JTextPane crewMemberInfo;
 	SpaceMessagePane messagePane;
+	JComboBox<CrewMember> crewMember2Selection;
+	JTextPane crewMember2Info;
 	
-	private JTextPane crewMember2Info;
-	private JComboBox<CrewMember> crewMember2Selection;
 	private NewGUIWindow guiWindow;
 	private ArrayList<String> messagePaneContents;
 	private GameEnvironment gameEnvironment;
@@ -135,7 +135,7 @@ public class GUIPilotShipScreen extends JPanel {
 		
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Screen");
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Crew Members");
 			}
 		});
 	}

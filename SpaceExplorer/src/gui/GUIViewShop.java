@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.util.ArrayList;
 
 import javax.swing.DefaultListCellRenderer;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -16,6 +17,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.CompoundBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import main.Consumable;
 import main.GameEnvironment;
@@ -25,10 +28,51 @@ import java.awt.event.ActionEvent;
 
 public class GUIViewShop extends JPanel {
 
+	SpaceMessagePane messagePane;
+	
 	private NewGUIWindow guiWindow;
 	private ArrayList<String> messagePaneContents;
 	private GameEnvironment gameEnvironment;
 	private InOutHandler inOut;
+	
+	private SpaceLabel lblMoney;
+	private JList<Consumable> listShopItems;
+	private SpaceButton btnPurchaseItem;
+	private JTextPane txtpnItemInfo;
+	
+	public void updateShopScreen() {
+		lblMoney.setText("Money: $" + gameEnvironment.getMoney());
+		Consumable initialSelection = listShopItems.getSelectedValue();
+		DefaultListModel<Consumable> list = new DefaultListModel<Consumable>();
+		list.addAll(gameEnvironment.getShop().getKeys());
+		listShopItems.setModel(list);
+		if (gameEnvironment.getShop().getKeys().contains(initialSelection)) {
+			listShopItems.setSelectedValue(initialSelection, false);
+		}
+		updateShopItem();
+	}
+	
+	public void updateShopItem() {
+		Object selection = listShopItems.getSelectedValue();
+		String text = "Item info";
+		if (selection instanceof Consumable) {
+			Consumable item = (Consumable) selection;
+			text = item.getName() + "\n" + 
+					item.getDescription() + "\n" +
+					"Price: $" + item.getPrice() + "\n" + 
+					"Quantity: " + gameEnvironment.getShop().get(item);
+			if (gameEnvironment.getMoney() < item.getPrice()) {
+				btnPurchaseItem.setEnabled(false);
+				text = text + "\nYou do not have enough money to purchase this item";
+			} else {
+				btnPurchaseItem.setEnabled(true);
+			}
+		} else {
+			btnPurchaseItem.setEnabled(false);
+		}
+		txtpnItemInfo.setText(text);
+	}
+	
 	/**
 	 * Create the panel.
 	 */
@@ -52,7 +96,7 @@ public class GUIViewShop extends JPanel {
 		lblTitle.setBounds(0, 0, 586, 60);
 		super.add(lblTitle);
 		
-		JTextPane txtpnItemInfo = new JTextPane();
+		txtpnItemInfo = new JTextPane();
 		txtpnItemInfo.setText("Item info");
 		txtpnItemInfo.setForeground(Color.WHITE);
 		txtpnItemInfo.setFont(new Font("MS Gothic", Font.PLAIN, 20));
@@ -61,7 +105,7 @@ public class GUIViewShop extends JPanel {
 		txtpnItemInfo.setBounds(303, 80, 283, 128);
 		super.add(txtpnItemInfo);
 		
-		SpaceMessagePane messagePane = new SpaceMessagePane();
+		messagePane = new SpaceMessagePane();
 		messagePane.setBounds(303, 264, 283, 93);
 		super.add(messagePane);
 		
@@ -69,11 +113,11 @@ public class GUIViewShop extends JPanel {
 		btnBack.setBounds(303, 367, 283, 36);
 		super.add(btnBack);
 		
-		SpaceButton btnPurchaseItem = new SpaceButton("Purchase item");
+		btnPurchaseItem = new SpaceButton("Purchase item");
 		btnPurchaseItem.setBounds(303, 218, 283, 36);
 		super.add(btnPurchaseItem);
 		
-		JList<Consumable> listShopItems = new JList<Consumable>();
+		listShopItems = new JList<Consumable>();
 		listShopItems.setCellRenderer(new DefaultListCellRenderer() {
 			@Override
 			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean hasFocus) {
@@ -97,13 +141,16 @@ public class GUIViewShop extends JPanel {
 		listShopItems.setBounds(0, 80, 283, 277);
 		super.add(listShopItems);	
 		
-		SpaceLabel lblMoney = new SpaceLabel("Money: $100");
+		lblMoney = new SpaceLabel("Money: $100");
 		lblMoney.setBounds(0, 367, 285, 36);
 		super.add(lblMoney);
 		
 		btnPurchaseItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//TODO ACTION FOR THIS BUTTON
+				gameEnvironment.purchaseItem(listShopItems.getSelectedValue());
+				updateShopScreen();
+				messagePaneContents.add((String) inOut.getOutput());
+				guiWindow.updatePane();
 			}
 		});
 		
@@ -111,6 +158,15 @@ public class GUIViewShop extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Visit Outpost");
 				guiWindow.updatePane();
+			}
+		});
+		
+		listShopItems.addListSelectionListener(new ListSelectionListener() {
+			public void valueChanged(ListSelectionEvent e) {
+				Object item = listShopItems.getSelectedValue();
+				if (item instanceof Consumable) {
+					updateShopItem();
+				}
 			}
 		});
 	}
