@@ -3,15 +3,23 @@ package gui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Vector;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JComboBox;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 
+import main.Consumable;
 import main.GameEnvironment;
+import main.InOutHandler;
 import main.CrewMemberTypes.CrewMember;
 
 public class GUICrewMembersScreen extends JPanel {
@@ -23,6 +31,7 @@ public class GUICrewMembersScreen extends JPanel {
 	private NewGUIWindow guiWindow;
 	private GameEnvironment gameEnvironment;
 	private ArrayList<String> messagePaneContents;
+	private InOutHandler inOut;
 	private SpaceButton btnUseItem;
 	private SpaceButton btnSleep;
 	private SpaceButton btnRepairShip;
@@ -40,6 +49,7 @@ public class GUICrewMembersScreen extends JPanel {
 		this.guiWindow = guiWindow;
 		gameEnvironment = guiWindow.gameEnvironment;
 		messagePaneContents = guiWindow.messagePaneContents;
+		inOut = gameEnvironment.getInOut();
 		initialize();
 	}
 	
@@ -63,39 +73,39 @@ public class GUICrewMembersScreen extends JPanel {
 	private void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Crew Members");
 		lblTitle.setBounds(0, 0, 586, 60);
-		panel.add(lblTitle);
+		super.add(lblTitle);
 		
 		messagePane = new SpaceMessagePane();
 		messagePane.setBounds(303, 264, 283, 93);
-		panel.add(messagePane);
+		super.add(messagePane);
 		
 		btnUseItem = new SpaceButton("Use food/medical supplies");
 		btnUseItem.setBounds(0, 126, 283, 36);
-		panel.add(btnUseItem);
+		super.add(btnUseItem);
 		
 		btnSleep = new SpaceButton("Sleep");
 		btnSleep.setBounds(0, 172, 283, 36);
-		panel.add(btnSleep);
+		super.add(btnSleep);
 		
 		btnRepairShip = new SpaceButton("Repair ship shields");
 		btnRepairShip.setBounds(0, 218, 283, 36);
-		panel.add(btnRepairShip);
+		super.add(btnRepairShip);
 		
 		btnSearchPlanet = new SpaceButton("Search planet");
 		btnSearchPlanet.setBounds(0, 264, 283, 36);
-		panel.add(btnSearchPlanet);
+		super.add(btnSearchPlanet);
 		
 		btnPilotShip = new SpaceButton("Pilot ship");
 		btnPilotShip.setBounds(0, 310, 283, 36);
-		panel.add(btnPilotShip);
+		super.add(btnPilotShip);
 		
 		SpaceButton btnBack = new SpaceButton("Back");
 		btnBack.setBounds(303, 367, 283, 36);
-		panel.add(btnBack);
+		super.add(btnBack);
 		
 		SpaceLabel lblCrewSelector = new SpaceLabel("Crew Member:");
 		lblCrewSelector.setBounds(0, 80, 126, 36);
-		panel.add(lblCrewSelector);
+		super.add(lblCrewSelector);
 		
 		crewMemberSelection = new JComboBox<CrewMember>();
 		crewMemberSelection.setFont(new Font("MS Gothic", Font.PLAIN, 20));
@@ -112,7 +122,7 @@ public class GUICrewMembersScreen extends JPanel {
 			}
 		});
 		crewMemberSelection.setBounds(135, 80, 441, 36);
-		panel.add(crewMemberSelection);
+		super.add(crewMemberSelection);
 		
 		JTextPane txtpnCrewMemberInfo = new JTextPane();
 		txtpnCrewMemberInfo.setEditable(false);
@@ -121,7 +131,88 @@ public class GUICrewMembersScreen extends JPanel {
 		txtpnCrewMemberInfo.setFont(new Font("MS Gothic", Font.PLAIN, 12));
 		txtpnCrewMemberInfo.setBackground(new Color(25, 25, 112));
 		txtpnCrewMemberInfo.setBounds(303, 125, 283, 128);
-		panel.add(txtpnCrewMemberInfo);
+		super.add(txtpnCrewMemberInfo);
+		
+		btnUseItem.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Use Item");
+				guiWindow.updatePane();
+				
+				ArrayList<Consumable> keys = gameEnvironment.getInventory().getKeys();
+				Consumable[] items = new Consumable[keys.size()];
+				for (int i = 0; i < keys.size(); i++) {
+					items[i] = keys.get(i);
+				}
+				guiWindow.useItemScreen.itemSelection.setModel(new DefaultComboBoxModel<Consumable>(items));
+				guiWindow.useItemScreen.updateItemInfo();
+			}
+		});
+		
+		btnSleep.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gameEnvironment.sleep((CrewMember) crewMemberSelection.getSelectedItem());
+				messagePaneContents.add((String) inOut.getOutput());
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Menu");
+				guiWindow.updatePane();
+			}
+		});
+		
+		btnRepairShip.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gameEnvironment.repairShip((CrewMember) crewMemberSelection.getSelectedItem());
+				Object output = inOut.getOutput();
+				while (output != null) {
+					messagePaneContents.add((String) output);
+					output = inOut.getOutput();
+				}
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Menu");
+				guiWindow.updatePane();
+			}
+		});
+		
+		btnSearchPlanet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				gameEnvironment.searchPlanet((CrewMember) crewMemberSelection.getSelectedItem());
+				Object output = inOut.getOutput();
+				while (output != null) {
+					messagePaneContents.add((String) output);
+					output = inOut.getOutput();
+				}
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Menu");
+				guiWindow.updatePane();
+			}
+		});
+		
+		btnPilotShip.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Vector<CrewMember> availableMembers = new Vector<CrewMember>(gameEnvironment.getAvailableMembers());
+				availableMembers.remove((CrewMember) comboBoxCrewMemberSelection.getSelectedItem());
+				comboBoxCrewMember2Selection.setModel(new DefaultComboBoxModel<CrewMember>(availableMembers));
+				Object item = comboBoxCrewMember2Selection.getSelectedItem();
+				if (item instanceof CrewMember) {
+					CrewMember crewMember = (CrewMember) item;
+					String crewMemberInfo = crewMember.toString() + "\nActions: " + crewMember.getActions();
+					crewMemberInfo = crewMemberInfo.substring(crewMemberInfo.indexOf("\n") + 1);
+					txtpnSecondCrewMember.setText(crewMemberInfo);
+				}
+				
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Pilot Ship");
+				guiWindow.updatePane();
+			}
+		});
+		
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Menu");
+				guiWindow.updatePane();
+			}
+		});
+		
+		crewMemberSelection.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				updateCrewMembers();
+			}
+		});
 	}
 
 }

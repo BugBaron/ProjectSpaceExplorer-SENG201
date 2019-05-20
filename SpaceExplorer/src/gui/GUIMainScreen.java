@@ -26,7 +26,6 @@ import main.CrewMemberTypes.CrewMember;
 
 public class GUIMainScreen extends JPanel {
 	
-	JPanel panel;
 	SpaceMessagePane messagePane;
 	SpaceLabel lblDayNumber;
 	
@@ -59,13 +58,13 @@ public class GUIMainScreen extends JPanel {
 		lblTitle.setForeground(Color.YELLOW);
 		lblTitle.setFont(new Font("MS Gothic", Font.PLAIN, 40));
 		lblTitle.setBounds(0, 0, 586, 60);
-		panel.add(lblTitle);
+		super.add(lblTitle);
 		
 		lblDayNumber = new SpaceLabel(gameEnvironment.getDayString());
 		lblDayNumber.setForeground(Color.WHITE);
 		lblDayNumber.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		lblDayNumber.setBounds(0, 80, 283, 36);
-		panel.add(lblDayNumber);
+		super.add(lblDayNumber);
 		
 		SpaceButton btnViewCrewMember = new SpaceButton("View Crew members");
 		btnViewCrewMember.setFocusable(false);
@@ -74,7 +73,7 @@ public class GUIMainScreen extends JPanel {
 		btnViewCrewMember.setBackground(new Color(25, 25, 112));
 		btnViewCrewMember.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		btnViewCrewMember.setBounds(0, 126, 283, 36);
-		panel.add(btnViewCrewMember);
+		super.add(btnViewCrewMember);
 		
 		SpaceButton btnViewShipStatus = new SpaceButton("View ship status");
 		btnViewShipStatus.setFocusable(false);
@@ -83,7 +82,7 @@ public class GUIMainScreen extends JPanel {
 		btnViewShipStatus.setBackground(new Color(25, 25, 112));
 		btnViewShipStatus.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		btnViewShipStatus.setBounds(0, 172, 283, 36);
-		panel.add(btnViewShipStatus);
+		super.add(btnViewShipStatus);
 		
 		SpaceButton btnVisitSpaceOutpost = new SpaceButton("Visit space outpost");
 		btnVisitSpaceOutpost.setFocusable(false);
@@ -92,22 +91,22 @@ public class GUIMainScreen extends JPanel {
 		btnVisitSpaceOutpost.setBackground(new Color(25, 25, 112));
 		btnVisitSpaceOutpost.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		btnVisitSpaceOutpost.setBounds(0, 218, 283, 36);
-		panel.add(btnVisitSpaceOutpost);
+		super.add(btnVisitSpaceOutpost);
 		
 		SpaceButton btnContinue = new SpaceButton("Continue to next day");
 		btnContinue.setBounds(0, 264, 283, 36);
-		panel.add(btnContinue);
+		super.add(btnContinue);
 		
 		messagePane = new SpaceMessagePane();
 		messagePane.setBounds(303, 264, 283, 93);
-		panel.add(messagePane);
+		super.add(messagePane);
 		
 		SpaceLabel lblImageControlPanel = new SpaceLabel("");
 		lblImageControlPanel.setIcon(new ImageIcon(NewGUIWindow.class.getResource("/images/SPACE.PNG")));
 		lblImageControlPanel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblImageControlPanel.setForeground(Color.WHITE);
 		lblImageControlPanel.setBounds(303, 80, 283, 174);
-		panel.add(lblImageControlPanel);
+		super.add(lblImageControlPanel);
 		
 		btnViewCrewMember.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
