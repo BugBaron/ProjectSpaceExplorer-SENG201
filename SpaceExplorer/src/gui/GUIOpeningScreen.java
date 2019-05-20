@@ -52,7 +52,7 @@ public class GUIOpeningScreen extends JPanel{
 		
 		btnCreateGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Set Up");
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Instructions");
 				guiWindow.updatePane();
 			}
 		});

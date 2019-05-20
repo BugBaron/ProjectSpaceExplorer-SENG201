@@ -1,7 +1,7 @@
 package gui;
 
 import java.awt.EventQueue;
-
+import javax.swing.JPanel;
 import javax.swing.JFrame;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -13,27 +13,13 @@ import javax.swing.border.CompoundBorder;
 import javax.swing.border.LineBorder;
 import javax.swing.JTextPane;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class GUIInstructions {
+public class GUIInstructions extends JPanel{
 
-	private JFrame frame;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					GUIInstructions window = new GUIInstructions();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	private NewGUIWindow guiWindow;
+	
 	/**
 	 * Create the application.
 	 */
@@ -45,38 +31,53 @@ public class GUIInstructions {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		frame = new JFrame();
-		frame.setMinimumSize(new Dimension(640, 480));
-		frame.getContentPane().setMinimumSize(new Dimension(640, 480));
-		frame.getContentPane().setBackground(new Color(0, 0, 128));
-		frame.getContentPane().setLayout(null);
 		
-		JLabel lblInstructions = new JLabel("Instructions");
+		SpaceTitle lblInstructions = new SpaceTitle("Instructions");
 		lblInstructions.setBounds(0, 11, 626, 41);
-		lblInstructions.setHorizontalAlignment(SwingConstants.CENTER);
-		lblInstructions.setFont(new Font("MS Gothic", Font.PLAIN, 40));
-		lblInstructions.setForeground(new Color(255, 255, 0));
-		frame.getContentPane().add(lblInstructions);
+		super.add(lblInstructions);
 		
-		JTextPane txtpnInsertTextHere = new JTextPane();
-		txtpnInsertTextHere.setForeground(new Color(255, 255, 255));
-		txtpnInsertTextHere.setBackground(new Color(0, 0, 128));
-		txtpnInsertTextHere.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		String InstructionsText = "You are lost in out of space and your space ship is falling apart. \n"
-				+ "In order for your mission to succeed you need to find the missing parts of your space ship \n"
-				+ "while maintaining the safety of your crew.";
-		txtpnInsertTextHere.setText(InstructionsText);
-		txtpnInsertTextHere.setBounds(68, 105, 492, 170);
-		frame.getContentPane().add(txtpnInsertTextHere);
+		JTextPane txtpnInstructions = new JTextPane();
+		txtpnInstructions.setForeground(new Color(255, 255, 255));
+		txtpnInstructions.setBackground(new Color(0, 0, 128));
+		txtpnInstructions.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		String InstructionsText = "You are lost in out of space and your space ship is falling apart.\n"
+				+ "In order for your mission to succeed you need to find the missing parts of your space ship "
+				+ "while maintaining the safety of your crew.\n\n"
+				+ "To find your missing space ship parts you must search a planet. There is a maximum of "
+				+ "of 1 space ship part on each planet. If you do not find a space ship part you may find "
+				+ "food, medical supplies, money or nothing. \n\n"
+				+ "Food and medical supplies are used to boost a crew members health or nutrition. They can be "
+				+ "purchased from the outpost or found on a planet. Crew members energy can be boosted by sleeping.\n\n"
+				+ "Each day, every crew member has 2 actions. These actions can be used to sleep, search the planet, "
+				+ "repair the space ship, pilot the space ship, eat food or use medical supplies. Note that piloting "
+				+ "the space ship requires 2 crew members with at least one action remaining. \n "
+				+ "Crew members lose 1 energy and 1 nutrition per action.\n\n"
+				+ "A new day can be triggered at any time, regardless of how many actions you have remaining. Each day "
+				+ "crew members lose 2 health. If a crew member has no energy, it will lose 1 additional health everyday. "
+				+ "If a crew member has no nutrition, they will lose an additional 1 health and 1 energy daily. "
+				+ "When a crew member runs out of health, they die and are removed from the spaceship.\n"
+				+ "You also gain $20 at the end of every day.\n\n"
+				+ "At the completion of every day there is a 40% chance a crew member may contract the space plague "
+				+ "or your ship may be attacked by alien pirates. If the ship is attacked by pirates you will "
+				+ "lose one random item from your inventory. When a crew member contracts the space plague, they "
+				+ "can be cured only by the 'Space Plague Cure' which must be found or purchased. Crew members that "
+				+ "have the space plague lose 1 additional health each day.\n\n"
+				+ "The game ends when you are successful in finding all the parts, you run out of days or all of the "
+				+ "crew members die.";
+		txtpnInstructions.setText(InstructionsText);
+		txtpnInstructions.setBounds(68, 105, 492, 170);
+		super.add(txtpnInstructions);
 		
-		JButton btnContinue = new JButton("Continue");
-		btnContinue.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		btnContinue.setBorder(new CompoundBorder(new LineBorder(new Color(0, 255, 0)), new CompoundBorder(new LineBorder(new Color(0, 0, 0)), new LineBorder(new Color(0, 255, 0)))));
-		btnContinue.setForeground(new Color(255, 255, 255));
+		SpaceButton btnContinue = new SpaceButton("Continue");
 		btnContinue.setBounds(201, 332, 237, 49);
-		frame.getContentPane().add(btnContinue);
-		frame.setBounds(100, 100, 450, 300);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		super.add(btnContinue);
+		
+		btnContinue.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Set Up");
+				guiWindow.updatePane();
+			}
+		});
 	}
 
 }
