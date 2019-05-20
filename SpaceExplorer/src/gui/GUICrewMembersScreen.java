@@ -124,14 +124,14 @@ public class GUICrewMembersScreen extends JPanel {
 		crewMemberSelection.setBounds(135, 80, 441, 36);
 		super.add(crewMemberSelection);
 		
-		JTextPane txtpnCrewMemberInfo = new JTextPane();
-		txtpnCrewMemberInfo.setEditable(false);
-		txtpnCrewMemberInfo.setText("Crew member info");
-		txtpnCrewMemberInfo.setForeground(Color.WHITE);
-		txtpnCrewMemberInfo.setFont(new Font("MS Gothic", Font.PLAIN, 12));
-		txtpnCrewMemberInfo.setBackground(new Color(25, 25, 112));
-		txtpnCrewMemberInfo.setBounds(303, 125, 283, 128);
-		super.add(txtpnCrewMemberInfo);
+		crewMemberInfo = new JTextPane();
+		crewMemberInfo.setEditable(false);
+		crewMemberInfo.setText("Crew member info");
+		crewMemberInfo.setForeground(Color.WHITE);
+		crewMemberInfo.setFont(new Font("MS Gothic", Font.PLAIN, 12));
+		crewMemberInfo.setBackground(new Color(25, 25, 112));
+		crewMemberInfo.setBounds(303, 125, 283, 128);
+		super.add(crewMemberInfo);
 		
 		btnUseItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -204,7 +204,6 @@ public class GUICrewMembersScreen extends JPanel {
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Menu");
-				guiWindow.updatePane();
 			}
 		});
 		

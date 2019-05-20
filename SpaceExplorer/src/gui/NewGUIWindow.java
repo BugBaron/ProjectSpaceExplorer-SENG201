@@ -96,6 +96,7 @@ public class NewGUIWindow {
 			memberText = memberText.substring(memberText.indexOf("\n") + 1);
 			crewMembersScreen.crewMemberInfo.setText(memberText);
 			useItemScreen.crewMemberInfo.setText(memberText);
+			pilotShipScreen.crewMemberInfo.setText(memberText);
 		}
 	}
 	

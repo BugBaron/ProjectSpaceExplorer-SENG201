@@ -39,23 +39,25 @@ public class GameEnvironment {
 			new Consumable("Band-Aid"), new Consumable("First Aid Kit")};
 	private final Integer[] FINDABLE_MONEY = {10, 20, 30};
 	
+	/**
+	 * Creates a new shop
+	 * @return a new shop
+	 */
 	public Inventory createShop() {
 		HashMap<Consumable, Integer> shopList = new HashMap<Consumable, Integer>();
 		int[] possibleQuantity = {0, 1, 2};
 		Random randomVar = new Random();
+		int randInt;
 		for (Consumable i : FOOD_ITEMS) {
-			shopList.put(i, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
+			randInt = possibleQuantity[randomVar.nextInt(possibleQuantity.length)];
+			if (randInt > 0) shopList.put(i, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
 		}
 		for (Consumable i : MEDICAL_ITEMS) {
-			shopList.put(i, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
+			randInt = possibleQuantity[randomVar.nextInt(possibleQuantity.length)];
+			if (randInt > 0) shopList.put(i, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
 		}
 		Inventory newShop = new Inventory(shopList);
 		return newShop;
-	}
-	
-	public static void main(String[] args) {
-		GameEnvironment gameEnvironment = new GameEnvironment();
-		gameEnvironment.createGame();
 	}
 	
 	
@@ -67,6 +69,10 @@ public class GameEnvironment {
 	}
 	
 	
+	/**
+	 * Gets the InOutHandler of this GameEnvironment
+	 * @return the InOutHandler
+	 */
 	public InOutHandler getInOut() {
 		return inOut;
 	}
@@ -176,6 +182,7 @@ public class GameEnvironment {
 		return availableMembers;
 	}
 	
+	
 	/**
 	 * Gets a string representing the ship status
 	 * @return a string representing the ship status
@@ -196,65 +203,16 @@ public class GameEnvironment {
 	}
 	
 	
+	/**
+	 * Purchases an item from the shop
+	 * @param item the item to be purchased
+	 */
 	public void purchaseItem(Consumable item) {
 		shop.removeItem(item); 
 		inventory.addItem(item);
 		inOut.print("You just purchased a " + item.getName() + "!");
 		ship.addMoney(-item.getPrice());
 	}
-	// TODO remove this function (obsolete)
-	/*
-	public void viewShop() {
-		ArrayList<Consumable> keys = shop.getKeys();
-		Integer size = keys.size();
-		
-		// Displays all the items in the shop as options
-		int i;
-			for (i = 0; i < size; i++) {
-				Consumable item = keys.get(i);
-				String classification = item.getClassification();
-				String name = item.getName();
-				String description = item.getDescription();
-				inOut.print((i + 1) + ") " + classification + " item: " + name + ", " 
-				+ description + ", " + shop.get(item) 
-				+ " in stock, $" + item.getPrice());
-			}
-		inOut.print((i + 1) + ") Back to Outpost");
-		int choice = inOut.collectInt(1, i + 1);
-		
-		
-		// TODO this is a real mess of a section
-		if (choice != i + 1) {
-			Consumable item = keys.get(choice - 1);
-			boolean isPurchasing = true;
-			while (isPurchasing && shop.get(item) != 0) {
-				inOut.print(item.getName());
-				inOut.print(item.getDescription());
-				inOut.print("Price: $" + item.getPrice());
-				inOut.print("Quantity: " + shop.get(item));
-				
-				if (item.getPrice() > ship.getMoney()) {
-					inOut.print("You cannot afford this item");
-					inOut.print("Press enter to return to the shop");
-					inOut.collectString();
-					viewShop();
-				} else {
-					inOut.print("1) Purchase item");
-					inOut.print("2) Back to shop");
-					switch (inOut.collectInt(1, 2)) {
-					case 1: shop.removeItem(item); inventory.addItem(item);
-						inOut.print("You just purchased a " + item.getName() + "!");
-						ship.addMoney(-item.getPrice()); break;
-					case 2: isPurchasing = false; break;
-					}
-				} 
-				viewShop();
-			} 
-		} else {
-			//goToOutpost();
-		}
-	}
-	*/
 	
 	/**
 	 * Gets the inventory of the ship
@@ -274,16 +232,19 @@ public class GameEnvironment {
 	}
 	
 	
+	/**
+	 * Gets the total money collected on the ship
+	 * @return the money on the ship
+	 */
 	public int getMoney() {
 		return ship.getMoney();
 	}
 	
 	
-	// TODO needs to be edited to remove obsolete sections
 	/**
 	 * Conducts all processes related to ending the day
 	 */
-	public void newDay() {
+	public boolean newDay() {
 		// End the day for each user. Also add to the score if the crew member has max status
 		int i;
 		int size = ship.getCrewMembers().size();
@@ -303,8 +264,8 @@ public class GameEnvironment {
 		
 		// Ends the game if there are no more crew members left alive, or if the last day ended
 		if (ship.getCrewMembers().size() == 0 || dayNumber > maxDays) {
-			inOut.print(true); // Indicates that the game has ended
-			endGame(false);
+			return true; // Indicates that the game has ended
+			//endGame(false);
 		} else {
 			inOut.print(false); // Indicates that the game has not ended
 			int sumAttackProbability = Arrays.stream(ATTACK_PROBABILITY).sum();
@@ -327,12 +288,8 @@ public class GameEnvironment {
 				}
 			}
 			partsHere = true;
-			inOut.print(true); // Indicates that the random events have no more messages
-			inOut.print("Daily Score: " + ship.getDailyScore());
-			// inOut.print("Press enter to continue");
-			// inOut.collectString();
-			
-			// gameLoop();
+			return false; // Indicates that the random events have no more messages
+			//inOut.print("Daily Score: " + ship.getDailyScore());
 		}
 	}
 	
@@ -357,7 +314,7 @@ public class GameEnvironment {
 				partsFound = partsFound + 1;
 				ship.addScore(100);
 				if (partsFound == partsToFind) {
-					endGame(true);
+					//endGame(true);
 					return true;
 				} else {
 					inOut.print("You now have " + partsFound + " out of " + partsToFind + 
@@ -476,9 +433,6 @@ public class GameEnvironment {
 		inOut.print("Final Score: " + ship.getTotalScore());
 		inOut.print("");
 		inOut.print("Would you like to play again?");
-		//inOut.print("1) Yes!");
-		//inOut.print("2) No, thank you");
-		//if (inOut.collectInt(1, 2) == 1) createGame();
 	}
 	
 	
