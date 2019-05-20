@@ -18,7 +18,7 @@ import main.Consumable;
 import main.GameEnvironment;
 import main.CrewMemberTypes.CrewMember;
 
-public class GUIUseItemScreen {
+public class GUIUseItemScreen implements GUIScreen{
 	
 	JPanel panel;
 	SpaceMessagePane messagePane;
@@ -38,7 +38,7 @@ public class GUIUseItemScreen {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	private void initialize() {
+	public void initialize() {
 		panel = new JPanel();
 		panel.setBackground(new Color(25, 25, 112));
 		panel.setLayout(null);
