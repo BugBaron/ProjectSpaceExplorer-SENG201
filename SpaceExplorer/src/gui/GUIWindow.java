@@ -866,7 +866,6 @@ public class GUIWindow {
 					crewMemberInfo = crewMemberInfo.substring(crewMemberInfo.indexOf("\n") + 1);
 					txtpnSecondCrewMember.setText(crewMemberInfo);
 				}
-				
 				layout.show(frame.getContentPane(), "Pilot Ship");
 				updatePane(txtpnMessagePanePilotShip);
 			}
