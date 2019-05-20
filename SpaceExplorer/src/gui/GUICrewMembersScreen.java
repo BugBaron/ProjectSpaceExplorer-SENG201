@@ -50,8 +50,6 @@ public class GUICrewMembersScreen implements GUIScreen {
 			btnRepairShip.setEnabled(actions > 0);
 			btnSearchPlanet.setEnabled(actions > 0);
 			btnPilotShip.setEnabled(actions > 0 && gameEnvironment.getAvailableMembers().size() > 1);
-			String memberText = crewMember.toString() + "\nActions: " + crewMember.getActions();
-			memberText = memberText.substring(memberText.indexOf("\n") + 1);
 			guiWindow.updateCrewMemberInfo();
 		}
 	}
@@ -59,7 +57,7 @@ public class GUICrewMembersScreen implements GUIScreen {
 	/**
 	 * Initialize the contents of the frame.
 	 */
-	public void initialize() {
+	private void initialize() {
 		panel = new JPanel();
 		panel.setBackground(new Color(25, 25, 112));
 		panel.setLayout(null);
