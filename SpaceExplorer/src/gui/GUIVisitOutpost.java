@@ -74,21 +74,21 @@ public class GUIVisitOutpost extends JPanel {
 	
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Set Up");
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Screen");
 				guiWindow.updatePane();
 			}
 		});
 		
 		btnViewInventory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Inventory");
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Inventory Screen");
 				guiWindow.updatePane();
 			}
 		});
 		
 		btnViewShop.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Shop");
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Shop Screen");
 			}
 		});
 	}
