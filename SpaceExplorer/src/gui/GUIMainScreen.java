@@ -39,7 +39,7 @@ public class GUIMainScreen extends JPanel {
 		inOut = gameEnvironment.getInOut();
 		initialize();
 	}
-
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -112,9 +112,10 @@ public class GUIMainScreen extends JPanel {
 		btnContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean result = gameEnvironment.newDay();
-				if () {
-					// The game has ended
-					// TODO add code to change end game screen text based on how they lost
+				if (result == true) {
+					guiWindow.endGameScreen.runEndDay(false);
+					guiWindow.layout.show(guiWindow.frame.getContentPane(), "End Game");
+					guiWindow.updatePane();
 				} else {
 					// The game has not ended
 					Object output = inOut.getOutput();
@@ -122,10 +123,10 @@ public class GUIMainScreen extends JPanel {
 						messagePaneContents.add((String) output);
 						output = inOut.getOutput();
 					}
-					lblDayNumber.setText(gameEnvironment.getDayString()); // TODO this is temporary
-
-					// TODO layout.show(frame.getContentPane(), "Score Screen"); and need 
-					// to change the contents of the label using '(String) inOut.getContents()'
+					String scoreOutput = "" + inOut.getOutput();
+					guiWindow.dailyScoreScreen.dailyScore(scoreOutput);
+					guiWindow.layout.show(guiWindow.frame.getContentPane(), "Daily Score");
+					guiWindow.updatePane();
 				}
 			}
 		});

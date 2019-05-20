@@ -25,11 +25,14 @@ public class GUIEndGameScreen extends JPanel {
 
 	private NewGUIWindow guiWindow;
 	private GameEnvironment gameEnvironment;
+	private InOutHandler inOut;
+	private JTextPane txtpnResultMessage;
+	private SpaceTitle lblTitle;
 	
 	/**
 	 * Create the panel
 	 */
-	public GUIEndGameScreen() {
+	public GUIEndGameScreen(NewGUIWindow guiWindow) {
 		super();
 		super.setBackground(new Color(25, 25, 112));
 		setLayout(null);
@@ -38,23 +41,34 @@ public class GUIEndGameScreen extends JPanel {
 		gameEnvironment = guiWindow.gameEnvironment;
 		initialize();
 	}
+	
+	public void runEndDay(boolean isVictory) {
+		gameEnvironment.endGame(isVictory);
+		String finalOutput = "";
+		Object output = inOut.getOutput();
+		finalOutput = finalOutput + output;
+		lblTitle.setText(finalOutput);
+		finalOutput = "";
+		while (output != null) {
+			finalOutput = finalOutput + output;
+			output = inOut.getOutput();
+		}
+		txtpnResultMessage.setText(finalOutput);
+	}
 
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
 		
-		//Need to generate so it updates to correct text
-		SpaceTitle lblTitle = new SpaceTitle("Congratulations!");
+		SpaceTitle lblTitle = new SpaceTitle("");
 		lblTitle.setBounds(0, 27, 626, 63);
 		super.add(lblTitle);
 		
-		//Need to generate so it updates to correct text
 		JTextPane txtpnResultMessage = new JTextPane();
 		txtpnResultMessage.setBackground(new Color(25, 25, 112));
 		txtpnResultMessage.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		txtpnResultMessage.setForeground(Color.WHITE);
-		txtpnResultMessage.setText("You found all the space ship parts and completed the mission! Well Done!");
 		txtpnResultMessage.setBounds(50, 115, 521, 193);
 		super.add(txtpnResultMessage);
 		

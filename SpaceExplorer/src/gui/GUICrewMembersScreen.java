@@ -182,6 +182,7 @@ public class GUICrewMembersScreen extends JPanel {
 					guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Menu");
 					guiWindow.updatePane();
 				} else { //If the game has now ended
+					guiWindow.endGameScreen.runEndDay(true);
 					guiWindow.layout.show(guiWindow.frame.getContentPane(), "End Game");
 					guiWindow.updatePane();
 				}

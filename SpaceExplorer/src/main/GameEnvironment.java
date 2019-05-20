@@ -267,7 +267,7 @@ public class GameEnvironment {
 			return true; // Indicates that the game has ended
 			//endGame(false);
 		} else {
-			inOut.print(false); // Indicates that the game has not ended
+			//inOut.print(false); // Indicates that the game has not ended
 			int sumAttackProbability = Arrays.stream(ATTACK_PROBABILITY).sum();
 			int randInt = (new Random()).nextInt(sumAttackProbability);
 			if (randInt < ATTACK_PROBABILITY[0] && inventory.size() > 0) {
@@ -288,8 +288,9 @@ public class GameEnvironment {
 				}
 			}
 			partsHere = true;
-			return false; // Indicates that the random events have no more messages
-			//inOut.print("Daily Score: " + ship.getDailyScore());
+			inOut.print(false); // Indicates that the random events have no more messages
+			inOut.print("Daily Score: " + ship.getDailyScore());
+			return false; 
 		}
 	}
 	
@@ -419,20 +420,21 @@ public class GameEnvironment {
 	 */
 	public void endGame(boolean isVictory) {
 		if (isVictory) {
+			inOut.print("Congratulations!");
 			inOut.print("You have piloted the ship " + ship.getName() + " to victory"); 
 			inOut.print("and found all the missing parts of your ship!");
 			inOut.print("Well done!");
 		} else if (ship.getCrewMembers().size() == 0) {
+			inOut.print("Sorry, you lost!");
 			inOut.print("Oh no! All of the members of your crew have died!");
 			inOut.print("The " + ship.getName() + " repair mission ends in tragedy");
 		} else {
+			inOut.print("Sorry, you lost!");
 			inOut.print("It has been " + maxDays + " days");
 			inOut.print(ship.getName() + " is now damaged beyond repair");
 		}
-		inOut.print("");
+		inOut.print("\n");
 		inOut.print("Final Score: " + ship.getTotalScore());
-		inOut.print("");
-		inOut.print("Would you like to play again?");
 	}
 	
 	
