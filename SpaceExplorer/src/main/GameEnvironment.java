@@ -50,11 +50,11 @@ public class GameEnvironment {
 		int randInt;
 		for (Consumable i : FOOD_ITEMS) {
 			randInt = possibleQuantity[randomVar.nextInt(possibleQuantity.length)];
-			if (randInt > 0) shopList.put(i, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
+			if (randInt > 0) shopList.put(i, randInt);
 		}
 		for (Consumable i : MEDICAL_ITEMS) {
 			randInt = possibleQuantity[randomVar.nextInt(possibleQuantity.length)];
-			if (randInt > 0) shopList.put(i, possibleQuantity[randomVar.nextInt(possibleQuantity.length)]);
+			if (randInt > 0) shopList.put(i, randInt);
 		}
 		Inventory newShop = new Inventory(shopList);
 		return newShop;
@@ -75,6 +75,17 @@ public class GameEnvironment {
 	 */
 	public InOutHandler getInOut() {
 		return inOut;
+	}
+	
+	public void createGame(int maxDays, Ship ship) {
+		shop = createShop();
+		inventory = new Inventory();
+		partsHere = true;
+		dayNumber = 1;
+		currentPlanet = 0;
+		
+		this.maxDays = maxDays;
+		partsToFind = 2 * maxDays / 3;
 	}
 	
 	// TODO this needs to be remade to work with the GUI
@@ -159,6 +170,8 @@ public class GameEnvironment {
 		
 		//gameLoop();
 	}
+	
+	
 	
 	
 	/**
