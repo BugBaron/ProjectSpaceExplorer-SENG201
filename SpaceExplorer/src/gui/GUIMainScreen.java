@@ -114,8 +114,8 @@ public class GUIMainScreen extends JPanel {
 		
 		btnContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gameEnvironment.newDay();
-				if ((boolean) inOut.getOutput()) {
+				boolean result = gameEnvironment.newDay();
+				if () {
 					// The game has ended
 					// TODO add code to change end game screen text based on how they lost
 				} else {

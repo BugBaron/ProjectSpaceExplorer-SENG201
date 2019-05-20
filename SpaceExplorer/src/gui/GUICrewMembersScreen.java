@@ -172,14 +172,19 @@ public class GUICrewMembersScreen extends JPanel {
 		
 		btnSearchPlanet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gameEnvironment.searchPlanet((CrewMember) crewMemberSelection.getSelectedItem());
+				boolean result = gameEnvironment.searchPlanet((CrewMember) crewMemberSelection.getSelectedItem());
 				Object output = inOut.getOutput();
 				while (output != null) {
 					messagePaneContents.add((String) output);
 					output = inOut.getOutput();
 				}
-				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Menu");
-				guiWindow.updatePane();
+				if (result == false) {
+					guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Menu");
+					guiWindow.updatePane();
+				} else { //If the game has now ended
+					guiWindow.layout.show(guiWindow.frame.getContentPane(), "End Game");
+					guiWindow.updatePane();
+				}
 			}
 		});
 		
