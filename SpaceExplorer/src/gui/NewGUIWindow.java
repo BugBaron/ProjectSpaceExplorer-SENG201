@@ -53,6 +53,7 @@ public class NewGUIWindow {
 	ArrayList<String> messagePaneContents = new ArrayList<String>();
 	GameEnvironment gameEnvironment = new GameEnvironment();
 	
+	GUISetUpScreen setUpScreen = new GUISetUpScreen(this);
 	GUIMainScreen mainScreen = new GUIMainScreen(this);
 	GUICrewMembersScreen crewMembersScreen = new GUICrewMembersScreen(this);
 	GUIUseItemScreen useItemScreen = new GUIUseItemScreen(this);
