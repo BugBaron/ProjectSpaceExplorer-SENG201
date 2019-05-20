@@ -62,6 +62,8 @@ public class NewGUIWindow {
 	GUIVisitOutpost visitOutpostScreen = new GUIVisitOutpost(this);
 	GUIViewShop shopScreen = new GUIViewShop(this);
 	GUIViewInventory inventoryScreen = new GUIViewInventory(this);
+	GUIEndGameScreen endGameScreen = new GUIEndGameScreen(this);
+	GUIDailyScoreScreen dailyScoreScreen = new GUIDailyScoreScreen(this);
 	
 	private InOutHandler inOut = gameEnvironment.getInOut();
 	
