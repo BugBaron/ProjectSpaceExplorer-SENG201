@@ -37,6 +37,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Vector;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemListener;
@@ -45,13 +46,19 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
 
-public class GUIWindow {
+public class NewGUIWindow {
 
-	private JFrame frame;
-	private CardLayout layout;
-	private ArrayList<String> messagePaneContents = new ArrayList<String>();
-	private GameEnvironment gameEnvironment = new GameEnvironment();
+	JFrame frame;
+	CardLayout layout;
+	ArrayList<String> messagePaneContents = new ArrayList<String>();
+	GameEnvironment gameEnvironment = new GameEnvironment();
+	
+	GUIMainScreen mainScreen = new GUIMainScreen(this);
+	GUICrewMembersScreen crewMembersScreen = new GUICrewMembersScreen(this);
+	GUIUseItemScreen useItemScreen = new GUIUseItemScreen(this);
+	
 	private InOutHandler inOut = gameEnvironment.getInOut();
+	private HashMap<String, GUIScreen> screens = new HashMap<String, GUIScreen>();
 	
 	/**
 	 * Launch the application.
@@ -60,7 +67,7 @@ public class GUIWindow {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					GUIWindow window = new GUIWindow();
+					NewGUIWindow window = new NewGUIWindow();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -72,20 +79,38 @@ public class GUIWindow {
 	/**
 	 * Create the application.
 	 */
-	public GUIWindow() {
+	public NewGUIWindow() {
 		gameEnvironment.createGame();
 		initialize();
+	}
+	
+	public void updateCrewMemberInfo() {
+		Object item = crewMembersScreen.crewMemberSelection.getSelectedItem();
+		if (item instanceof CrewMember) {
+			CrewMember crewMember = (CrewMember) item;
+			String memberText = crewMember.toString() + "\nActions: " + crewMember.getActions();
+			memberText = memberText.substring(memberText.indexOf("\n") + 1);
+			crewMembersScreen.crewMemberInfo.setText(memberText);
+			useItemScreen.crewMemberInfo.setText(memberText);
+		}
 	}
 	
 	/**
 	 * Update the text for the specified message pane
 	 */
-	public void updatePane(JTextPane msgPane) {
+	public void updatePane() {
 		String text = "";
 		for (int i=0; i < messagePaneContents.size(); i++) {
 			text = messagePaneContents.get(i) + "\n" + text;
 		}
-		msgPane.setText(text);
+		mainScreen.messagePane.setText(text);
+		crewMembersScreen.messagePane.setText(text);
+		useItemScreen.messagePane.setText(text);
+		pilotShipScreen.messagePane.setText(text);
+		shipScreen.messagePane.setText(text);
+		visitOutpostScreen.messagePane.setText(text);
+		shopScreen.messagePane.setText(text);
+		inventoryScreen.messagePane.setText(text);
 	}
 	
 	/**
@@ -96,24 +121,13 @@ public class GUIWindow {
 		frame.getContentPane().setMinimumSize(new Dimension(640, 480));
 		frame.getContentPane().setBackground(new Color(25, 25, 112));
 		frame.getContentPane().setForeground(new Color(0, 0, 128));
-		frame.getContentPane().setLayout(new CardLayout(20, 20));
-		layout = (CardLayout) frame.getContentPane().getLayout();
+		layout = new CardLayout(20, 20);
+		frame.getContentPane().setLayout(layout);
 		
-		JPanel mainScreen = new JPanel();
-		mainScreen.setBackground(new Color(25, 25, 112));
-		frame.getContentPane().add(mainScreen, "Main Screen");
-		mainScreen.setLayout(null);
-
-		JPanel crewMembers = new JPanel();
-		crewMembers.setBackground(new Color(25, 25, 112));
-		frame.getContentPane().add(crewMembers, "Crew Members");
-		crewMembers.setLayout(null);
-
-		JPanel useItem = new JPanel();
-		useItem.setBackground(new Color(25, 25, 112));
-		frame.getContentPane().add(useItem, "Use Item");
-		useItem.setLayout(null);
-
+		frame.getContentPane().add(mainScreen.panel, "Main Screen");
+		frame.getContentPane().add(crewMembersScreen.panel, "Crew Members");
+		frame.getContentPane().add(useItemScreen.panel, "Use Item");
+		
 		JPanel pilotShip = new JPanel();
 		pilotShip.setBackground(new Color(25, 25, 112));
 		frame.getContentPane().add(pilotShip, "Pilot Ship");
@@ -138,249 +152,6 @@ public class GUIWindow {
 		inventoryScreen.setLayout(null);
 		inventoryScreen.setBackground(new Color(25, 25, 112));
 		frame.getContentPane().add(inventoryScreen, "Inventory Screen");
-		
-		// Main screen
-		
-		JLabel lblControlPanelTitle = new JLabel("Control Panel");
-		lblControlPanelTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblControlPanelTitle.setForeground(Color.YELLOW);
-		lblControlPanelTitle.setFont(new Font("MS Gothic", Font.PLAIN, 40));
-		lblControlPanelTitle.setBounds(0, 0, 586, 60);
-		mainScreen.add(lblControlPanelTitle);
-		
-		JLabel lblDayNumber = new JLabel(gameEnvironment.getDayString());
-		lblDayNumber.setForeground(Color.WHITE);
-		lblDayNumber.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		lblDayNumber.setBounds(0, 80, 283, 36);
-		mainScreen.add(lblDayNumber);
-		
-		JButton btnViewCrewMember = new JButton("View Crew members");
-		btnViewCrewMember.setFocusable(false);
-		btnViewCrewMember.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
-		btnViewCrewMember.setForeground(Color.WHITE);
-		btnViewCrewMember.setBackground(new Color(25, 25, 112));
-		btnViewCrewMember.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		btnViewCrewMember.setBounds(0, 126, 283, 36);
-		mainScreen.add(btnViewCrewMember);
-		
-		JButton btnViewShipStatus = new JButton("View ship status");
-		btnViewShipStatus.setFocusable(false);
-		btnViewShipStatus.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
-		btnViewShipStatus.setForeground(Color.WHITE);
-		btnViewShipStatus.setBackground(new Color(25, 25, 112));
-		btnViewShipStatus.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		btnViewShipStatus.setBounds(0, 172, 283, 36);
-		mainScreen.add(btnViewShipStatus);
-		
-		JButton btnVisitSpaceOutpost = new JButton("Visit space outpost");
-		btnVisitSpaceOutpost.setFocusable(false);
-		btnVisitSpaceOutpost.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
-		btnVisitSpaceOutpost.setForeground(new Color(255, 255, 255));
-		btnVisitSpaceOutpost.setBackground(new Color(25, 25, 112));
-		btnVisitSpaceOutpost.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		btnVisitSpaceOutpost.setBounds(0, 218, 283, 36);
-		mainScreen.add(btnVisitSpaceOutpost);
-		
-		JButton btnContinue = new JButton("Continue to next day");
-		btnContinue.setFocusable(false);
-		btnContinue.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
-		btnContinue.setForeground(Color.WHITE);
-		btnContinue.setBackground(new Color(25, 25, 112));
-		btnContinue.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		btnContinue.setBounds(0, 264, 283, 36);
-		mainScreen.add(btnContinue);
-		
-		JTextPane txtpnMessagePane = new JTextPane();
-		txtpnMessagePane.setEditable(false);
-		txtpnMessagePane.setText("Message pane");
-		txtpnMessagePane.setForeground(new Color(0, 0, 128));
-		txtpnMessagePane.setFont(new Font("MS Gothic", Font.PLAIN, 15));
-		txtpnMessagePane.setBounds(303, 264, 283, 93);
-		mainScreen.add(txtpnMessagePane);
-		
-		JLabel lblImageControlPanel = new JLabel("");
-		lblImageControlPanel.setIcon(new ImageIcon(GUIWindow.class.getResource("/images/SPACE.PNG")));
-		lblImageControlPanel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblImageControlPanel.setForeground(Color.WHITE);
-		lblImageControlPanel.setBounds(303, 80, 283, 174);
-		mainScreen.add(lblImageControlPanel);
-		
-		// Crew members pane
-		
-		JLabel lblCrewMembersTitle = new JLabel("Crew Members");
-		lblCrewMembersTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCrewMembersTitle.setForeground(Color.YELLOW);
-		lblCrewMembersTitle.setFont(new Font("MS Gothic", Font.PLAIN, 40));
-		lblCrewMembersTitle.setBounds(0, 0, 586, 60);
-		crewMembers.add(lblCrewMembersTitle);
-		
-		JTextPane txtpnMessagePaneCrewMembers = new JTextPane();
-		txtpnMessagePaneCrewMembers.setEditable(false);
-		txtpnMessagePaneCrewMembers.setText("Message pane");
-		txtpnMessagePaneCrewMembers.setForeground(new Color(0, 0, 128));
-		txtpnMessagePaneCrewMembers.setFont(new Font("MS Gothic", Font.PLAIN, 15));
-		txtpnMessagePaneCrewMembers.setBounds(303, 264, 283, 93);
-		crewMembers.add(txtpnMessagePaneCrewMembers);
-		
-		JButton btnUseItem = new JButton("Use food/medical supplies");
-		btnUseItem.setFocusable(false);
-		btnUseItem.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
-		btnUseItem.setForeground(Color.WHITE);
-		btnUseItem.setBackground(new Color(25, 25, 112));
-		btnUseItem.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		btnUseItem.setBounds(0, 126, 283, 36);
-		crewMembers.add(btnUseItem);
-		
-		JButton btnSleep = new JButton("Sleep");
-		btnSleep.setFocusable(false);
-		btnSleep.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
-		btnSleep.setForeground(Color.WHITE);
-		btnSleep.setBackground(new Color(25, 25, 112));
-		btnSleep.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		btnSleep.setBounds(0, 172, 283, 36);
-		crewMembers.add(btnSleep);
-		
-		JButton btnRepairShip = new JButton("Repair ship shields");
-		btnRepairShip.setFocusable(false);
-		btnRepairShip.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
-		btnRepairShip.setForeground(Color.WHITE);
-		btnRepairShip.setBackground(new Color(25, 25, 112));
-		btnRepairShip.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		btnRepairShip.setBounds(0, 218, 283, 36);
-		crewMembers.add(btnRepairShip);
-		
-		JButton btnSearchPlanet = new JButton("Search planet");
-		btnSearchPlanet.setFocusable(false);
-		btnSearchPlanet.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
-		btnSearchPlanet.setForeground(Color.WHITE);
-		btnSearchPlanet.setBackground(new Color(25, 25, 112));
-		btnSearchPlanet.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		btnSearchPlanet.setBounds(0, 264, 283, 36);
-		crewMembers.add(btnSearchPlanet);
-		
-		JButton btnPilotShip = new JButton("Pilot ship");
-		btnPilotShip.setFocusable(false);
-		btnPilotShip.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
-		btnPilotShip.setForeground(Color.WHITE);
-		btnPilotShip.setBackground(new Color(25, 25, 112));
-		btnPilotShip.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		btnPilotShip.setBounds(0, 310, 283, 36);
-		crewMembers.add(btnPilotShip);
-		
-		JButton btnBack = new JButton("Back");
-		btnBack.setFocusable(false);
-		btnBack.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
-		btnBack.setForeground(Color.WHITE);
-		btnBack.setBackground(new Color(25, 25, 112));
-		btnBack.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		btnBack.setBounds(303, 367, 283, 36);
-		crewMembers.add(btnBack);
-		
-		JLabel lblCrewSelector = new JLabel("Crew Member:");
-		lblCrewSelector.setForeground(Color.WHITE);
-		lblCrewSelector.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		lblCrewSelector.setBounds(0, 80, 126, 36);
-		crewMembers.add(lblCrewSelector);
-		
-		JComboBox<CrewMember> comboBoxCrewMemberSelection = new JComboBox<CrewMember>();
-		comboBoxCrewMemberSelection.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		comboBoxCrewMemberSelection.setRenderer(new BasicComboBoxRenderer() {
-			@Override
-			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean hasFocus) {
-				super.getListCellRendererComponent(list, value, index, isSelected, hasFocus);
-				if (value instanceof CrewMember) {
-					CrewMember crewMember = (CrewMember) value;
-					setText(crewMember.getName() + ", " + crewMember.getTypeInfo().get("Type"));
-				}
-				
-				return this;	
-			}
-		});
-		comboBoxCrewMemberSelection.setBounds(135, 80, 441, 36);
-		crewMembers.add(comboBoxCrewMemberSelection);
-		
-		JTextPane txtpnCrewMemberInfo = new JTextPane();
-		txtpnCrewMemberInfo.setEditable(false);
-		txtpnCrewMemberInfo.setText("Crew member info");
-		txtpnCrewMemberInfo.setForeground(Color.WHITE);
-		txtpnCrewMemberInfo.setFont(new Font("MS Gothic", Font.PLAIN, 12));
-		txtpnCrewMemberInfo.setBackground(new Color(25, 25, 112));
-		txtpnCrewMemberInfo.setBounds(303, 125, 283, 128);
-		crewMembers.add(txtpnCrewMemberInfo);
-		
-		// Use Item Screen
-		
-		JLabel lblUseItemTitle = new JLabel("Use Item");
-		lblUseItemTitle.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUseItemTitle.setForeground(Color.YELLOW);
-		lblUseItemTitle.setFont(new Font("MS Gothic", Font.PLAIN, 40));
-		lblUseItemTitle.setBounds(0, 0, 586, 60);
-		useItem.add(lblUseItemTitle);
-		
-		JTextPane txtpnMessagePaneUseItem = new JTextPane();
-		txtpnMessagePaneUseItem.setEditable(false);
-		txtpnMessagePaneUseItem.setText("Message pane");
-		txtpnMessagePaneUseItem.setForeground(new Color(0, 0, 128));
-		txtpnMessagePaneUseItem.setFont(new Font("MS Gothic", Font.PLAIN, 15));
-		txtpnMessagePaneUseItem.setBounds(303, 264, 283, 93);
-		useItem.add(txtpnMessagePaneUseItem);
-		
-		JButton btnBackUseItem = new JButton("Back");
-		btnBackUseItem.setFocusable(false);
-		btnBackUseItem.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
-		btnBackUseItem.setForeground(Color.WHITE);
-		btnBackUseItem.setBackground(new Color(25, 25, 112));
-		btnBackUseItem.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		btnBackUseItem.setBounds(303, 367, 283, 36);
-		useItem.add(btnBackUseItem);
-		
-		JLabel lblItemSelector = new JLabel("Item:");
-		lblItemSelector.setForeground(Color.WHITE);
-		lblItemSelector.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		lblItemSelector.setBounds(0, 80, 50, 36);
-		useItem.add(lblItemSelector);
-		
-		JComboBox<Consumable> comboBoxItemSelection = new JComboBox<Consumable>();
-		comboBoxItemSelection.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		comboBoxItemSelection.setRenderer(new BasicComboBoxRenderer() {
-			@Override
-			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean hasFocus) {
-				super.getListCellRendererComponent(list, value, index, isSelected, hasFocus);
-				if (value instanceof Consumable) {
-					Consumable item = (Consumable) value;
-					setText(item.getName() + ", Quantity: " + gameEnvironment.getInventory().get(item));
-				}
-				
-				return this;	
-			}
-		});
-		comboBoxItemSelection.setBounds(60, 80, 526, 36);
-		useItem.add(comboBoxItemSelection);
-		
-		JButton btnConfirmUseItem = new JButton("Use item");
-		btnConfirmUseItem.setFocusable(false);
-		btnConfirmUseItem.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
-		btnConfirmUseItem.setForeground(Color.WHITE);
-		btnConfirmUseItem.setBackground(new Color(25, 25, 112));
-		btnConfirmUseItem.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		btnConfirmUseItem.setBounds(0, 264, 283, 36);
-		useItem.add(btnConfirmUseItem);
-		
-		JTextPane txtpnCrewMemberInfoUseItem = new JTextPane();
-		txtpnCrewMemberInfoUseItem.setText("Crew member info");
-		txtpnCrewMemberInfoUseItem.setForeground(Color.WHITE);
-		txtpnCrewMemberInfoUseItem.setFont(new Font("MS Gothic", Font.PLAIN, 12));
-		txtpnCrewMemberInfoUseItem.setBackground(new Color(25, 25, 112));
-		txtpnCrewMemberInfoUseItem.setBounds(303, 126, 283, 138);
-		useItem.add(txtpnCrewMemberInfoUseItem);
-		
-		JTextPane txtpnItemInfo = new JTextPane();
-		txtpnItemInfo.setText("Item info");
-		txtpnItemInfo.setForeground(Color.WHITE);
-		txtpnItemInfo.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		txtpnItemInfo.setBackground(new Color(25, 25, 112));
-		txtpnItemInfo.setBounds(0, 126, 283, 128);
-		useItem.add(txtpnItemInfo);
 		
 		// Pilot Ship Screen
 		
@@ -468,7 +239,7 @@ public class GUIWindow {
 		shipStatus.add(lblShipStatus);
 		
 		JLabel lblImageShipStatus = new JLabel("");
-		lblImageShipStatus.setIcon(new ImageIcon(GUIWindow.class.getResource("/images/SPACE.PNG")));
+		lblImageShipStatus.setIcon(new ImageIcon(NewGUIWindow.class.getResource("/images/SPACE.PNG")));
 		lblImageShipStatus.setVerticalAlignment(SwingConstants.TOP);
 		lblImageShipStatus.setBounds(303, 80, 283, 174);
 		shipStatus.add(lblImageShipStatus);
@@ -509,7 +280,7 @@ public class GUIWindow {
 		visitOutpost.add(lblVisitOutpostTitle);
 		
 		JLabel lblImageVisitOutpost = new JLabel("");
-		lblImageVisitOutpost.setIcon(new ImageIcon(GUIWindow.class.getResource("/images/OUTPOST.png")));
+		lblImageVisitOutpost.setIcon(new ImageIcon(NewGUIWindow.class.getResource("/images/OUTPOST.png")));
 		lblImageVisitOutpost.setVerticalAlignment(SwingConstants.TOP);
 		lblImageVisitOutpost.setBounds(303, 80, 283, 174);
 		visitOutpost.add(lblImageVisitOutpost);
@@ -650,7 +421,7 @@ public class GUIWindow {
 		inventoryScreen.add(lblInventoryTitle);
 		
 		JLabel lblImageInventoryScreen = new JLabel("");
-		lblImageInventoryScreen.setIcon(new ImageIcon(GUIWindow.class.getResource("/images/STORAGE.PNG")));
+		lblImageInventoryScreen.setIcon(new ImageIcon(NewGUIWindow.class.getResource("/images/STORAGE.PNG")));
 		lblImageInventoryScreen.setVerticalAlignment(SwingConstants.TOP);
 		lblImageInventoryScreen.setBounds(303, 80, 283, 174);
 		inventoryScreen.add(lblImageInventoryScreen);
@@ -757,48 +528,7 @@ public class GUIWindow {
 		
 		
 		
-		btnViewCrewMember.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				METHODS.gotoCrewMember();
-				METHODS.updateCrewMembers();
-			}
-		});
 		
-		btnViewShipStatus.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				txtpnShipStatus.setText(gameEnvironment.getShipString());
-				layout.show(frame.getContentPane(), "Ship Status");
-				updatePane(txtpnMessagePaneShipStatus);
-			}
-		});
-
-		btnVisitSpaceOutpost.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				layout.show(frame.getContentPane(), "Visit Outpost");
-				updatePane(txtpnMessagePaneVisitOutpost);
-			}
-		});
-		
-		btnContinue.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				gameEnvironment.newDay();
-				if ((boolean) inOut.getOutput()) {
-					// The game has ended
-					// TODO add code to change end game screen text based on how they lost
-				} else {
-					// The game has not ended
-					Object output = inOut.getOutput();
-					while (!(output instanceof Boolean)) {
-						messagePaneContents.add((String) output);
-						output = inOut.getOutput();
-					}
-					lblDayNumber.setText(gameEnvironment.getDayString()); // TODO this is temporary
-
-					// TODO layout.show(frame.getContentPane(), "Score Screen"); and need 
-					// to change the contents of the label using '(String) inOut.getContents()'
-				}
-			}
-		});
 		
 		btnUseItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

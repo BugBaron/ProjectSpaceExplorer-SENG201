@@ -14,9 +14,8 @@ import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import main.GameEnvironment;
 import main.CrewMemberTypes.CrewMember;
 
-public class GUICrewMembersScreen implements GUIScreen {
+public class GUICrewMembersScreen extends JPanel {
 
-	JPanel panel;
 	SpaceMessagePane messagePane;
 	JComboBox<CrewMember> crewMemberSelection;
 	JTextPane crewMemberInfo;
@@ -34,6 +33,10 @@ public class GUICrewMembersScreen implements GUIScreen {
 	 * Create the application.
 	 */
 	public GUICrewMembersScreen(NewGUIWindow guiWindow) {
+		super();
+		super.setBackground(new Color(25, 25, 112));
+		super.setLayout(null);
+		
 		this.guiWindow = guiWindow;
 		gameEnvironment = guiWindow.gameEnvironment;
 		messagePaneContents = guiWindow.messagePaneContents;
@@ -58,11 +61,6 @@ public class GUICrewMembersScreen implements GUIScreen {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		panel = new JPanel();
-		panel.setBackground(new Color(25, 25, 112));
-		panel.setLayout(null);
-		
-
 		SpaceTitle lblTitle = new SpaceTitle("Crew Members");
 		lblTitle.setBounds(0, 0, 586, 60);
 		panel.add(lblTitle);

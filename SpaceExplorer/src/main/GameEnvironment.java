@@ -67,12 +67,8 @@ public class GameEnvironment {
 	}
 	
 	
-	/**
-	 * Class constructor for the GameEnvironment with the specified InOutHandler
-	 * @param inOut the InOutHandler to use
-	 */
-	public GameEnvironment(InOutHandler inOut) {
-		this.inOut = inOut;
+	public InOutHandler getInOut() {
+		return inOut;
 	}
 	
 	// TODO this needs to be remade to work with the GUI
