@@ -30,13 +30,13 @@ public class GUIShipStatusScreen extends JPanel {
 	SpaceMessagePane messagePane;
 	JTextPane txtpnShipStatus;
 	
-	private NewGUIWindow guiWindow;
+	private GUIWindow guiWindow;
 	private GameEnvironment gameEnvironment;
 
 	/**
 	 * Create the application.
 	 */
-	public GUIShipStatusScreen(NewGUIWindow guiWindow) {
+	public GUIShipStatusScreen(GUIWindow guiWindow) {
 		super();
 		super.setBackground(new Color(25, 25, 112));
 		super.setLayout(null);
@@ -55,7 +55,7 @@ public class GUIShipStatusScreen extends JPanel {
 		this.add(lblTitle);
 		
 		JLabel lblImage = new JLabel("");
-		lblImage.setIcon(new ImageIcon(NewGUIWindow.class.getResource("/images/SPACE.PNG")));
+		lblImage.setIcon(new ImageIcon(GUIWindow.class.getResource("/images/SPACE.PNG")));
 		lblImage.setVerticalAlignment(SwingConstants.TOP);
 		lblImage.setBounds(303, 80, 283, 174);
 		this.add(lblImage);

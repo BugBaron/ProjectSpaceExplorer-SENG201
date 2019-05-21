@@ -26,14 +26,14 @@ public class GUIViewInventory extends JPanel {
 	SpaceMessagePane messagePane;
 	JTree treeInventoryContainers;
 	
-	private NewGUIWindow guiWindow;
+	private GUIWindow guiWindow;
 	private ArrayList<String> messagePaneContents;
 	private GameEnvironment gameEnvironment;
 	private InOutHandler inOut;
 	/**
 	 * Create the panel.
 	 */
-	public GUIViewInventory(NewGUIWindow guiWindow) {
+	public GUIViewInventory(GUIWindow guiWindow) {
 		super();
 		super.setBackground(new Color(25, 25, 112));
 		setLayout(null);

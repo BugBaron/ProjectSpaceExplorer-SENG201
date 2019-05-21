@@ -27,7 +27,7 @@ public class GUIUseItemScreen extends JPanel {
 	JComboBox<Consumable> itemSelection;
 	
 	private JTextPane txtpnItemInfo;
-	private NewGUIWindow guiWindow;
+	private GUIWindow guiWindow;
 	private ArrayList<String> messagePaneContents;
 	private GameEnvironment gameEnvironment;
 	private InOutHandler inOut;
@@ -35,7 +35,7 @@ public class GUIUseItemScreen extends JPanel {
 	/**
 	 * Create the application.
 	 */
-	public GUIUseItemScreen(NewGUIWindow guiWindow) {
+	public GUIUseItemScreen(GUIWindow guiWindow) {
 		super();
 		super.setBackground(new Color(25, 25, 112));
 		super.setLayout(null);
@@ -132,7 +132,7 @@ public class GUIUseItemScreen extends JPanel {
 				gameEnvironment.useItem((CrewMember) guiWindow.crewMembersScreen.crewMemberSelection.getSelectedItem(), 
 						(Consumable) itemSelection.getSelectedItem());
 				messagePaneContents.add((String) inOut.getOutput());
-				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Menu");
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Screen");
 				guiWindow.updatePane();
 			}
 		});

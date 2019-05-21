@@ -30,7 +30,7 @@ public class GUIViewShop extends JPanel {
 
 	SpaceMessagePane messagePane;
 	
-	private NewGUIWindow guiWindow;
+	private GUIWindow guiWindow;
 	private ArrayList<String> messagePaneContents;
 	private GameEnvironment gameEnvironment;
 	private InOutHandler inOut;
@@ -76,7 +76,7 @@ public class GUIViewShop extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public GUIViewShop(NewGUIWindow guiWindow) {
+	public GUIViewShop(GUIWindow guiWindow) {
 		super();
 		super.setBackground(new Color(25, 25, 112));
 		setLayout(null);
