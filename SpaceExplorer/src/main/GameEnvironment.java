@@ -15,7 +15,7 @@ import main.CrewMemberTypes.Robot;
 import main.CrewMemberTypes.Unicorn;
 
 public class GameEnvironment {
-	private Ship ship;
+	private Ship ship; 
 	private Inventory inventory;
 	private Inventory shop;
 	private InOutHandler inOut;
