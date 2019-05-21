@@ -36,7 +36,7 @@ public class GameEnvironment {
 			new Consumable("Egg")};
 	private final Consumable[] MEDICAL_ITEMS = {new Consumable("Space Plague Cure"),
 			new Consumable("Band-Aid"), new Consumable("First Aid Kit")};
-	private final Integer[] FINDABLE_MONEY = {10, 20, 30};
+	private final int[] FINDABLE_MONEY = {10, 20, 30};
 	
 	/**
 	 * Creates a new shop
