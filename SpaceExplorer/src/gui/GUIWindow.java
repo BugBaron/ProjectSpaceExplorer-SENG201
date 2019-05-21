@@ -31,6 +31,7 @@ public class GUIWindow {
 	GUIEndGameScreen endGameScreen = new GUIEndGameScreen(this);
 	GUIDailyScoreScreen dailyScoreScreen = new GUIDailyScoreScreen(this);
 	
+	
 	/**
 	 * Launch the application.
 	 */
@@ -46,6 +47,7 @@ public class GUIWindow {
 			}
 		});
 	}
+	
 	
 	/**
 	 * Create the application.
@@ -66,13 +68,17 @@ public class GUIWindow {
 		}
 	}
 	
+	
 	/**
 	 * Update the text for the specified message pane
 	 */
 	public void updatePane() {
 		String text = "";
-		for (int i=0; i < messagePaneContents.size(); i++) {
-			text = messagePaneContents.get(i) + "\n" + text;
+		if (messagePaneContents.size() > 0) {
+			text = messagePaneContents.get(0);
+			for (int i = 1; i < messagePaneContents.size(); i++) {
+				text = text + "\n" + messagePaneContents.get(i);
+			}
 		}
 		mainScreen.messagePane.setText(text);
 		crewMembersScreen.messagePane.setText(text);
@@ -83,6 +89,7 @@ public class GUIWindow {
 		shopScreen.messagePane.setText(text);
 		inventoryScreen.messagePane.setText(text);
 	}
+	
 	
 	/**
 	 * Initialize the contents of the frame.
@@ -116,4 +123,5 @@ public class GUIWindow {
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
+	
 }

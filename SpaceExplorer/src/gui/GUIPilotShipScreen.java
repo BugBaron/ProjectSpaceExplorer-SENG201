@@ -33,7 +33,8 @@ public class GUIPilotShipScreen extends JPanel {
 	private InOutHandler inOut;
 	
 	/**
-	 * Create the panel.
+	 * Creates the panel
+	 * @param guiWindow the window to create this panel for
 	 */
 	public GUIPilotShipScreen(GUIWindow guiWindow) {
 		super();
@@ -49,7 +50,7 @@ public class GUIPilotShipScreen extends JPanel {
 	
 	
 	/**
-	 * Initialize the contents of the frame
+	 * Initialize the panel contents
 	 */
 	private void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Pilot Ship");
@@ -62,7 +63,7 @@ public class GUIPilotShipScreen extends JPanel {
 		
 		messagePane = new SpaceMessagePane();
 		messagePane.setBounds(303, 264, 283, 93);
-		this.add(messagePane);
+		this.add(messagePane.getScrollPane());
 		
 		SpaceButton btnBack = new SpaceButton("Back");
 		btnBack.setBounds(303, 367, 283, 36);

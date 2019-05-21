@@ -15,8 +15,10 @@ public class GUIDailyScoreScreen extends JPanel {
 	private GameEnvironment gameEnvironment;
 	private SpaceLabel lblScore;
 	
+	
 	/**
-	 * Create the panel.
+	 * Creates the panel
+	 * @param guiWindow the window to create this panel for
 	 */
 	public GUIDailyScoreScreen(GUIWindow guiWindow) {
 		super();
@@ -28,10 +30,16 @@ public class GUIDailyScoreScreen extends JPanel {
 		initialize();
 	}
 	
+	
+	/**
+	 * Sets the labels to display the score
+	 * @param scoreOutput the score to display
+	 */
 	public void dailyScore(String scoreOutput) {
 		lblScore.setText(scoreOutput);
 		guiWindow.mainScreen.lblDayNumber.setText(gameEnvironment.getDayString());
 	}
+	
 	
 	/**
 	 * Initialize the panel contents

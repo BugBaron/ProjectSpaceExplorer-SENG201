@@ -7,6 +7,7 @@ public class InOutHandler {
 	private Scanner scanner;
 	private ArrayBlockingQueue<Object> outputList = new ArrayBlockingQueue<Object>(20);
 	
+	
 	/**
 	 * Creates a new InOutHandler with System.in as the input and
 	 * with System.out as the output
@@ -43,6 +44,7 @@ public class InOutHandler {
 		return choice;
 	}
 	
+	
 	/**
 	 * Collects a string input for a general user interaction
 	 * @return a string received from the user
@@ -78,4 +80,6 @@ public class InOutHandler {
 	public Object getOutput() {
 		return outputList.poll();
 	}
+	
+	
 }

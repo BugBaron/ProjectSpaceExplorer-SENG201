@@ -26,7 +26,8 @@ public class GUIShipStatusScreen extends JPanel {
 	private GameEnvironment gameEnvironment;
 
 	/**
-	 * Create the application.
+	 * Creates the panel
+	 * @param guiWindow the window to create this panel for
 	 */
 	public GUIShipStatusScreen(GUIWindow guiWindow) {
 		super();
@@ -39,7 +40,7 @@ public class GUIShipStatusScreen extends JPanel {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the panel contents
 	 */
 	public void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Ship Status");
@@ -53,19 +54,10 @@ public class GUIShipStatusScreen extends JPanel {
 		this.add(lblImage);
 		
 		messagePane = new SpaceMessagePane();
-		messagePane.setEditable(false);
-		messagePane.setText("Message pane");
-		messagePane.setForeground(new Color(0, 0, 128));
-		messagePane.setFont(new Font("MS Gothic", Font.PLAIN, 15));
 		messagePane.setBounds(303, 264, 283, 93);
-		this.add(messagePane);
+		this.add(messagePane.getScrollPane());
 		
-		JButton btnBack = new JButton("Back");
-		btnBack.setFocusable(false);
-		btnBack.setForeground(Color.WHITE);
-		btnBack.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		btnBack.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
-		btnBack.setBackground(new Color(25, 25, 112));
+		SpaceButton btnBack = new SpaceButton("Back");
 		btnBack.setBounds(303, 367, 283, 36);
 		this.add(btnBack);
 		

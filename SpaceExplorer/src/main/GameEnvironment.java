@@ -15,19 +15,24 @@ import main.CrewMemberTypes.Robot;
 import main.CrewMemberTypes.Unicorn;
 
 public class GameEnvironment {
-	private Ship ship; 
+	
+	private InOutHandler inOut;
+	
+	private Ship ship;
 	private Inventory inventory;
 	private Inventory shop;
-	private InOutHandler inOut;
+	
 	private int partsToFind;
 	private int partsFound;
 	private boolean partsHere;
 	
 	private int dayNumber;
 	private int maxDays;
+	
 	private int currentPlanet;
 	private ArrayList<String> PLANET_ARRAY = new ArrayList<>(Arrays.asList("Europa", "Titan", 
 			"Io", "Callisto", "Oberon", "Umbriel", "Rhea", "Phoebe", "Ananke", "Dactyl"));
+	
 	private final int[] ATTACK_PROBABILITY = {20, 20, 60};
 	private final int[] ASTEROID_PROBABILITY = {30, 70};
 	private final Consumable[] FOOD_ITEMS = {new Consumable("Space Ration"), 
@@ -37,6 +42,7 @@ public class GameEnvironment {
 	private final Consumable[] MEDICAL_ITEMS = {new Consumable("Space Plague Cure"),
 			new Consumable("Band-Aid"), new Consumable("First Aid Kit")};
 	private final Integer[] FINDABLE_MONEY = {10, 20, 30};
+	
 	
 	/**
 	 * Creates a new shop
@@ -76,6 +82,13 @@ public class GameEnvironment {
 		return inOut;
 	}
 	
+	
+	/**
+	 * Creates a new game with the specified number of days and the specified ship
+	 * with crew members already added to it
+	 * @param maxDays the maximum number of days to repair the ship
+	 * @param ship the ship to create the game with
+	 */
 	public void createGame(int maxDays, Ship ship) {
 		shop = createShop();
 		inventory = new Inventory();
@@ -87,91 +100,6 @@ public class GameEnvironment {
 		partsToFind = 2 * maxDays / 3;
 		this.ship = ship;
 	}
-	
-	// TODO this needs to be remade to work with the GUI
-	public void createGame() {
-		shop = createShop();
-		inventory = new Inventory();
-		partsHere = true;
-		dayNumber = 1;
-		currentPlanet = 0;
-		
-		//inOut.print("How many in-game days would you like the game to last? (3-10)");
-		maxDays = inOut.collectInt(3, 10);
-		partsToFind = 2 * maxDays / 3;
-		
-		//inOut.print("How many crew members would you like? (2-4)");
-		int numMembers = inOut.collectInt(2, 4);
-		
-		ArrayList<CrewMember> selectedMembers = new ArrayList<CrewMember>();
-		ArrayList<String> names = new ArrayList<String>();
-		ArrayList<CrewMember> availableList = new ArrayList<CrewMember>(Arrays.asList(
-				new Human(ship), new Robot(ship), new Cyborg(ship), 
-				new Alien(ship), new Lizard(ship), new Unicorn(ship)));
-		for (int i = 0; i < numMembers; i++) {
-			//inOut.print("Choose crew member " + (i + 1) + ":");
-			for (CrewMember person : availableList) {
-				//HashMap<String, String> typeInfo = person.getTypeInfo();
-				//inOut.print((availableList.indexOf(person) + 1) + ") " + typeInfo.get("Type") + ", " 
-				//+ typeInfo.get("Strength") + ", " + typeInfo.get("Weakness"));
-			}
-			CrewMember selectedPerson = availableList.get(inOut.collectInt(1, 6) - 1);
-			//inOut.print("What would you like to name this " + selectedPerson.getTypeInfo().get("Type") + "?");
-			String name = inOut.collectString();
-			selectedMembers.add(selectedPerson);
-			String new_name = name;
-			Integer j = 2;
-			while (names.contains(new_name)) {
-				if (!name.isEmpty()) {
-					new_name = name + " (" + j + ")";
-					j ++;
-				}
-				else if (Collections.frequency(selectedMembers, selectedPerson) > 1)  {
-					Integer number = Collections.frequency(selectedMembers, selectedPerson);
-					new_name = Integer.toString(number);
-				}
-				else {
-					break;
-				}
-			}
-			names.add(new_name);
-		}
-		
-		//inOut.print("What would you like the name of your ship to be?");
-		String shipName = inOut.collectString();
-		if (shipName.length() == 0) {
-			ship = new Ship();
-		} else {
-			ship = new Ship(shipName);
-		}
-		
-		for (int i = 0; i < selectedMembers.size(); i++) {
-			String type = selectedMembers.get(i).getTypeInfo().get("Type");
-			String name = names.get(i);
-			ArrayList<CrewMember> shipMembers = ship.getCrewMembers();
-			CrewMember crewMember;
-			switch (type) {
-			case "Human": if (name.length() == 0) { crewMember = new Human(ship); } 
-				else {crewMember = new Human(ship, name); } break;
-			case "Robot": if (name.length() == 0) { crewMember = new Robot(ship); } 
-				else {crewMember = new Robot(ship, name); } break;
-			case "Cyborg": if (name.length() == 0) { crewMember = new Cyborg(ship); } 
-				else {crewMember = new Cyborg(ship, name); } break;
-			case "Alien": if (name.length() == 0) { crewMember = new Alien(ship); } 
-				else {crewMember = new Alien(ship, name); } break;
-			case "Lizard": if (name.length() == 0) { crewMember = new Lizard(ship); } 
-				else {crewMember = new Lizard(ship, name); } break;
-			case "Unicorn": if (name.length() == 0) { crewMember = new Unicorn(ship); } 
-				else {crewMember = new Unicorn(ship, name); } break;
-			default: crewMember = new Human(ship);
-			}
-			shipMembers.add(crewMember);
-		}
-		
-		//gameLoop();
-	}
-	
-	
 	
 	
 	/**
@@ -227,6 +155,7 @@ public class GameEnvironment {
 		ship.addMoney(-item.getPrice());
 	}
 	
+	
 	/**
 	 * Gets the inventory of the ship
 	 * @return the inventory of the ship
@@ -256,6 +185,7 @@ public class GameEnvironment {
 	
 	/**
 	 * Conducts all processes related to ending the day
+	 * @return whether or not the game ended as a result of this function
 	 */
 	public boolean newDay() {
 		// End the day for each user. Also add to the score if the crew member has max status
@@ -399,6 +329,7 @@ public class GameEnvironment {
 	public void repairShip(CrewMember crewMember) {
 		crewMember.completeAction();
 		ship.addShipShields(crewMember.getRepairAmount());
+		inOut.print(crewMember.getName() + " repaired " + ship.getName() + " to " + ship.getShipShields());
 	}
 	
 	
@@ -416,6 +347,7 @@ public class GameEnvironment {
 		inOut.print(crewMember.getName() + " and " + person.getName() + 
 				" flew the ship to " + PLANET_ARRAY.get(currentPlanet));
 		
+		shop = createShop();
 		int sumAsteroidProbability = Arrays.stream(ASTEROID_PROBABILITY).sum();
 		int randInt = (new Random()).nextInt(sumAsteroidProbability);
 		if (randInt < ASTEROID_PROBABILITY[0]) {
@@ -425,7 +357,6 @@ public class GameEnvironment {
 	}
 	
 	
-	// TODO needs some sections edited to work with the GUI
 	/**
 	 * Prints an end game screen for the player after they have found all the parts,
 	 * lost all their crew members or run out of time

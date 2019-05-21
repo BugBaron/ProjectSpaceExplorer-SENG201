@@ -22,8 +22,11 @@ public class GUIViewInventory extends JPanel {
 	private GUIWindow guiWindow;
 	private ArrayList<String> messagePaneContents;
 	private GameEnvironment gameEnvironment;
+	
+	
 	/**
-	 * Create the panel.
+	 * Creates the panel
+	 * @param guiWindow the window to create this panel for
 	 */
 	public GUIViewInventory(GUIWindow guiWindow) {
 		super();
@@ -36,13 +39,14 @@ public class GUIViewInventory extends JPanel {
 		initialize();
 	}
 	
+	
 	/**
-	 * Initialize the contents of the frame
+	 * Initialize the panel contents
 	 */
 	private void initialize() {
 		messagePane = new SpaceMessagePane();
 		messagePane.setBounds(303, 264, 283, 93);
-		super.add(messagePane);
+		super.add(messagePane.getScrollPane());
 		
 		SpaceButton btnBack = new SpaceButton("Back");
 		btnBack.setBounds(303, 367, 283, 36);

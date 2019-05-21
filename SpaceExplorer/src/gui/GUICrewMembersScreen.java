@@ -38,13 +38,15 @@ public class GUICrewMembersScreen extends JPanel {
 	private SpaceButton btnSearchPlanet;
 	private SpaceButton btnPilotShip;
 
+	
 	/**
-	 * Create the application.
+	 * Creates the pane
+	 * @param guiWindow the window to create this panel for
 	 */
 	public GUICrewMembersScreen(GUIWindow guiWindow) {
 		super();
-		super.setBackground(new Color(25, 25, 112));
-		super.setLayout(null);
+		this.setBackground(new Color(25, 25, 112));
+		this.setLayout(null);
 		
 		this.guiWindow = guiWindow;
 		gameEnvironment = guiWindow.gameEnvironment;
@@ -53,6 +55,10 @@ public class GUICrewMembersScreen extends JPanel {
 		initialize();
 	}
 	
+	
+	/**
+	 * Updates the buttons and related crew member info on the crew member screen
+	 */
 	public void updateCrewMembers() {
 		Object item = crewMemberSelection.getSelectedItem();
 		if (item instanceof CrewMember) {
@@ -68,51 +74,51 @@ public class GUICrewMembersScreen extends JPanel {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the panel contents
 	 */
 	private void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Crew Members");
 		lblTitle.setBounds(0, 0, 586, 60);
-		super.add(lblTitle);
+		this.add(lblTitle);
 		
 		messagePane = new SpaceMessagePane();
 		messagePane.setBounds(303, 264, 283, 93);
-		super.add(messagePane);
+		this.add(messagePane.getScrollPane());
 		
 		btnUseItem = new SpaceButton("Use food/medical supplies");
 		btnUseItem.setBounds(0, 126, 283, 36);
-		super.add(btnUseItem);
+		this.add(btnUseItem);
 		
 		btnSleep = new SpaceButton("Sleep");
 		btnSleep.setBounds(0, 172, 283, 36);
-		super.add(btnSleep);
+		this.add(btnSleep);
 		
 		btnRepairShip = new SpaceButton("Repair ship shields");
 		btnRepairShip.setBounds(0, 218, 283, 36);
-		super.add(btnRepairShip);
+		this.add(btnRepairShip);
 		
 		btnSearchPlanet = new SpaceButton("Search planet");
 		btnSearchPlanet.setBounds(0, 264, 283, 36);
-		super.add(btnSearchPlanet);
+		this.add(btnSearchPlanet);
 		
 		btnPilotShip = new SpaceButton("Pilot ship");
 		btnPilotShip.setBounds(0, 310, 283, 36);
-		super.add(btnPilotShip);
+		this.add(btnPilotShip);
 		
 		SpaceButton btnBack = new SpaceButton("Back");
 		btnBack.setBounds(303, 367, 283, 36);
-		super.add(btnBack);
+		this.add(btnBack);
 		
 		SpaceLabel lblCrewSelector = new SpaceLabel("Crew Member:");
 		lblCrewSelector.setBounds(0, 80, 126, 36);
-		super.add(lblCrewSelector);
+		this.add(lblCrewSelector);
 		
 		crewMemberSelection = new JComboBox<CrewMember>();
 		crewMemberSelection.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		crewMemberSelection.setRenderer(new BasicComboBoxRenderer() {
 			@Override
 			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean hasFocus) {
-				super.getListCellRendererComponent(list, value, index, isSelected, hasFocus);
+				this.getListCellRendererComponent(list, value, index, isSelected, hasFocus);
 				if (value instanceof CrewMember) {
 					CrewMember crewMember = (CrewMember) value;
 					String text = crewMember.getName() + ", " + crewMember.getTypeInfo().get("Type");
@@ -124,7 +130,7 @@ public class GUICrewMembersScreen extends JPanel {
 			}
 		});
 		crewMemberSelection.setBounds(135, 80, 441, 36);
-		super.add(crewMemberSelection);
+		this.add(crewMemberSelection);
 		
 		crewMemberInfo = new JTextPane();
 		crewMemberInfo.setEditable(false);
@@ -133,7 +139,7 @@ public class GUICrewMembersScreen extends JPanel {
 		crewMemberInfo.setFont(new Font("MS Gothic", Font.PLAIN, 12));
 		crewMemberInfo.setBackground(new Color(25, 25, 112));
 		crewMemberInfo.setBounds(303, 125, 283, 128);
-		super.add(crewMemberInfo);
+		this.add(crewMemberInfo);
 		
 		btnUseItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -162,11 +168,7 @@ public class GUICrewMembersScreen extends JPanel {
 		btnRepairShip.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				gameEnvironment.repairShip((CrewMember) crewMemberSelection.getSelectedItem());
-				Object output = inOut.getOutput();
-				while (output != null) {
-					messagePaneContents.add((String) output);
-					output = inOut.getOutput();
-				}
+				messagePaneContents.add((String) inOut.getOutput());
 				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Screen");
 				guiWindow.updatePane();
 			}
@@ -183,7 +185,7 @@ public class GUICrewMembersScreen extends JPanel {
 				if (result == false) {
 					guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Screen");
 					guiWindow.updatePane();
-				} else { //If the game has now ended
+				} else { // If the game has now ended
 					guiWindow.endGameScreen.runEndDay(true);
 					guiWindow.layout.show(guiWindow.frame.getContentPane(), "End Game Screen");
 					guiWindow.updatePane();

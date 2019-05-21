@@ -33,7 +33,8 @@ public class GUIUseItemScreen extends JPanel {
 	private InOutHandler inOut;
 
 	/**
-	 * Create the application.
+	 * Creates the panel
+	 * @param guiWindow the window to create this panel for
 	 */
 	public GUIUseItemScreen(GUIWindow guiWindow) {
 		super();
@@ -48,6 +49,9 @@ public class GUIUseItemScreen extends JPanel {
 	}
 	
 	
+	/**
+	 * Updates the item info pane to show what is selected
+	 */
 	public void updateItemInfo() {
 		Object item = itemSelection.getSelectedItem();
 		if (item instanceof Consumable) {
@@ -59,7 +63,7 @@ public class GUIUseItemScreen extends JPanel {
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the panel contents
 	 */
 	private void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Use Item");
@@ -68,7 +72,7 @@ public class GUIUseItemScreen extends JPanel {
 		
 		messagePane = new SpaceMessagePane();
 		messagePane.setBounds(303, 264, 283, 93);
-		super.add(messagePane);
+		super.add(messagePane.getScrollPane());
 		
 		SpaceButton btnBack = new SpaceButton("Back");
 		btnBack.setBounds(303, 367, 283, 36);

@@ -12,9 +12,9 @@ public class Ship {
 	private int shipShields;
 	private final int MAX_SHIP_SHIELDS = 10;
 	
-	/** This is the total score excluding what was earned today */
+	// This is the total score excluding what was earned today
 	private int totalScore;
-	/** This is the daily score */
+	// This is the daily score
 	private int dailyScore;
 	
 	
@@ -149,4 +149,6 @@ public class Ship {
 		returnString = returnString + "Shield level: " + shipShields + "/" + MAX_SHIP_SHIELDS;
 		return returnString;
 	}
+	
+	
 }

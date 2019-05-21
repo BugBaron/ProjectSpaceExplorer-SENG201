@@ -36,7 +36,27 @@ public class GUIViewShop extends JPanel {
 	private JList<Consumable> listShopItems;
 	private SpaceButton btnPurchaseItem;
 	private JTextPane txtpnItemInfo;
+
+	/**
+	 * Creates the panel
+	 * @param guiWindow the window to create this panel for
+	 */
+	public GUIViewShop(GUIWindow guiWindow) {
+		super();
+		super.setBackground(new Color(25, 25, 112));
+		setLayout(null);
+		
+		this.guiWindow = guiWindow;
+		gameEnvironment = guiWindow.gameEnvironment;
+		messagePaneContents = guiWindow.messagePaneContents;
+		inOut = gameEnvironment.getInOut();
+		initialize();
+	}
 	
+	
+	/**
+	 * Updates the items displayed in the shop screen
+	 */
 	public void updateShopScreen() {
 		lblMoney.setText("Money: $" + gameEnvironment.getMoney());
 		Consumable initialSelection = listShopItems.getSelectedValue();
@@ -49,6 +69,10 @@ public class GUIViewShop extends JPanel {
 		updateShopItem();
 	}
 	
+	
+	/**
+	 * Updates the description of the selected item in the shop screen
+	 */
 	public void updateShopItem() {
 		Object selection = listShopItems.getSelectedValue();
 		String text = "Item info";
@@ -70,23 +94,9 @@ public class GUIViewShop extends JPanel {
 		txtpnItemInfo.setText(text);
 	}
 	
-	/**
-	 * Create the panel.
-	 */
-	public GUIViewShop(GUIWindow guiWindow) {
-		super();
-		super.setBackground(new Color(25, 25, 112));
-		setLayout(null);
-		
-		this.guiWindow = guiWindow;
-		gameEnvironment = guiWindow.gameEnvironment;
-		messagePaneContents = guiWindow.messagePaneContents;
-		inOut = gameEnvironment.getInOut();
-		initialize();
-	}
 	
 	/**
-	 * Initialize the contents of the frame
+	 * Initialize the panel contents
 	 */
 	private void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Shop");
@@ -104,7 +114,7 @@ public class GUIViewShop extends JPanel {
 		
 		messagePane = new SpaceMessagePane();
 		messagePane.setBounds(303, 264, 283, 93);
-		super.add(messagePane);
+		super.add(messagePane.getScrollPane());
 		
 		SpaceButton btnBack = new SpaceButton("Back");
 		btnBack.setBounds(303, 367, 283, 36);
