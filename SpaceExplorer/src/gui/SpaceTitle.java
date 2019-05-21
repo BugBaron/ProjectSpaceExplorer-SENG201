@@ -8,8 +8,12 @@ import javax.swing.SwingConstants;
 
 public class SpaceTitle extends JLabel {
 	
-	SpaceTitle(String name) {
-		super(name);
+	/**
+	 * Creates a new JLabel with specific styling
+	 * @param text the text to display on the title
+	 */
+	SpaceTitle(String text) {
+		super(text);
 		super.setHorizontalAlignment(SwingConstants.CENTER);
 		super.setForeground(Color.YELLOW);
 		super.setFont(new Font("MS Gothic", Font.PLAIN, 40));

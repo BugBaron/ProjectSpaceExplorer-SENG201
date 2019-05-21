@@ -73,6 +73,7 @@ public abstract class CrewMember {
 		}
 	}
 	
+	
 	/**
 	 * Adds health to this crew member
 	 * @param amount the amount to increase the health by, can be negative to decrease health
@@ -128,6 +129,9 @@ public abstract class CrewMember {
 	}
 
 	
+	/**
+	 * Completes an action for the crew member
+	 */
 	public void completeAction() {
 		numActions--;
 		addEnergy(-1);

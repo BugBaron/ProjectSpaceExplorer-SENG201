@@ -12,8 +12,10 @@ public class GUIOpeningScreen extends JPanel{
 
 	private GUIWindow guiWindow;
 	
+	
 	/**
-	 * Create the application.
+	 * Creates the panel
+	 * @param guiWindow the window to create this panel for
 	 */
 	public GUIOpeningScreen(GUIWindow guiWindow) {
 		super();
@@ -25,7 +27,7 @@ public class GUIOpeningScreen extends JPanel{
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the panel contents
 	 */
 	private void initialize() {
 		

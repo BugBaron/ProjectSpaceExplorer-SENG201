@@ -20,7 +20,8 @@ public class GUIEndGameScreen extends JPanel {
 	private SpaceTitle lblTitle;
 	
 	/**
-	 * Create the panel
+	 * Creates the pane
+	 * @param guiWindow the window to create this panel for
 	 */
 	public GUIEndGameScreen(GUIWindow guiWindow) {
 		super();
@@ -33,22 +34,29 @@ public class GUIEndGameScreen extends JPanel {
 		initialize();
 	}
 	
+	
+	/**
+	 * Runs the processes necessary to show the End Day Screen
+	 * @param isVictory whether or not the game ended as a victory
+	 */
 	public void runEndDay(boolean isVictory) {
 		gameEnvironment.endGame(isVictory);
 		String finalOutput = "";
 		Object output = inOut.getOutput();
 		finalOutput = finalOutput + output;
 		lblTitle.setText(finalOutput);
-		finalOutput = "";
+		output = inOut.getOutput();
+		finalOutput = (String) output;
 		while (output != null) {
-			finalOutput = finalOutput + output;
+			finalOutput = finalOutput + "\n" + output;
 			output = inOut.getOutput();
 		}
 		txtpnResultMessage.setText(finalOutput);
 	}
 
+	
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the panel contents
 	 */
 	private void initialize() {
 		

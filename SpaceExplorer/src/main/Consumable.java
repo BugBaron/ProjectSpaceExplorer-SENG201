@@ -80,6 +80,7 @@ public class Consumable {
 		}		
 	}
 	
+	
 	/**
 	 * Retrieves the price information for the item
 	 * @return price an integer value for the price of the item
@@ -87,6 +88,7 @@ public class Consumable {
 	public int getPrice() {
 		return price;
 	}
+	
 	
 	/**
 	 * Applies the item to a crew member
@@ -101,6 +103,7 @@ public class Consumable {
 		}
 	}
 	
+	
 	/**
 	 * Retrieves the name of the item
 	 * @return name the name attached to the item
@@ -108,6 +111,7 @@ public class Consumable {
 	public String getName() {
 		return name;
 	}
+	
 	
 	/**
 	 * Retrieves the description of the item
@@ -117,6 +121,7 @@ public class Consumable {
 		return description;
 	}
 	
+	
 	/**
 	 * Retrieves the classification of the item: either Food or Medical
 	 * @return classification which category the item fits in
@@ -124,6 +129,7 @@ public class Consumable {
 	public String getClassification() {
 		return classification;
 	}
+	
 	
 	/**
 	 * Tests this consumable for equality with another one
@@ -133,5 +139,7 @@ public class Consumable {
 	public boolean equals(Consumable other) {
 		return this.name == other.name; //Equality test
 	}
+	
+	
 }
 

@@ -12,14 +12,15 @@ public class GUIInstructions extends JPanel{
 	private GUIWindow guiWindow;
 	
 	/**
-	 * Create the application.
+	 * Creates the panel
+	 * @param guiWindow the window to create this panel for
 	 */
 	public GUIInstructions() {
 		initialize();
 	}
 
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the panel contents
 	 */
 	private void initialize() {
 		
@@ -37,8 +38,8 @@ public class GUIInstructions extends JPanel{
 				+ "To find your missing space ship parts you must search a planet. There is a maximum of "
 				+ "of 1 space ship part on each planet. If you do not find a space ship part you may find "
 				+ "food, medical supplies, money or nothing. \n\n"
-				+ "Food and medical supplies are used to boost a crew members health or nutrition. They can be "
-				+ "purchased from the outpost or found on a planet. Crew members energy can be boosted by sleeping.\n\n"
+				+ "Food and medical supplies are used to restored a crew members health or nutrition. They can be "
+				+ "purchased from the outpost or found on a planet. Crew members energy can be restored by sleeping.\n\n"
 				+ "Each day, every crew member has 2 actions. These actions can be used to sleep, search the planet, "
 				+ "repair the space ship, pilot the space ship, eat food or use medical supplies. Note that piloting "
 				+ "the space ship requires 2 crew members with at least one action remaining. \n "
@@ -46,6 +47,7 @@ public class GUIInstructions extends JPanel{
 				+ "A new day can be triggered at any time, regardless of how many actions you have remaining. Each day "
 				+ "crew members lose 2 health. If a crew member has no energy, it will lose 1 additional health everyday. "
 				+ "If a crew member has no nutrition, they will lose an additional 1 health and 1 energy daily. "
+				+ "If your ship has no shields, each crew member will lose 1 additional health each day. "
 				+ "When a crew member runs out of health, they die and are removed from the spaceship.\n"
 				+ "You also gain $20 at the end of every day.\n\n"
 				+ "At the completion of every day there is a 40% chance a crew member may contract the space plague "

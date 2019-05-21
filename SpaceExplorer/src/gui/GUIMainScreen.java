@@ -25,8 +25,10 @@ public class GUIMainScreen extends JPanel {
 	private ArrayList<String> messagePaneContents;
 	private GameEnvironment gameEnvironment;
 
+	
 	/**
-	 * Create the application.
+	 * Creates the panel
+	 * @param guiWindow the window to create this panel for
 	 */
 	public GUIMainScreen(GUIWindow guiWindow) {
 		super();
@@ -40,8 +42,9 @@ public class GUIMainScreen extends JPanel {
 		initialize();
 	}
 	
+	
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the panel contents
 	 */
 	public void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Control Panel");
@@ -70,7 +73,8 @@ public class GUIMainScreen extends JPanel {
 		
 		messagePane = new SpaceMessagePane();
 		messagePane.setBounds(303, 264, 283, 93);
-		super.add(messagePane);
+		super.add(messagePane.getScrollPane());
+		
 		
 		JLabel lblImageControlPanel = new JLabel("");
 		lblImageControlPanel.setIcon(new ImageIcon(GUIWindow.class.getResource("/images/SPACE.PNG")));

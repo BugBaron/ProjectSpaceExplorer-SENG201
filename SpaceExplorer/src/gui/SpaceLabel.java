@@ -7,8 +7,12 @@ import javax.swing.JLabel;
 
 public class SpaceLabel extends JLabel {
 	
-	SpaceLabel(String name) {
-		super(name);
+	/**
+	 * Creates a new JLabel with specific styling
+	 * @param text the text to display on the label
+	 */
+	SpaceLabel(String text) {
+		super(text);
 		super.setForeground(Color.WHITE);
 		super.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 	}

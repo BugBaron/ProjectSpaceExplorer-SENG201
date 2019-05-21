@@ -7,6 +7,7 @@ public class Inventory {
 	
 	private HashMap<Consumable, Integer> items;
 	
+	
 	/**
 	 * Class constructor, with no additional entries
 	 * @param isShop whether or not to make this a shop inventory
@@ -24,6 +25,7 @@ public class Inventory {
 		items = newItems;
 	}
 	
+	
 	/**
 	 * Retrieves the details of the things in the inventory
 	 * @return the items in the shop and their quantities
@@ -40,6 +42,7 @@ public class Inventory {
 	public int size() {
 		return items.size();
 	}
+	
 	
 	/**
 	 * Gets the quantity of an item in the inventory
@@ -99,4 +102,6 @@ public class Inventory {
 				.forEach(x -> keys.add(x));
 		return keys;
 	}
+	
+	
 }

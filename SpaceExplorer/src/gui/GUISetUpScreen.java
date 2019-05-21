@@ -51,7 +51,8 @@ public class GUISetUpScreen extends JPanel {
 	private Ship ship;
 
 	/**
-	 * Create the application.
+	 * Creates the panel
+	 * @param guiWindow the window to create this panel for
 	 */
 	public GUISetUpScreen(GUIWindow guiWindow) {
 		super();
@@ -64,6 +65,12 @@ public class GUISetUpScreen extends JPanel {
 	}
 
 	
+	/**
+	 * Creates a new game with the specified number of days and the specified 
+	 * number of crew members
+	 * @param maxDays the number of days the game should last
+	 * @param numMembers the number of members that should be on the ship
+	 */
 	private void createGame(int maxDays, int numMembers) {
 		String shipName = textField_4.getText();
 		if (shipName.length() == 0) {
@@ -76,14 +83,14 @@ public class GUISetUpScreen extends JPanel {
 		ArrayList<String> selectedMembers = new ArrayList<String>();
 		ship.getCrewMembers().add(createCrewMember((String) comboBox.getSelectedItem(), 
 				textField.getText(), ship, names, selectedMembers));
-		ship.getCrewMembers().add(createCrewMember((String) comboBox.getSelectedItem(), 
-				textField.getText(), ship, names, selectedMembers));
+		ship.getCrewMembers().add(createCrewMember((String) comboBox_1.getSelectedItem(), 
+				textField_1.getText(), ship, names, selectedMembers));
 		if (numMembers >= 3) {
-			ship.getCrewMembers().add(createCrewMember((String) comboBox.getSelectedItem(), 
-					textField.getText(), ship, names, selectedMembers));
+			ship.getCrewMembers().add(createCrewMember((String) comboBox_2.getSelectedItem(), 
+					textField_2.getText(), ship, names, selectedMembers));
 			if (numMembers == 4) {
-				ship.getCrewMembers().add(createCrewMember((String) comboBox.getSelectedItem(), 
-						textField.getText(), ship, names, selectedMembers));
+				ship.getCrewMembers().add(createCrewMember((String) comboBox_3.getSelectedItem(), 
+						textField_3.getText(), ship, names, selectedMembers));
 			}
 		}
 		
@@ -92,6 +99,16 @@ public class GUISetUpScreen extends JPanel {
 		guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Screen");
 	}
 	
+	
+	/**
+	 * Creates a crew member according to the specified parameters
+	 * @param type the type of crew member to create
+	 * @param name the name of the crew member to create
+	 * @param ship the ship which the crew member should be created for
+	 * @param names a list of names of all previous crew members
+	 * @param selectedMembers a list of types of all previous crew members
+	 * @return
+	 */
 	private CrewMember createCrewMember(String type, String name, Ship ship, ArrayList<String> names, ArrayList<String> selectedMembers) {
 		CrewMember crewMember;
 		selectedMembers.add(type);
@@ -134,7 +151,7 @@ public class GUISetUpScreen extends JPanel {
 	
 	
 	/**
-	 * Initialize the contents of the frame.
+	 * Initialize the panel contents
 	 */
 	private void initialize() {
 		SpaceLabel lblMissionLength = new SpaceLabel("How many days is the mission?");

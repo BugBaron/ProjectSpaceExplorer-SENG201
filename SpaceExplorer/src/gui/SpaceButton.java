@@ -10,8 +10,12 @@ import javax.swing.border.LineBorder;
 
 public class SpaceButton extends JButton {
 	
-	SpaceButton(String name) {
-		super(name);
+	/**
+	 * Creates a new JButton with specific styling
+	 * @param text the text on the button
+	 */
+	SpaceButton(String text) {
+		super(text);
 		super.setFocusable(false);
 		super.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
 		super.setForeground(Color.WHITE);
