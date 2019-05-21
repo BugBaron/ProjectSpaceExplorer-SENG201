@@ -34,7 +34,7 @@ public class GameEnvironment {
 			new Consumable("Egg")};
 	private final Consumable[] MEDICAL_ITEMS = {new Consumable("Space Plague Cure"),
 			new Consumable("Band-Aid"), new Consumable("First Aid Kit")};
-	private final int[] FINDABLE_MONEY = {10, 20, 30};
+	private final Integer[] FINDABLE_MONEY = {10, 20, 30};
 	
 	
 	/**
@@ -276,7 +276,7 @@ public class GameEnvironment {
 			inventory.addItem(foundItem);
 			inOut.print(crewMember.getName() + " found a " + foundItem.getName() + "!");
 		} else if (randInt < totalSum - searchProbability[4]) {
-			int moneyFound = (Integer) pickRandom(FINDABLE_MONEY);
+			int moneyFound = (Integer) pickRandom((Object[]) FINDABLE_MONEY);
 			inOut.print(crewMember.getName() + " found $" + moneyFound + "!");
 			ship.addMoney(moneyFound);
 		} else {
