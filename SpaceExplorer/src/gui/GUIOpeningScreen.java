@@ -10,12 +10,17 @@ import java.awt.event.ActionEvent;
 
 public class GUIOpeningScreen extends JPanel{
 
-	private NewGUIWindow guiWindow;
+	private GUIWindow guiWindow;
 	
 	/**
 	 * Create the application.
 	 */
-	public GUIOpeningScreen() {
+	public GUIOpeningScreen(GUIWindow guiWindow) {
+		super();
+		super.setBackground(new Color(25, 25, 112));
+		setLayout(null);
+		
+		this.guiWindow = guiWindow;
 		initialize();
 	}
 
@@ -25,27 +30,27 @@ public class GUIOpeningScreen extends JPanel{
 	private void initialize() {
 		
 		SpaceButton btnCreateGame = new SpaceButton("Create New Game");
-		btnCreateGame.setBounds(173, 305, 304, 70);
+		btnCreateGame.setBounds(0, 300, 283, 36);
 		super.add(btnCreateGame);
 		
 		SpaceButton btnExit = new SpaceButton("Exit");
-		btnExit.setBounds(173, 386, 304, 70);
+		btnExit.setBounds(303, 300, 283, 36);
 		super.add(btnExit);
 		
 		JLabel lblTitle = new JLabel("SPACE EXPLORER:");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setFont(new Font("MS Gothic", Font.PLAIN, 58));
 		lblTitle.setForeground(Color.YELLOW);
-		lblTitle.setBounds(31, 11, 596, 196);
+		lblTitle.setBounds(0, 0, 586, 196);
 		super.add(lblTitle);
 		
 		SpaceTitle lblSubTitle = new SpaceTitle("THE GAME");
-		lblSubTitle.setBounds(210, 146, 216, 89);
+		lblSubTitle.setBounds(185, 146, 216, 89);
 		super.add(lblSubTitle);
 		
 		btnCreateGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Instructions");
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Set Up Screen");
 				guiWindow.updatePane();
 			}
 		});

@@ -9,7 +9,7 @@ import java.awt.event.ActionEvent;
 
 public class GUIInstructions extends JPanel{
 
-	private NewGUIWindow guiWindow;
+	private GUIWindow guiWindow;
 	
 	/**
 	 * Create the application.

@@ -20,11 +20,11 @@ public class GUIVisitOutpost extends JPanel {
 	
 	private GameEnvironment gameEnvironment;
 	
-	private NewGUIWindow guiWindow;
+	private GUIWindow guiWindow;
 	/**
 	 * Create the panel.
 	 */
-	public GUIVisitOutpost(NewGUIWindow guiWindow) {
+	public GUIVisitOutpost(GUIWindow guiWindow) {
 		super();
 		super.setBackground(new Color(25, 25, 112));
 		setLayout(null);

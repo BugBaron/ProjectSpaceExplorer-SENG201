@@ -27,7 +27,7 @@ public class GUIPilotShipScreen extends JPanel {
 	JComboBox<CrewMember> crewMember2Selection;
 	JTextPane crewMember2Info;
 	
-	private NewGUIWindow guiWindow;
+	private GUIWindow guiWindow;
 	private ArrayList<String> messagePaneContents;
 	private GameEnvironment gameEnvironment;
 	private InOutHandler inOut;
@@ -35,7 +35,7 @@ public class GUIPilotShipScreen extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public GUIPilotShipScreen(NewGUIWindow guiWindow) {
+	public GUIPilotShipScreen(GUIWindow guiWindow) {
 		super();
 		super.setBackground(new Color(25, 25, 112));
 		setLayout(null);

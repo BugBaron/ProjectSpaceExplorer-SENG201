@@ -21,14 +21,14 @@ public class GUIMainScreen extends JPanel {
 	SpaceLabel lblDayNumber;
 	
 	private InOutHandler inOut;
-	private NewGUIWindow guiWindow;
+	private GUIWindow guiWindow;
 	private ArrayList<String> messagePaneContents;
 	private GameEnvironment gameEnvironment;
 
 	/**
 	 * Create the application.
 	 */
-	public GUIMainScreen(NewGUIWindow guiWindow) {
+	public GUIMainScreen(GUIWindow guiWindow) {
 		super();
 		super.setBackground(new Color(25, 25, 112));
 		super.setLayout(null);
@@ -73,7 +73,7 @@ public class GUIMainScreen extends JPanel {
 		super.add(messagePane);
 		
 		JLabel lblImageControlPanel = new JLabel("");
-		lblImageControlPanel.setIcon(new ImageIcon(NewGUIWindow.class.getResource("/images/SPACE.PNG")));
+		lblImageControlPanel.setIcon(new ImageIcon(GUIWindow.class.getResource("/images/SPACE.PNG")));
 		lblImageControlPanel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblImageControlPanel.setForeground(Color.WHITE);
 		lblImageControlPanel.setBounds(303, 80, 283, 174);
@@ -114,7 +114,7 @@ public class GUIMainScreen extends JPanel {
 				boolean result = gameEnvironment.newDay();
 				if (result == true) {
 					guiWindow.endGameScreen.runEndDay(false);
-					guiWindow.layout.show(guiWindow.frame.getContentPane(), "End Game");
+					guiWindow.layout.show(guiWindow.frame.getContentPane(), "End Game Screen");
 					guiWindow.updatePane();
 				} else {
 					// The game has not ended

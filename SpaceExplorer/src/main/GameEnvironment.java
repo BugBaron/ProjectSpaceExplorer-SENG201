@@ -85,6 +85,7 @@ public class GameEnvironment {
 		
 		this.maxDays = maxDays;
 		partsToFind = 2 * maxDays / 3;
+		this.ship = ship;
 	}
 	
 	// TODO this needs to be remade to work with the GUI

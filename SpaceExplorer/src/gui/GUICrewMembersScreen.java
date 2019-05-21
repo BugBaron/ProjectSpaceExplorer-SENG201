@@ -28,7 +28,7 @@ public class GUICrewMembersScreen extends JPanel {
 	JComboBox<CrewMember> crewMemberSelection;
 	JTextPane crewMemberInfo;
 	
-	private NewGUIWindow guiWindow;
+	private GUIWindow guiWindow;
 	private GameEnvironment gameEnvironment;
 	private ArrayList<String> messagePaneContents;
 	private InOutHandler inOut;
@@ -41,7 +41,7 @@ public class GUICrewMembersScreen extends JPanel {
 	/**
 	 * Create the application.
 	 */
-	public GUICrewMembersScreen(NewGUIWindow guiWindow) {
+	public GUICrewMembersScreen(GUIWindow guiWindow) {
 		super();
 		super.setBackground(new Color(25, 25, 112));
 		super.setLayout(null);
@@ -115,7 +115,9 @@ public class GUICrewMembersScreen extends JPanel {
 				super.getListCellRendererComponent(list, value, index, isSelected, hasFocus);
 				if (value instanceof CrewMember) {
 					CrewMember crewMember = (CrewMember) value;
-					setText(crewMember.getName() + ", " + crewMember.getTypeInfo().get("Type"));
+					String text = crewMember.getName() + ", " + crewMember.getTypeInfo().get("Type");
+					if (crewMember.getActions() == 0) text = text + ", No actions remaining";
+					setText(text);
 				}
 				
 				return this;	
@@ -152,7 +154,7 @@ public class GUICrewMembersScreen extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				gameEnvironment.sleep((CrewMember) crewMemberSelection.getSelectedItem());
 				messagePaneContents.add((String) inOut.getOutput());
-				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Menu");
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Screen");
 				guiWindow.updatePane();
 			}
 		});
@@ -165,7 +167,7 @@ public class GUICrewMembersScreen extends JPanel {
 					messagePaneContents.add((String) output);
 					output = inOut.getOutput();
 				}
-				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Menu");
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Screen");
 				guiWindow.updatePane();
 			}
 		});
@@ -179,11 +181,11 @@ public class GUICrewMembersScreen extends JPanel {
 					output = inOut.getOutput();
 				}
 				if (result == false) {
-					guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Menu");
+					guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Screen");
 					guiWindow.updatePane();
 				} else { //If the game has now ended
 					guiWindow.endGameScreen.runEndDay(true);
-					guiWindow.layout.show(guiWindow.frame.getContentPane(), "End Game");
+					guiWindow.layout.show(guiWindow.frame.getContentPane(), "End Game Screen");
 					guiWindow.updatePane();
 				}
 			}
@@ -209,7 +211,7 @@ public class GUICrewMembersScreen extends JPanel {
 		
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Menu");
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Screen");
 			}
 		});
 		

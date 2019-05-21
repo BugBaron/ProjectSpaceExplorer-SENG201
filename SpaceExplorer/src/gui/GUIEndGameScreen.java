@@ -8,11 +8,12 @@ import javax.swing.JTextPane;
 import main.GameEnvironment;
 import main.InOutHandler;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class GUIEndGameScreen extends JPanel {
 
-	private NewGUIWindow guiWindow;
+	private GUIWindow guiWindow;
 	private GameEnvironment gameEnvironment;
 	private InOutHandler inOut;
 	private JTextPane txtpnResultMessage;
@@ -21,13 +22,14 @@ public class GUIEndGameScreen extends JPanel {
 	/**
 	 * Create the panel
 	 */
-	public GUIEndGameScreen(NewGUIWindow guiWindow) {
+	public GUIEndGameScreen(GUIWindow guiWindow) {
 		super();
 		super.setBackground(new Color(25, 25, 112));
 		setLayout(null);
 		
 		this.guiWindow = guiWindow;
 		gameEnvironment = guiWindow.gameEnvironment;
+		inOut = gameEnvironment.getInOut();
 		initialize();
 	}
 	
@@ -50,11 +52,11 @@ public class GUIEndGameScreen extends JPanel {
 	 */
 	private void initialize() {
 		
-		SpaceTitle lblTitle = new SpaceTitle("");
+		lblTitle = new SpaceTitle("");
 		lblTitle.setBounds(0, 27, 626, 63);
 		super.add(lblTitle);
 		
-		JTextPane txtpnResultMessage = new JTextPane();
+		txtpnResultMessage = new JTextPane();
 		txtpnResultMessage.setBackground(new Color(25, 25, 112));
 		txtpnResultMessage.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		txtpnResultMessage.setForeground(Color.WHITE);
@@ -71,7 +73,8 @@ public class GUIEndGameScreen extends JPanel {
 		
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Set Up");
+				guiWindow.messagePaneContents = new ArrayList<String>();
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Set Up Screen");
 				guiWindow.updatePane();
 			}
 		});
