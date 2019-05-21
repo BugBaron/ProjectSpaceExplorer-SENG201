@@ -6,16 +6,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
-import javax.swing.border.CompoundBorder;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
-
-import main.GameEnvironment;
 
 public class GUIShipStatusScreen extends JPanel {
 	
@@ -23,7 +17,6 @@ public class GUIShipStatusScreen extends JPanel {
 	JTextPane txtpnShipStatus;
 	
 	private GUIWindow guiWindow;
-	private GameEnvironment gameEnvironment;
 
 	/**
 	 * Creates the panel
@@ -35,7 +28,6 @@ public class GUIShipStatusScreen extends JPanel {
 		super.setLayout(null);
 		
 		this.guiWindow = guiWindow;
-		gameEnvironment = guiWindow.gameEnvironment;
 		initialize();
 	}
 

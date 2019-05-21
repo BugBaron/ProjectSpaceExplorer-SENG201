@@ -20,8 +20,6 @@ public class GUIViewInventory extends JPanel {
 	JTree treeInventoryContainers;
 	
 	private GUIWindow guiWindow;
-	private ArrayList<String> messagePaneContents;
-	private GameEnvironment gameEnvironment;
 	
 	
 	/**
@@ -34,8 +32,6 @@ public class GUIViewInventory extends JPanel {
 		setLayout(null);
 		
 		this.guiWindow = guiWindow;
-		gameEnvironment = guiWindow.gameEnvironment;
-		messagePaneContents = guiWindow.messagePaneContents;
 		initialize();
 	}
 	
