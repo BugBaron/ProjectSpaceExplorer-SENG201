@@ -20,7 +20,7 @@ public class GUIEndGameScreen extends JPanel {
 	private SpaceTitle lblTitle;
 	
 	/**
-	 * Creates the pane
+	 * Creates the panel
 	 * @param guiWindow the window to create this panel for
 	 */
 	public GUIEndGameScreen(GUIWindow guiWindow) {
