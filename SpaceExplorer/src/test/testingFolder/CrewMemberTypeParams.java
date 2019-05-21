@@ -1,4 +1,4 @@
-package test;
+package test.testingFolder;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ import main.CrewMemberTypes.Cyborg;
 import main.CrewMemberTypes.Alien;
 import main.CrewMemberTypes.Lizard;
 
-class CrewMemberTypeParams {
+public class CrewMemberTypeParams {
 	public static ArrayList<Object> getHuman(Ship ship, String name) {
 		ArrayList<Object> returnList = new ArrayList<>();
 		if (name.length() == 0) {

@@ -133,12 +133,26 @@ public class Consumable {
 	
 	/**
 	 * Tests this consumable for equality with another one
-	 * @param other the consumable to test this consumable with
+	 * @param o the consumable to test this consumable with
 	 * @return whether the two consumables are equal
 	 */
-	public boolean equals(Consumable other) {
-		return this.name == other.name; //Equality test
+	public boolean equals(Object o) {
+		if (o instanceof Consumable) {
+			return this.name == ((Consumable) o).name; //Equality test
+		} else {
+			return false;
+		}
 	}
+	
+	
+	/**
+	 * Creates a hash code for this consumable. Required for the Inventory HashMap
+	 * @return a hash code for this consumable
+	 */
+	public int hashCode() {
+		return name.hashCode();
+	}
+	
 	
 	
 }

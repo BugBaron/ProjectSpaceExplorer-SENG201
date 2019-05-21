@@ -30,6 +30,7 @@ public class GUIWindow {
 	GUIViewInventory inventoryScreen = new GUIViewInventory(this);
 	GUIEndGameScreen endGameScreen = new GUIEndGameScreen(this);
 	GUIDailyScoreScreen dailyScoreScreen = new GUIDailyScoreScreen(this);
+	GUIInstructions instructionsScreen = new GUIInstructions(this);
 	
 	
 	/**
@@ -116,6 +117,7 @@ public class GUIWindow {
 		frame.getContentPane().add(inventoryScreen, "Inventory Screen");
 		frame.getContentPane().add(endGameScreen, "End Game Screen");
 		frame.getContentPane().add(dailyScoreScreen, "Daily Score");
+		frame.getContentPane().add(instructionsScreen, "Instructions Screen");
 		
 		layout.show(frame.getContentPane(), "Opening Screen");
 		

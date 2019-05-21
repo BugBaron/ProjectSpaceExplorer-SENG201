@@ -38,7 +38,7 @@ public class GUIPilotShipScreen extends JPanel {
 	 */
 	public GUIPilotShipScreen(GUIWindow guiWindow) {
 		super();
-		super.setBackground(new Color(25, 25, 112));
+		setBackground(new Color(25, 25, 112));
 		setLayout(null);
 		
 		this.guiWindow = guiWindow;
@@ -55,23 +55,23 @@ public class GUIPilotShipScreen extends JPanel {
 	private void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Pilot Ship");
 		lblTitle.setBounds(0, 0, 586, 60);
-		this.add(lblTitle);
+		add(lblTitle);
 		
 		SpaceButton btnConfirmPilotShip = new SpaceButton("Pilot Ship");
 		btnConfirmPilotShip.setBounds(0, 264, 283, 36);
-		this.add(btnConfirmPilotShip);
+		add(btnConfirmPilotShip);
 		
 		messagePane = new SpaceMessagePane();
 		messagePane.setBounds(303, 264, 283, 93);
-		this.add(messagePane.getScrollPane());
+		add(messagePane.getScrollPane());
 		
 		SpaceButton btnBack = new SpaceButton("Back");
 		btnBack.setBounds(303, 367, 283, 36);
-		this.add(btnBack);
+		add(btnBack);
 		
 		SpaceLabel lblCrewMember2Selector = new SpaceLabel("Second crew member:");
 		lblCrewMember2Selector.setBounds(0, 80, 200, 36);
-		this.add(lblCrewMember2Selector);
+		add(lblCrewMember2Selector);
 		
 		crewMember2Selection = new JComboBox<CrewMember>();
 		crewMember2Selection.setRenderer(new BasicComboBoxRenderer() {
@@ -88,7 +88,7 @@ public class GUIPilotShipScreen extends JPanel {
 		});
 		crewMember2Selection.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		crewMember2Selection.setBounds(200, 80, 379, 36);
-		this.add(crewMember2Selection);
+		add(crewMember2Selection);
 		
 		crewMember2Info = new JTextPane();
 		crewMember2Info.setEditable(false);
@@ -97,7 +97,7 @@ public class GUIPilotShipScreen extends JPanel {
 		crewMember2Info.setFont(new Font("MS Gothic", Font.PLAIN, 12));
 		crewMember2Info.setText("Second crew member info");
 		crewMember2Info.setBounds(0, 126, 283, 128);
-		this.add(crewMember2Info);
+		add(crewMember2Info);
 		
 		crewMemberInfo = new JTextPane();
 		crewMemberInfo.setEditable(false);
@@ -106,7 +106,7 @@ public class GUIPilotShipScreen extends JPanel {
 		crewMemberInfo.setFont(new Font("MS Gothic", Font.PLAIN, 12));
 		crewMemberInfo.setBackground(new Color(25, 25, 112));
 		crewMemberInfo.setBounds(303, 126, 283, 128);
-		this.add(crewMemberInfo);
+		add(crewMemberInfo);
 		
 		btnConfirmPilotShip.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

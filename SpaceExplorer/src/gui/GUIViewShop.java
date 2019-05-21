@@ -43,7 +43,7 @@ public class GUIViewShop extends JPanel {
 	 */
 	public GUIViewShop(GUIWindow guiWindow) {
 		super();
-		super.setBackground(new Color(25, 25, 112));
+		setBackground(new Color(25, 25, 112));
 		setLayout(null);
 		
 		this.guiWindow = guiWindow;
@@ -101,7 +101,7 @@ public class GUIViewShop extends JPanel {
 	private void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Shop");
 		lblTitle.setBounds(0, 0, 586, 60);
-		super.add(lblTitle);
+		add(lblTitle);
 		
 		txtpnItemInfo = new JTextPane();
 		txtpnItemInfo.setText("Item info");
@@ -110,19 +110,19 @@ public class GUIViewShop extends JPanel {
 		txtpnItemInfo.setEditable(false);
 		txtpnItemInfo.setBackground(new Color(25, 25, 112));
 		txtpnItemInfo.setBounds(303, 80, 283, 128);
-		super.add(txtpnItemInfo);
+		add(txtpnItemInfo);
 		
 		messagePane = new SpaceMessagePane();
 		messagePane.setBounds(303, 264, 283, 93);
-		super.add(messagePane.getScrollPane());
+		add(messagePane.getScrollPane());
 		
 		SpaceButton btnBack = new SpaceButton("Back");
 		btnBack.setBounds(303, 367, 283, 36);
-		super.add(btnBack);
+		add(btnBack);
 		
 		btnPurchaseItem = new SpaceButton("Purchase item");
 		btnPurchaseItem.setBounds(303, 218, 283, 36);
-		super.add(btnPurchaseItem);
+		add(btnPurchaseItem);
 		
 		listShopItems = new JList<Consumable>();
 		listShopItems.setCellRenderer(new DefaultListCellRenderer() {
@@ -146,11 +146,11 @@ public class GUIViewShop extends JPanel {
 		listShopItems.setVisibleRowCount(9);
 		listShopItems.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		listShopItems.setBounds(0, 80, 283, 277);
-		super.add(listShopItems);	
+		add(listShopItems);	
 		
 		lblMoney = new SpaceLabel("Money: $100");
 		lblMoney.setBounds(0, 367, 285, 36);
-		super.add(lblMoney);
+		add(lblMoney);
 		
 		btnPurchaseItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

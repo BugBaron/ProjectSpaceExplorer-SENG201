@@ -56,8 +56,8 @@ public class GUISetUpScreen extends JPanel {
 	 */
 	public GUISetUpScreen(GUIWindow guiWindow) {
 		super();
-		super.setBackground(new Color(25, 25, 112));
-		super.setLayout(null);
+		setBackground(new Color(25, 25, 112));
+		setLayout(null);
 		
 		this.guiWindow = guiWindow;
 		gameEnvironment = guiWindow.gameEnvironment;
@@ -158,7 +158,7 @@ public class GUISetUpScreen extends JPanel {
 		lblMissionLength.setHorizontalAlignment(SwingConstants.CENTER);
 		lblMissionLength.setFont(new Font("MS Gothic", Font.PLAIN, 18));
 		lblMissionLength.setBounds(0, 0, 283, 36);
-		this.add(lblMissionLength);
+		add(lblMissionLength);
 		
 		JSlider sliderMissionLength = new JSlider();
 		sliderMissionLength.setMajorTickSpacing(1);
@@ -172,12 +172,12 @@ public class GUISetUpScreen extends JPanel {
 		sliderMissionLength.setForeground(new Color(255, 255, 255));
 		sliderMissionLength.setBackground(new Color(25, 25, 112));
 		sliderMissionLength.setBounds(0, 46, 283, 36);
-		this.add(sliderMissionLength);
+		add(sliderMissionLength);
 		
 		SpaceLabel lblHowManyCrew = new SpaceLabel("Number of crew members?");
 		lblHowManyCrew.setBounds(303, 0, 283, 36);
 		lblMissionLength.setFont(new Font("MS Gothic", Font.PLAIN, 18));
-		this.add(lblHowManyCrew);
+		add(lblHowManyCrew);
 		
 		JSlider slider = new JSlider();
 		slider.setFont(new Font("MS Gothic", Font.PLAIN, 10));
@@ -191,16 +191,16 @@ public class GUISetUpScreen extends JPanel {
 		slider.setForeground(new Color(255, 255, 255));
 		slider.setBackground(new Color(25, 25, 112));
 		slider.setBounds(303, 44, 283, 46);
-		this.add(slider);
+		add(slider);
 		
 		SpaceLabel lblCrewMember = new SpaceLabel("Crew Member 1:");
 		lblCrewMember.setBounds(0, 93, 145, 30);
-		this.add(lblCrewMember);
+		add(lblCrewMember);
 		
 		comboBox = new JComboBox<String>();
 		comboBox.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		comboBox.setBounds(145, 93, 145, 25);
-		this.add(comboBox);
+		add(comboBox);
 		
 		JTextPane textPane = new JTextPane();
 		textPane.setEditable(false);
@@ -209,22 +209,22 @@ public class GUISetUpScreen extends JPanel {
 		textPane.setForeground(new Color(255, 255, 255));
 		textPane.setFont(new Font("MS Gothic", Font.PLAIN, 11));
 		textPane.setBounds(303, 93, 283, 50);
-		this.add(textPane);
+		add(textPane);
 		
 		textField = new JTextField();
 		textField.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		textField.setBounds(145, 118, 145, 25);
-		this.add(textField);
+		add(textField);
 		textField.setColumns(10);
 		
 		SpaceLabel lblCrewMember_1 = new SpaceLabel("Crew Member 2:");
 		lblCrewMember_1.setBounds(0, 157, 145, 30);
-		this.add(lblCrewMember_1);
+		add(lblCrewMember_1);
 		
 		comboBox_1 = new JComboBox<String>();
 		comboBox_1.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		comboBox_1.setBounds(145, 157, 145, 25);
-		this.add(comboBox_1);
+		add(comboBox_1);
 		
 		JTextPane textPane_1 = new JTextPane();
 		textPane_1.setEditable(false);
@@ -233,22 +233,22 @@ public class GUISetUpScreen extends JPanel {
 		textPane_1.setBorder(new LineBorder(new Color(255, 255, 255)));
 		textPane_1.setBackground(new Color(25, 25, 112));
 		textPane_1.setBounds(303, 157, 283, 50);
-		this.add(textPane_1);
+		add(textPane_1);
 
 		textField_1 = new JTextField();
 		textField_1.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		textField_1.setBounds(145, 182, 145, 25);
-		this.add(textField_1);
+		add(textField_1);
 		textField_1.setColumns(10);
 		
 		SpaceLabel lblCrewMember_2 = new SpaceLabel("Crew Member 3:");
 		lblCrewMember_2.setBounds(0, 218, 145, 30);
-		this.add(lblCrewMember_2);
+		add(lblCrewMember_2);
 		
 		comboBox_2 = new JComboBox<String>();
 		comboBox_2.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		comboBox_2.setBounds(145, 218, 145, 25);
-		this.add(comboBox_2);
+		add(comboBox_2);
 		
 		JTextPane textPane_2 = new JTextPane();
 		textPane_2.setEditable(false);
@@ -257,23 +257,23 @@ public class GUISetUpScreen extends JPanel {
 		textPane_2.setBorder(new LineBorder(new Color(255, 255, 255)));
 		textPane_2.setBackground(new Color(25, 25, 112));
 		textPane_2.setBounds(303, 218, 283, 50);
-		this.add(textPane_2);
+		add(textPane_2);
 
 		textField_2 = new JTextField();
 		textField_2.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		textField_2.setBounds(145, 243, 145, 25);
-		this.add(textField_2);
+		add(textField_2);
 		textField_2.setColumns(10);
 		
 		SpaceLabel lblCrewMember_3 = new SpaceLabel("Crew Member 4:");
 		lblCrewMember_3.setBounds(0, 285, 145, 30);
-		this.add(lblCrewMember_3);
+		add(lblCrewMember_3);
 		
 		comboBox_3 = new JComboBox<String>();
 		comboBox_3.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		comboBox_3.setEnabled(false);
 		comboBox_3.setBounds(145, 285, 145, 25);
-		this.add(comboBox_3);
+		add(comboBox_3);
 		
 		JTextPane textPane_3 = new JTextPane();
 		textPane_3.setEditable(false);
@@ -282,29 +282,29 @@ public class GUISetUpScreen extends JPanel {
 		textPane_3.setBorder(new LineBorder(new Color(255, 255, 255)));
 		textPane_3.setBackground(new Color(25, 25, 112));
 		textPane_3.setBounds(303, 285, 283, 50);
-		this.add(textPane_3);
+		add(textPane_3);
 
 		textField_3 = new JTextField();
 		textField_3.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		textField_3.setEnabled(false);
 		textField_3.setBounds(145, 310, 145, 20);
-		this.add(textField_3);
+		add(textField_3);
 		textField_3.setColumns(10);
 		
 		SpaceLabel lblShipName = new SpaceLabel("Ship Name:");
 		lblShipName.setBackground(new Color(25, 25, 112));
 		lblShipName.setBounds(0, 370, 125, 30);
-		this.add(lblShipName);
+		add(lblShipName);
 		
 		textField_4 = new JTextField();
 		textField_4.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		textField_4.setBounds(145, 370, 145, 25);
-		this.add(textField_4);
+		add(textField_4);
 		textField_4.setColumns(10);
 		
 		SpaceButton btnStartGame = new SpaceButton("Start game");
 		btnStartGame.setBounds(303, 367, 283, 36);
-		this.add(btnStartGame);
+		add(btnStartGame);
 		
 		slider.addChangeListener(new ChangeListener() {
 			@Override

@@ -1,4 +1,4 @@
-package test;
+package test.testingFolder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 import main.Ship;
 import main.CrewMemberTypes.CrewMember;
 
-class CrewMemberParameterizedTest {
+public class CrewMemberParameterizedTest {
 	
 	private static Ship newShip;
 	private static ArrayList<ArrayList<Object>> testCases;
@@ -232,7 +232,7 @@ class CrewMemberParameterizedTest {
 	@ParameterizedTest(name = "Test {index}: {4}")
 	@MethodSource("testToString")
 	void testToString(CrewMember crewMember, int maxHealth, int maxEnergy, int maxNutrition, String name, String type, String strength, String weakness) {
-		String actualString = name + ", " + type + "\nHealth: " + maxHealth + "/" + maxHealth + "\nEnergy: " + maxEnergy + "/" + maxEnergy + "\nNutrition: " + maxNutrition + "/" + maxNutrition + "\nStrength: " + strength + "\nWeakness: " + weakness;
+		String actualString = name + ", " + type + "\nHealth:    " + maxHealth + "/" + maxHealth + "\nEnergy:    " + maxEnergy + "/" + maxEnergy + "\nNutrition: " + maxNutrition + "/" + maxNutrition + "\nStrength: " + strength + "\nWeakness: " + weakness;
 		if (crewMember.getHasSpacePlague()) {
 			actualString = actualString + "\nAfflicted by space plague";
 		}
@@ -241,7 +241,7 @@ class CrewMemberParameterizedTest {
 		crewMember.addEnergy(-1);
 		crewMember.addNutrition(-1);
 		crewMember.setHasSpacePlague(true);
-		actualString = name + ", " + type + "\nHealth: " + (maxHealth - 1) + "/" + maxHealth + "\nEnergy: " + (maxEnergy - 1) + "/" + maxEnergy + "\nNutrition: " + (maxNutrition - 1) + "/" + maxNutrition + "\nStrength: " + strength + "\nWeakness: " + weakness + "\nAfflicted by space plague";
+		actualString = name + ", " + type + "\nHealth:    " + (maxHealth - 1) + "/" + maxHealth + "\nEnergy:    " + (maxEnergy - 1) + "/" + maxEnergy + "\nNutrition: " + (maxNutrition - 1) + "/" + maxNutrition + "\nStrength: " + strength + "\nWeakness: " + weakness + "\nAfflicted by space plague";
 		assertEquals(actualString, crewMember.toString());
 		crewMember.addHealth(1);
 		crewMember.addEnergy(1);

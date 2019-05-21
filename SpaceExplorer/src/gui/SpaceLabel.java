@@ -13,7 +13,7 @@ public class SpaceLabel extends JLabel {
 	 */
 	SpaceLabel(String text) {
 		super(text);
-		super.setForeground(Color.WHITE);
-		super.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		setForeground(Color.WHITE);
+		setFont(new Font("MS Gothic", Font.PLAIN, 20));
 	}
 }

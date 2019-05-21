@@ -45,8 +45,8 @@ public class GUICrewMembersScreen extends JPanel {
 	 */
 	public GUICrewMembersScreen(GUIWindow guiWindow) {
 		super();
-		this.setBackground(new Color(25, 25, 112));
-		this.setLayout(null);
+		setBackground(new Color(25, 25, 112));
+		setLayout(null);
 		
 		this.guiWindow = guiWindow;
 		gameEnvironment = guiWindow.gameEnvironment;
@@ -79,46 +79,46 @@ public class GUICrewMembersScreen extends JPanel {
 	private void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Crew Members");
 		lblTitle.setBounds(0, 0, 586, 60);
-		this.add(lblTitle);
+		add(lblTitle);
 		
 		messagePane = new SpaceMessagePane();
 		messagePane.setBounds(303, 264, 283, 93);
-		this.add(messagePane.getScrollPane());
+		add(messagePane.getScrollPane());
 		
 		btnUseItem = new SpaceButton("Use food/medical supplies");
 		btnUseItem.setBounds(0, 126, 283, 36);
-		this.add(btnUseItem);
+		add(btnUseItem);
 		
 		btnSleep = new SpaceButton("Sleep");
 		btnSleep.setBounds(0, 172, 283, 36);
-		this.add(btnSleep);
+		add(btnSleep);
 		
 		btnRepairShip = new SpaceButton("Repair ship shields");
 		btnRepairShip.setBounds(0, 218, 283, 36);
-		this.add(btnRepairShip);
+		add(btnRepairShip);
 		
 		btnSearchPlanet = new SpaceButton("Search planet");
 		btnSearchPlanet.setBounds(0, 264, 283, 36);
-		this.add(btnSearchPlanet);
+		add(btnSearchPlanet);
 		
 		btnPilotShip = new SpaceButton("Pilot ship");
 		btnPilotShip.setBounds(0, 310, 283, 36);
-		this.add(btnPilotShip);
+		add(btnPilotShip);
 		
 		SpaceButton btnBack = new SpaceButton("Back");
 		btnBack.setBounds(303, 367, 283, 36);
-		this.add(btnBack);
+		add(btnBack);
 		
 		SpaceLabel lblCrewSelector = new SpaceLabel("Crew Member:");
 		lblCrewSelector.setBounds(0, 80, 126, 36);
-		this.add(lblCrewSelector);
+		add(lblCrewSelector);
 		
 		crewMemberSelection = new JComboBox<CrewMember>();
 		crewMemberSelection.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		crewMemberSelection.setRenderer(new BasicComboBoxRenderer() {
 			@Override
 			public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean hasFocus) {
-				this.getListCellRendererComponent(list, value, index, isSelected, hasFocus);
+				super.getListCellRendererComponent(list, value, index, isSelected, hasFocus);
 				if (value instanceof CrewMember) {
 					CrewMember crewMember = (CrewMember) value;
 					String text = crewMember.getName() + ", " + crewMember.getTypeInfo().get("Type");
@@ -130,7 +130,7 @@ public class GUICrewMembersScreen extends JPanel {
 			}
 		});
 		crewMemberSelection.setBounds(135, 80, 441, 36);
-		this.add(crewMemberSelection);
+		add(crewMemberSelection);
 		
 		crewMemberInfo = new JTextPane();
 		crewMemberInfo.setEditable(false);
@@ -139,7 +139,7 @@ public class GUICrewMembersScreen extends JPanel {
 		crewMemberInfo.setFont(new Font("MS Gothic", Font.PLAIN, 12));
 		crewMemberInfo.setBackground(new Color(25, 25, 112));
 		crewMemberInfo.setBounds(303, 125, 283, 128);
-		this.add(crewMemberInfo);
+		add(crewMemberInfo);
 		
 		btnUseItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

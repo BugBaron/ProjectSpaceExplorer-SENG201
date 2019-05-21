@@ -32,8 +32,8 @@ public class GUIMainScreen extends JPanel {
 	 */
 	public GUIMainScreen(GUIWindow guiWindow) {
 		super();
-		super.setBackground(new Color(25, 25, 112));
-		super.setLayout(null);
+		setBackground(new Color(25, 25, 112));
+		setLayout(null);
 		
 		this.guiWindow = guiWindow;
 		gameEnvironment = guiWindow.gameEnvironment;
@@ -49,39 +49,42 @@ public class GUIMainScreen extends JPanel {
 	public void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Control Panel");
 		lblTitle.setBounds(0, 0, 586, 60);
-		super.add(lblTitle);
+		add(lblTitle);
 		
 		lblDayNumber = new SpaceLabel(gameEnvironment.getDayString());
 		lblDayNumber.setBounds(0, 80, 283, 36);
-		super.add(lblDayNumber);
+		add(lblDayNumber);
 		
 		SpaceButton btnViewCrewMember = new SpaceButton("View Crew members");
 		btnViewCrewMember.setBounds(0, 126, 283, 36);
-		super.add(btnViewCrewMember);
+		add(btnViewCrewMember);
 		
 		SpaceButton btnViewShipStatus = new SpaceButton("View ship status");
 		btnViewShipStatus.setBounds(0, 172, 283, 36);
-		super.add(btnViewShipStatus);
+		add(btnViewShipStatus);
 		
 		SpaceButton btnVisitSpaceOutpost = new SpaceButton("Visit space outpost");
 		btnVisitSpaceOutpost.setBounds(0, 218, 283, 36);
-		super.add(btnVisitSpaceOutpost);
+		add(btnVisitSpaceOutpost);
 		
 		SpaceButton btnContinue = new SpaceButton("Continue to next day");
 		btnContinue.setBounds(0, 264, 283, 36);
-		super.add(btnContinue);
+		add(btnContinue);
 		
 		messagePane = new SpaceMessagePane();
 		messagePane.setBounds(303, 264, 283, 93);
-		super.add(messagePane.getScrollPane());
-		
+		add(messagePane.getScrollPane());
 		
 		JLabel lblImageControlPanel = new JLabel("");
 		lblImageControlPanel.setIcon(new ImageIcon(GUIWindow.class.getResource("/images/SPACE.PNG")));
 		lblImageControlPanel.setHorizontalAlignment(SwingConstants.CENTER);
 		lblImageControlPanel.setForeground(Color.WHITE);
 		lblImageControlPanel.setBounds(303, 80, 283, 174);
-		super.add(lblImageControlPanel);
+		add(lblImageControlPanel);
+		
+		SpaceButton btnInstructions = new SpaceButton("Instructions");
+		btnInstructions.setBounds(303, 367, 283, 36);
+		add(btnInstructions);
 		
 		btnViewCrewMember.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -134,5 +137,12 @@ public class GUIMainScreen extends JPanel {
 				}
 			}
 		});
+		
+		btnInstructions.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Instructions Screen");
+			}
+		});
+		
 	}
 }

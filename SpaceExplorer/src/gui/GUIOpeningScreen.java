@@ -19,7 +19,7 @@ public class GUIOpeningScreen extends JPanel{
 	 */
 	public GUIOpeningScreen(GUIWindow guiWindow) {
 		super();
-		super.setBackground(new Color(25, 25, 112));
+		setBackground(new Color(25, 25, 112));
 		setLayout(null);
 		
 		this.guiWindow = guiWindow;
@@ -33,22 +33,22 @@ public class GUIOpeningScreen extends JPanel{
 		
 		SpaceButton btnCreateGame = new SpaceButton("Create New Game");
 		btnCreateGame.setBounds(0, 300, 283, 36);
-		super.add(btnCreateGame);
+		add(btnCreateGame);
 		
 		SpaceButton btnExit = new SpaceButton("Exit");
 		btnExit.setBounds(303, 300, 283, 36);
-		super.add(btnExit);
+		add(btnExit);
 		
 		JLabel lblTitle = new JLabel("SPACE EXPLORER:");
 		lblTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblTitle.setFont(new Font("MS Gothic", Font.PLAIN, 58));
 		lblTitle.setForeground(Color.YELLOW);
 		lblTitle.setBounds(0, 0, 586, 196);
-		super.add(lblTitle);
+		add(lblTitle);
 		
 		SpaceTitle lblSubTitle = new SpaceTitle("THE GAME");
 		lblSubTitle.setBounds(185, 146, 216, 89);
-		super.add(lblSubTitle);
+		add(lblSubTitle);
 		
 		btnCreateGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

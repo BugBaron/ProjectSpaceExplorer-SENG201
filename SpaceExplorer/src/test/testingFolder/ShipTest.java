@@ -1,4 +1,4 @@
-package test;
+package test.testingFolder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,7 +11,7 @@ import main.Ship;
 import main.CrewMemberTypes.CrewMember;
 import main.CrewMemberTypes.Human;
 
-class ShipTest {
+public class ShipTest {
 	
 	private Ship ship;
 	
@@ -34,6 +34,8 @@ class ShipTest {
 		assertEquals(110, ship.getMoney());
 		ship.addMoney(-18);
 		assertEquals(92, ship.getMoney());
+		ship.addMoney(-100);
+		assertEquals(0, ship.getMoney());
 		
 	}
 

@@ -193,7 +193,11 @@ public class GameEnvironment {
 			if (status.get("Energy") == maxStatus.get("Energy")) ship.addScore(10);
 			if (status.get("Nutrition") == maxStatus.get("Nutrition")) ship.addScore(10);
 			person.endDay();
-			if (!ship.getCrewMembers().contains(person)) removedMembers = removedMembers + 1;
+			if (!ship.getCrewMembers().contains(person)) {
+				inOut.print("Oh no! " + person.getName() + " has died!");
+				removedMembers = removedMembers + 1;
+			}
+			
 		}
 		dayNumber = dayNumber + 1;
 		ship.addMoney(20);

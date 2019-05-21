@@ -1,4 +1,4 @@
-package test;
+package test.testingFolder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 import main.Consumable;
 import main.Inventory;
 
-class InventoryTest {
+public class InventoryTest {
 	private final Consumable SPACE_PLAGUE_CURE = new Consumable("Space Plague Cure");
 	private final Consumable BAND_AID = new Consumable("Band-Aid");
 	private final Consumable COFFEE = new Consumable("Coffee");
@@ -53,6 +53,13 @@ class InventoryTest {
 		assertEquals(2, inventory.get(SPACE_PLAGUE_CURE));
 		inventory.addItem(COFFEE);
 		assertEquals(1, inventory.get(COFFEE));
+		Consumable newCoffee = new Consumable("Coffee");
+		inventory.addItem(newCoffee);
+		for (Consumable i : inventory.getKeys()) {
+			System.out.println(i.getName());
+		}
+		//assertEquals(2, inventory.get(COFFEE));
+		assertEquals(2, inventory.get(newCoffee));
 	}
 
 	@Test

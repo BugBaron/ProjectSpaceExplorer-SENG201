@@ -16,11 +16,11 @@ public class SpaceButton extends JButton {
 	 */
 	SpaceButton(String text) {
 		super(text);
-		super.setFocusable(false);
-		super.setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
-		super.setForeground(Color.WHITE);
-		super.setBackground(new Color(25, 25, 112));
-		super.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		setFocusable(false);
+		setBorder(new CompoundBorder(new LineBorder(new Color(50, 205, 50)), new CompoundBorder(new EmptyBorder(1, 1, 1, 1), new LineBorder(new Color(50, 205, 50)))));
+		setForeground(Color.WHITE);
+		setBackground(new Color(25, 25, 112));
+		setFont(new Font("MS Gothic", Font.PLAIN, 20));
 	}
 	
 }

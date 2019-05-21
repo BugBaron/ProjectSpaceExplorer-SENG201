@@ -25,7 +25,7 @@ public class GUIEndGameScreen extends JPanel {
 	 */
 	public GUIEndGameScreen(GUIWindow guiWindow) {
 		super();
-		super.setBackground(new Color(25, 25, 112));
+		setBackground(new Color(25, 25, 112));
 		setLayout(null);
 		
 		this.guiWindow = guiWindow;
@@ -62,22 +62,22 @@ public class GUIEndGameScreen extends JPanel {
 		
 		lblTitle = new SpaceTitle("");
 		lblTitle.setBounds(0, 27, 626, 63);
-		super.add(lblTitle);
+		add(lblTitle);
 		
 		txtpnResultMessage = new JTextPane();
 		txtpnResultMessage.setBackground(new Color(25, 25, 112));
 		txtpnResultMessage.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		txtpnResultMessage.setForeground(Color.WHITE);
 		txtpnResultMessage.setBounds(50, 115, 521, 193);
-		super.add(txtpnResultMessage);
+		add(txtpnResultMessage);
 		
 		SpaceButton btnNewGame = new SpaceButton("New Game");
 		btnNewGame.setBounds(147, 319, 147, 43);
-		super.add(btnNewGame);
+		add(btnNewGame);
 		
 		SpaceButton btnExit = new SpaceButton("Exit");
 		btnExit.setBounds(345, 319, 147, 42);
-		super.add(btnExit);
+		add(btnExit);
 		
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

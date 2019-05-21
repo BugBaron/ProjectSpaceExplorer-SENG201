@@ -24,8 +24,8 @@ public class GUIShipStatusScreen extends JPanel {
 	 */
 	public GUIShipStatusScreen(GUIWindow guiWindow) {
 		super();
-		super.setBackground(new Color(25, 25, 112));
-		super.setLayout(null);
+		setBackground(new Color(25, 25, 112));
+		setLayout(null);
 		
 		this.guiWindow = guiWindow;
 		initialize();
@@ -37,21 +37,21 @@ public class GUIShipStatusScreen extends JPanel {
 	public void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Ship Status");
 		lblTitle.setBounds(0, 0, 586, 60);
-		this.add(lblTitle);
+		add(lblTitle);
 		
 		JLabel lblImage = new JLabel("");
 		lblImage.setIcon(new ImageIcon(GUIWindow.class.getResource("/images/SPACE.PNG")));
 		lblImage.setVerticalAlignment(SwingConstants.TOP);
 		lblImage.setBounds(303, 80, 283, 174);
-		this.add(lblImage);
+		add(lblImage);
 		
 		messagePane = new SpaceMessagePane();
 		messagePane.setBounds(303, 264, 283, 93);
-		this.add(messagePane.getScrollPane());
+		add(messagePane.getScrollPane());
 		
 		SpaceButton btnBack = new SpaceButton("Back");
 		btnBack.setBounds(303, 367, 283, 36);
-		this.add(btnBack);
+		add(btnBack);
 		
 		txtpnShipStatus = new JTextPane();
 		txtpnShipStatus.setEditable(false);
@@ -60,7 +60,7 @@ public class GUIShipStatusScreen extends JPanel {
 		txtpnShipStatus.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		txtpnShipStatus.setBackground(new Color(25, 25, 112));
 		txtpnShipStatus.setBounds(0, 80, 283, 174);
-		this.add(txtpnShipStatus);
+		add(txtpnShipStatus);
 		
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

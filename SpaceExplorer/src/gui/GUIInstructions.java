@@ -1,21 +1,34 @@
 package gui;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextPane;
+
+import main.GameEnvironment;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Dimension;
 
 public class GUIInstructions extends JPanel{
 
 	private GUIWindow guiWindow;
+	private GameEnvironment gameEnvironment;
 	
 	/**
 	 * Creates the panel
 	 * @param guiWindow the window to create this panel for
 	 */
-	public GUIInstructions() {
+	public GUIInstructions(GUIWindow guiWindow) {
+		super();
+		setBackground(new Color(25, 25, 112));
+		setLayout(null);
+		
+		this.guiWindow = guiWindow;
+		gameEnvironment = guiWindow.gameEnvironment;
 		initialize();
 	}
 
@@ -25,12 +38,13 @@ public class GUIInstructions extends JPanel{
 	private void initialize() {
 		
 		SpaceTitle lblInstructions = new SpaceTitle("Instructions");
-		lblInstructions.setBounds(0, 11, 626, 41);
-		super.add(lblInstructions);
+		lblInstructions.setBounds(0, 0, 586, 40);
+		add(lblInstructions);
 		
 		JTextPane txtpnInstructions = new JTextPane();
+		txtpnInstructions.setEditable(false);
 		txtpnInstructions.setForeground(new Color(255, 255, 255));
-		txtpnInstructions.setBackground(new Color(0, 0, 128));
+		txtpnInstructions.setBackground(new Color(25, 25, 112));
 		txtpnInstructions.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		String InstructionsText = "You are lost in out of space and your space ship is falling apart.\n"
 				+ "In order for your mission to succeed you need to find the missing parts of your space ship "
@@ -42,7 +56,7 @@ public class GUIInstructions extends JPanel{
 				+ "purchased from the outpost or found on a planet. Crew members energy can be restored by sleeping.\n\n"
 				+ "Each day, every crew member has 2 actions. These actions can be used to sleep, search the planet, "
 				+ "repair the space ship, pilot the space ship, eat food or use medical supplies. Note that piloting "
-				+ "the space ship requires 2 crew members with at least one action remaining. \n "
+				+ "the space ship requires 2 crew members with at least one action remaining.\n"
 				+ "Crew members lose 1 energy and 1 nutrition per action.\n\n"
 				+ "A new day can be triggered at any time, regardless of how many actions you have remaining. Each day "
 				+ "crew members lose 2 health. If a crew member has no energy, it will lose 1 additional health everyday. "
@@ -58,17 +72,19 @@ public class GUIInstructions extends JPanel{
 				+ "The game ends when you are successful in finding all the parts, you run out of days or all of the "
 				+ "crew members die.";
 		txtpnInstructions.setText(InstructionsText);
-		txtpnInstructions.setBounds(68, 105, 492, 170);
-		super.add(txtpnInstructions);
+		txtpnInstructions.setCaretPosition(0);
+		
+		JScrollPane scrollPane = new JScrollPane(txtpnInstructions);
+		scrollPane.setBounds(0, 60, 586, 297);
+		add(scrollPane);
 		
 		SpaceButton btnContinue = new SpaceButton("Continue");
-		btnContinue.setBounds(201, 332, 237, 49);
-		super.add(btnContinue);
+		btnContinue.setBounds(151, 367, 284, 36);
+		add(btnContinue);
 		
 		btnContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Set Up");
-				guiWindow.updatePane();
+				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Screen");
 			}
 		});
 	}

@@ -1,4 +1,4 @@
-package test;
+package test.testingFolder;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -11,7 +11,7 @@ import main.Ship;
 import main.CrewMemberTypes.CrewMember;
 import main.CrewMemberTypes.Human;
 
-class ConsumableTest {
+public class ConsumableTest {
 	
 	private final Consumable spacePlagueCure = new Consumable("Space Plague Cure");
 	private final Consumable bandAid = new Consumable("Band-Aid");
@@ -210,5 +210,14 @@ class ConsumableTest {
 		assertTrue(status.get("Nutrition")==10); 
 		assertTrue(status.get("Energy")==10); //Ensure variables remain unchanged
 		assertEquals(false, member.getHasSpacePlague()); //Ensure variables remain unchanged
+	}
+	
+	@Test
+	void testEquals() {
+		Consumable thisBanana = new Consumable("Banana");
+		Consumable thisBandAid = new Consumable("Band-Aid");
+		assertTrue(thisBanana.equals(thisBanana));
+		assertTrue(thisBanana.equals(banana));
+		assertFalse(thisBanana.equals(thisBandAid));
 	}
 }

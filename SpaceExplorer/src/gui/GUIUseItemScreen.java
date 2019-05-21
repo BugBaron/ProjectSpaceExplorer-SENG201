@@ -38,8 +38,8 @@ public class GUIUseItemScreen extends JPanel {
 	 */
 	public GUIUseItemScreen(GUIWindow guiWindow) {
 		super();
-		super.setBackground(new Color(25, 25, 112));
-		super.setLayout(null);
+		setBackground(new Color(25, 25, 112));
+		setLayout(null);
 		
 		this.guiWindow = guiWindow;
 		gameEnvironment = guiWindow.gameEnvironment;
@@ -68,19 +68,19 @@ public class GUIUseItemScreen extends JPanel {
 	private void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Use Item");
 		lblTitle.setBounds(0, 0, 586, 60);
-		super.add(lblTitle);
+		add(lblTitle);
 		
 		messagePane = new SpaceMessagePane();
 		messagePane.setBounds(303, 264, 283, 93);
-		super.add(messagePane.getScrollPane());
+		add(messagePane.getScrollPane());
 		
 		SpaceButton btnBack = new SpaceButton("Back");
 		btnBack.setBounds(303, 367, 283, 36);
-		super.add(btnBack);
+		add(btnBack);
 		
 		SpaceLabel lblItemSelector = new SpaceLabel("Item:");
 		lblItemSelector.setBounds(0, 80, 50, 36);
-		super.add(lblItemSelector);
+		add(lblItemSelector);
 		
 		itemSelection = new JComboBox<Consumable>();
 		itemSelection.setFont(new Font("MS Gothic", Font.PLAIN, 20));
@@ -97,11 +97,11 @@ public class GUIUseItemScreen extends JPanel {
 			}
 		});
 		itemSelection.setBounds(60, 80, 526, 36);
-		super.add(itemSelection);
+		add(itemSelection);
 		
 		SpaceButton btnConfirmUseItem = new SpaceButton("Use item");;
 		btnConfirmUseItem.setBounds(0, 264, 283, 36);
-		super.add(btnConfirmUseItem);
+		add(btnConfirmUseItem);
 		
 		crewMemberInfo = new JTextPane();
 		crewMemberInfo.setText("Crew member info");
@@ -109,7 +109,7 @@ public class GUIUseItemScreen extends JPanel {
 		crewMemberInfo.setFont(new Font("MS Gothic", Font.PLAIN, 12));
 		crewMemberInfo.setBackground(new Color(25, 25, 112));
 		crewMemberInfo.setBounds(303, 126, 283, 138);
-		super.add(crewMemberInfo);
+		add(crewMemberInfo);
 		
 		txtpnItemInfo = new JTextPane();
 		txtpnItemInfo.setText("Item info");
@@ -117,7 +117,7 @@ public class GUIUseItemScreen extends JPanel {
 		txtpnItemInfo.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		txtpnItemInfo.setBackground(new Color(25, 25, 112));
 		txtpnItemInfo.setBounds(0, 126, 283, 128);
-		super.add(txtpnItemInfo);
+		add(txtpnItemInfo);
 		
 		itemSelection.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {

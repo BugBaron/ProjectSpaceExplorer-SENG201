@@ -14,9 +14,9 @@ public class SpaceTitle extends JLabel {
 	 */
 	SpaceTitle(String text) {
 		super(text);
-		super.setHorizontalAlignment(SwingConstants.CENTER);
-		super.setForeground(Color.YELLOW);
-		super.setFont(new Font("MS Gothic", Font.PLAIN, 40));
+		setHorizontalAlignment(SwingConstants.CENTER);
+		setForeground(Color.YELLOW);
+		setFont(new Font("MS Gothic", Font.PLAIN, 40));
 	}
 	
 }

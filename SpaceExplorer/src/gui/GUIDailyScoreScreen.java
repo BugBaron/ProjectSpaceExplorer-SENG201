@@ -22,7 +22,7 @@ public class GUIDailyScoreScreen extends JPanel {
 	 */
 	public GUIDailyScoreScreen(GUIWindow guiWindow) {
 		super();
-		super.setBackground(new Color(25, 25, 112));
+		setBackground(new Color(25, 25, 112));
 		setLayout(null);
 		
 		this.guiWindow = guiWindow;
@@ -47,16 +47,16 @@ public class GUIDailyScoreScreen extends JPanel {
 	private void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Daily Score");
 		lblTitle.setBounds(0, 0, 586, 80);
-		super.add(lblTitle);
+		add(lblTitle);
 		
 		lblScore = new SpaceLabel("");
 		lblScore.setBounds(0, 182, 586, 63);
 		lblScore.setHorizontalAlignment(SwingConstants.CENTER);
-		super.add(lblScore);
+		add(lblScore);
 		
 		SpaceButton btnContinue = new SpaceButton("Continue");
 		btnContinue.setBounds(151, 367, 284, 36);;
-		super.add(btnContinue);
+		add(btnContinue);
 		btnContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Screen");
