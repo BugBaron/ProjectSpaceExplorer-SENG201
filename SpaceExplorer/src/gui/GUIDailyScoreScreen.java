@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import main.GameEnvironment;
-import java.awt.Component;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
