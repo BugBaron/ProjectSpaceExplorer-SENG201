@@ -4,8 +4,15 @@ import java.util.HashMap;
 
 import main.Ship;
 
+/**
+ * A cyborg who has become a crew member
+ * @author Daniel Harris and Rebekah McKinnon
+ */
 public class Cyborg extends CrewMember {
 
+	/** The ship which this cyborg is on */
+	Ship ship;
+	
 	
 	/**
 	 * Class constructor
@@ -13,6 +20,7 @@ public class Cyborg extends CrewMember {
 	 */
 	public Cyborg(Ship tempShip) {
 		super(tempShip);
+		ship = tempShip;
 		createDefaultCyborg();
 	}
 		
@@ -31,7 +39,10 @@ public class Cyborg extends CrewMember {
 		super.name = tempName;
 	}
 	
-	
+
+	/**
+	 * Adjusts all default values to create a new cyborg
+	 */
 	private void createDefaultCyborg() {
 		HashMap <String, Integer> maxStats = new HashMap <String, Integer>();
 		maxStats.put("Health", 10);
@@ -73,7 +84,7 @@ public class Cyborg extends CrewMember {
 		if (super.getHasSpacePlague()) {
 			super.addHealth(-1);
 		}
-		if (super.ship.getShipShields() == 0) {
+		if (ship.getShipShields() == 0) {
 			super.addHealth(-1);
 		}
 	}

@@ -3,8 +3,15 @@ package main;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * Contains a mapping of Consumables to integers, to represent the quantity of
+ * relevant items
+ * @author Daniel Harris and Rebekah McKinnon
+ *
+ */
 public class Inventory {
 	
+	/** The map to store the quantities of each item in */
 	private HashMap<Consumable, Integer> items;
 	
 	

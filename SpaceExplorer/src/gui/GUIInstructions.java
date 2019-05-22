@@ -11,7 +11,6 @@ import main.GameEnvironment;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Dimension;
 
 public class GUIInstructions extends JPanel{
 
@@ -53,7 +52,7 @@ public class GUIInstructions extends JPanel{
 				+ "of 1 space ship part on each planet. If you do not find a space ship part you may find "
 				+ "food, medical supplies, money or nothing. \n\n"
 				+ "Food and medical supplies are used to restored a crew members health or nutrition. They can be "
-				+ "purchased from the outpost or found on a planet. Crew members energy can be restored by sleeping.\n\n"
+				+ "purchased from an outpost or found on a planet. Crew members energy can be restored by sleeping.\n\n"
 				+ "Each day, every crew member has 2 actions. These actions can be used to sleep, search the planet, "
 				+ "repair the space ship, pilot the space ship, eat food or use medical supplies. Note that piloting "
 				+ "the space ship requires 2 crew members with at least one action remaining.\n"

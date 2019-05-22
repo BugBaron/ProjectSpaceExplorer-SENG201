@@ -4,17 +4,26 @@ import java.util.ArrayList;
 
 import main.CrewMemberTypes.CrewMember;
 
+/**
+ * The ship which needs parts for the player to win
+ * @author Daniel Harris and Rebekah McKinnon
+ */
 public class Ship {
 	
+	/** The name of the ship */
 	private String shipName;
+	/** The crew members on this ship */
 	private ArrayList<CrewMember> crewMembers;
+	/** The money that the player has on this ship */
 	private int money;
+	/** The shield level of this ship */
 	private int shipShields;
+	/** The maximum shield level */
 	private final int MAX_SHIP_SHIELDS = 10;
 	
-	// This is the total score excluding what was earned today
+	/** Total score excluding what was earned today */
 	private int totalScore;
-	// This is the daily score
+	/** Daily score. Set to zero when getDailyScore() is called */
 	private int dailyScore;
 	
 	

@@ -4,8 +4,15 @@ import java.util.HashMap;
 
 import main.Ship;
 
+/**
+ * A unicorn who has become a crew member
+ * @author Daniel Harris and Rebekah McKinnon
+ */
 public class Unicorn extends CrewMember {
 
+	/** The ship which this unicorn is on */
+	Ship ship;
+	
 	
 	/**
 	 * Class constructor
@@ -13,6 +20,7 @@ public class Unicorn extends CrewMember {
 	 */
 	public Unicorn(Ship tempShip) {
 		super(tempShip);
+		ship = tempShip;
 		createDefaultUnicorn();
 	}
 		
@@ -32,6 +40,9 @@ public class Unicorn extends CrewMember {
 	}
 	
 	
+	/**
+	 * Adjusts all default values to create a new unicorn
+	 */
 	private void createDefaultUnicorn() {
 		HashMap <String, Integer> maxStats = new HashMap <String, Integer>();
 		maxStats.put("Health", 10);
@@ -71,7 +82,7 @@ public class Unicorn extends CrewMember {
 		if (super.getHasSpacePlague()) {
 			super.addHealth(-1);
 		}
-		if (super.ship.getShipShields() == 0) {
+		if (ship.getShipShields() == 0) {
 			super.addHealth(-1);
 		}
 		super.addEnergy(2);

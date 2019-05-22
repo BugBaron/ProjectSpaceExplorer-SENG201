@@ -4,8 +4,15 @@ import java.util.HashMap;
 
 import main.Ship;
 
+/**
+ * An alien who has become a crew member
+ * @author Daniel Harris and Rebekah McKinnon
+ */
 public class Alien extends CrewMember {
 
+	/** The ship which this alien is on */
+	Ship ship;
+	
 	
 	/**
 	 * Class constructor
@@ -13,6 +20,7 @@ public class Alien extends CrewMember {
 	 */
 	public Alien(Ship tempShip) {
 		super(tempShip);
+		ship = tempShip;
 		createDefaultAlien();
 	}
 		
@@ -32,6 +40,9 @@ public class Alien extends CrewMember {
 	}
 	
 	
+	/**
+	 * Adjusts all default values to create a new alien
+	 */
 	private void createDefaultAlien() {
 		HashMap <String, Integer> maxStats = new HashMap <String, Integer>();
 		maxStats.put("Health", 12);
@@ -70,7 +81,7 @@ public class Alien extends CrewMember {
 		if (super.getHasSpacePlague()) {
 			super.addHealth(-1);
 		}
-		if (super.ship.getShipShields() == 0) {
+		if (ship.getShipShields() == 0) {
 			super.addHealth(-1);
 		}
 	}

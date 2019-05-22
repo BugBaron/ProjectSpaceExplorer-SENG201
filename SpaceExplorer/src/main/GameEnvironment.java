@@ -7,33 +7,59 @@ import java.util.Random;
 
 import main.CrewMemberTypes.CrewMember;
 
+/**
+ * Conducts all game logic to play the Space Explorer game
+ * @author Daniel Harris and Rebekah McKinnon
+ */
 public class GameEnvironment {
 	
+	/** Prints output and recieves input */
 	private InOutHandler inOut;
 	
+	/** The ship used in the game */
 	private Ship ship;
+	/** The inventory of items available to the crew in the game */
 	private Inventory inventory;
+	/** The shop on a planet in the game */
 	private Inventory shop;
 	
+	/** The parts required to win the game */
 	private int partsToFind;
+	/** The number of parts found so far */
 	private int partsFound;
+	/** Whether or not there are parts on this planet */
 	private boolean partsHere;
 	
+	/** The number of days that the game has been played for */
 	private int dayNumber;
+	/** The maximum number of days */
 	private int maxDays;
 	
+	/** The index of the Planet Array to get the planet the ship is on */
 	private int currentPlanet;
-	private ArrayList<String> PLANET_ARRAY = new ArrayList<>(Arrays.asList("Europa", "Titan", 
+	/** A list of planets that can be visited */
+	private final ArrayList<String> PLANET_ARRAY = new ArrayList<>(Arrays.asList("Europa", "Titan", 
 			"Io", "Callisto", "Oberon", "Umbriel", "Rhea", "Phoebe", "Ananke", "Dactyl"));
 	
+	/** 
+	 * A list of percentage probabilities. At the end of each day, 20% chance to have an item 
+	 * stolen, 20% chance to have a crew member infected, and 60% chance for no special event  
+	 */
 	private final int[] ATTACK_PROBABILITY = {20, 20, 60};
+	/** 
+	 * A list of percentage probabilities. When the ship is piloted, 30% chance to run into
+	 * an Asteroid field, and 70% chance for no special event
+	 */
 	private final int[] ASTEROID_PROBABILITY = {30, 70};
+	/** A list of all the available food items */
 	private final Consumable[] FOOD_ITEMS = {new Consumable("Space Ration"), 
 			new Consumable("Water"), new Consumable("Banana"), 
 			new Consumable("Alien Meat"), new Consumable("Coffee"), 
 			new Consumable("Egg")};
+	/** A list of all the available medical items */
 	private final Consumable[] MEDICAL_ITEMS = {new Consumable("Space Plague Cure"),
 			new Consumable("Band-Aid"), new Consumable("First Aid Kit")};
+	/** A list of all the amounts of money that can be found each time a planet is searched */
 	private final Integer[] FINDABLE_MONEY = {10, 20, 30};
 	
 	
@@ -325,7 +351,8 @@ public class GameEnvironment {
 	public void repairShip(CrewMember crewMember) {
 		crewMember.completeAction();
 		ship.addShipShields(crewMember.getRepairAmount());
-		inOut.print(crewMember.getName() + " repaired " + ship.getName() + " to " + ship.getShipShields());
+		inOut.print(crewMember.getName() + " restored the shield levels of " + ship.getName() 
+			+ " to " + ship.getShipShields());
 	}
 	
 	

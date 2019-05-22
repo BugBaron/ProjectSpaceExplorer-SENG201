@@ -1,11 +1,19 @@
 package main;
 
+import java.util.LinkedList;
 import java.util.Scanner;
-import java.util.concurrent.ArrayBlockingQueue;
 
+/**
+ * Handles all input and output sent to it
+ * @author Daniel Harris and Rebekah McKinnon
+ *
+ */
 public class InOutHandler {
+	
+	/** The scanner to receive input from */
 	private Scanner scanner;
-	private ArrayBlockingQueue<Object> outputList = new ArrayBlockingQueue<Object>(20);
+	/** The queue where output is sent and collected */
+	private LinkedList<Object> outputList = new LinkedList<Object>();
 	
 	
 	/**
@@ -32,12 +40,12 @@ public class InOutHandler {
 				
 				// If the choice is not in the required range
 				if (!(choice > minValue - 1 && choice < maxValue + 1)) {
-					System.out.println("Please input a number between " + minValue + " and " + maxValue);
+					outputList.add("Please input a number between " + minValue + " and " + maxValue);
 					choice = -1;
 				}
 			// If the choice is not an integer
 			} catch (NumberFormatException e) {
-				System.out.println("Please input a number to select an option");
+				outputList.add("Please input a number to select an option");
 				choice = -1;
 			}
 		}

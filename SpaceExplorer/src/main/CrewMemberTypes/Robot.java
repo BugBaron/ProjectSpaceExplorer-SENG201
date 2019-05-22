@@ -4,8 +4,15 @@ import java.util.HashMap;
 
 import main.Ship;
 
+/**
+ * A robot who has become a crew member
+ * @author Daniel Harris and Rebekah McKinnon
+ */
 public class Robot extends CrewMember {
 
+	/** The ship which this robot is on */
+	Ship ship;
+	
 	
 	/**
 	 * Class constructor
@@ -13,6 +20,7 @@ public class Robot extends CrewMember {
 	 */
 	public Robot(Ship tempShip) {
 		super(tempShip);
+		ship = tempShip;
 		createDefaultRobot();
 	}
 		
@@ -32,6 +40,9 @@ public class Robot extends CrewMember {
 	}
 	
 	
+	/**
+	 * Adjusts all default values to create a new robot
+	 */
 	private void createDefaultRobot() {
 		HashMap <String, Integer> maxStats = new HashMap <String, Integer>();
 		maxStats.put("Health", 10);
@@ -70,7 +81,7 @@ public class Robot extends CrewMember {
 		if (super.getHasSpacePlague()) {
 			super.addHealth(-1);
 		}
-		if (super.ship.getShipShields() == 0) {
+		if (ship.getShipShields() == 0) {
 			super.addHealth(-1);
 		}
 		super.addNutrition(2);

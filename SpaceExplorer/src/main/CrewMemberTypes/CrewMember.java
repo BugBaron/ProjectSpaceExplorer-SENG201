@@ -3,22 +3,40 @@ package main.CrewMemberTypes;
 import java.util.HashMap;
 import main.Ship;
 
+/**
+ * A member of the crew stranded on the ship
+ * @author Daniel Harris and Rebekah McKinnon
+ */
 public abstract class CrewMember {
 	
-	Ship ship;
+	/** The ship that this crew member is on */
+	private Ship ship;
+	/** 
+	 * The status of this crew member, stored in a Map, from strings (Health, Energy and Nutrition)
+	 * to the relevant integer value of the status value
+	 */
 	private HashMap <String, Integer> status;
+	/** The number of actions that this crew member has available */
 	private int numActions;
 	
-	// Variables which are modified upon being created by sub-classes
+	// Variables which are modified in sub-class constructors
 	// All-caps variables are not modified after the sub-class is constructed
-	HashMap <String, Integer> MAX_STAT;
-	int REPAIR_AMOUNT = 2;
+	/** Whether or not this member has the space plague */
 	boolean spacePlague = false;
+	/** The name of this crew member */
 	String name;
+	
+	/** The maximum value of each status value. Stored identically to the status variable */
+	HashMap <String, Integer> MAX_STAT;
+	/** The amount by which this crew member can repair the ship */
+	int REPAIR_AMOUNT = 2;
+	/** 
+	 * Descriptions of the type of crew member this is. A map from strings (Type, Strength, Weakness)
+	 * to the relevant description
+	 */
 	HashMap <String, String> TYPE_INFO;
-	// The probabilities are coded to be relative
-	// Chance of finding a {part, food item, medical item, money, nothing}
-	int[] SEARCHING_PROBABILITIES = {1, 1, 1, 1, 1};
+	/** The percentage chance of finding a part, food item, medical item, money and nothing, respectively */
+	int[] SEARCHING_PROBABILITIES = {20, 20, 20, 20, 20};
 	
 	
 	/**

@@ -2,16 +2,30 @@ package main;
 
 import main.CrewMemberTypes.CrewMember;
 
+/**
+ * An item that can be used on a crew member
+ * @author Daniel Harris and Rebekah McKinnon
+ */
 public class Consumable {
+	/** Price of the item */
+	private int price;
 	
-	private int price; //Price of the item
-	private int nutritionRestore = 0; //Amount of nutrition restored to the crew member
-	private int energyRestore = 0; //Amount of energy restored to the crew member
-	private int healthRestore = 0; //Amount of health restored to the crew members
-	private boolean cureSpacePlague = false; //Does it cure the space plague? T/F
-	private String description; //English description of what is restored to crew member
-	private String name; //Item name
-	private String classification; //Food or medical item
+	/** Amount of nutrition restored to the crew member */
+	private int nutritionRestore = 0;
+	/** Amount of energy restored to the crew member */
+	private int energyRestore = 0;
+	/** Amount of health restored to the crew members */
+	private int healthRestore = 0;
+	
+	/** Does it cure the space plague? T/F */
+	private boolean cureSpacePlague = false;
+	/** English description of what is restored to crew member */
+	private String description;
+	
+	/** Item name */
+	private String name;
+	/** What type of item this is (Food or Medical) */
+	private String classification;
 	
 	/** 
 	 * Class constructor
