@@ -366,7 +366,6 @@ public class GameEnvironment {
 					person.setHasSpacePlague(true);
 				}
 			}
-			partsHere = true;
 			inOut.print("Daily Score: " + ship.getDailyScore());
 			inOut.print("Press enter to continue");
 			inOut.collectString();
@@ -541,6 +540,7 @@ public class GameEnvironment {
 			crewMember.completeAction();
 			person.completeAction();
 			
+			partsHere = true;
 			currentPlanet++;
 			if (currentPlanet >= PLANET_ARRAY.size()) currentPlanet = 0;
 			inOut.print(crewMember.getName() + " and " + person.getName() + 
