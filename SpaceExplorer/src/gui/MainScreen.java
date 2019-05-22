@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -107,10 +108,7 @@ public class MainScreen extends JPanel {
 		btnViewCrewMember.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<CrewMember> crewMembers = gameEnvironment.getCrewMembers();
-				CrewMember[] newMembers = new CrewMember[crewMembers.size()];
-				for (int i = 0; i < crewMembers.size(); i++) {
-					newMembers[i] = crewMembers.get(i);
-				}
+				Vector<CrewMember> newMembers = new Vector<CrewMember>(crewMembers);
 				guiWindow.crewMembersScreen.crewMemberSelection.setModel(new DefaultComboBoxModel<CrewMember>(newMembers));
 				guiWindow.crewMembersScreen.updateCrewMembers();
 				

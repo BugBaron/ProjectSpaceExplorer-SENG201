@@ -173,10 +173,7 @@ public class CrewMembersScreen extends JPanel {
 				guiWindow.updatePane();
 				
 				ArrayList<Consumable> keys = gameEnvironment.getInventory().getKeys();
-				Consumable[] items = new Consumable[keys.size()];
-				for (int i = 0; i < keys.size(); i++) {
-					items[i] = keys.get(i);
-				}
+				Vector<Consumable> items = new Vector<Consumable>(keys);
 				guiWindow.useItemScreen.itemSelection.setModel(new DefaultComboBoxModel<Consumable>(items));
 				guiWindow.useItemScreen.updateItemInfo();
 			}
@@ -224,6 +221,7 @@ public class CrewMembersScreen extends JPanel {
 				Vector<CrewMember> availableMembers = new Vector<CrewMember>(gameEnvironment.getAvailableMembers());
 				availableMembers.remove((CrewMember) crewMemberSelection.getSelectedItem());
 				guiWindow.pilotShipScreen.crewMember2Selection.setModel(new DefaultComboBoxModel<CrewMember>(availableMembers));
+				
 				Object item = guiWindow.pilotShipScreen.crewMember2Selection.getSelectedItem();
 				if (item instanceof CrewMember) {
 					CrewMember crewMember = (CrewMember) item;
