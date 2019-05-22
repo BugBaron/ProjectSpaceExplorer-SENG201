@@ -227,7 +227,6 @@ public class GameEnvironment {
 					person.setHasSpacePlague(true);
 				}
 			}
-			partsHere = true;
 			inOut.print(false); // Indicates that the random events have no more messages
 			inOut.print("Daily Score: " + ship.getDailyScore());
 			return false; 
@@ -343,7 +342,8 @@ public class GameEnvironment {
 		if (currentPlanet >= PLANET_ARRAY.size()) currentPlanet = 0;
 		inOut.print(crewMember.getName() + " and " + person.getName() + 
 				" flew the ship to " + PLANET_ARRAY.get(currentPlanet));
-		
+
+		partsHere = true;
 		shop = createShop();
 		int sumAsteroidProbability = Arrays.stream(ASTEROID_PROBABILITY).sum();
 		int randInt = (new Random()).nextInt(sumAsteroidProbability);
@@ -362,17 +362,17 @@ public class GameEnvironment {
 	public void endGame(boolean isVictory) {
 		if (isVictory) {
 			inOut.print("Congratulations!");
-			inOut.print("You have piloted the ship " + ship.getName() + " to victory"); 
-			inOut.print("and found all the missing parts of your ship!");
+			inOut.print("You have piloted the ship " + ship.getName() + " to victory"
+					+ "and found all the missing parts of your ship!");
 			inOut.print("Well done!");
 		} else if (ship.getCrewMembers().size() == 0) {
 			inOut.print("Sorry, you lost!");
 			inOut.print("Oh no! All of the members of your crew have died!");
-			inOut.print("The " + ship.getName() + " repair mission ends in tragedy");
+			inOut.print("The " + ship.getName() + " repair mission ends in tragedy.");
 		} else {
 			inOut.print("Sorry, you lost!");
-			inOut.print("It has been " + maxDays + " days");
-			inOut.print(ship.getName() + " is now damaged beyond repair");
+			inOut.print("It has been " + maxDays + " days.");
+			inOut.print(ship.getName() + " is now damaged beyond repair.");
 		}
 		inOut.print("\n");
 		inOut.print("Final Score: " + ship.getTotalScore());
