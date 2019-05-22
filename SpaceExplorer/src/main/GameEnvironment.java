@@ -230,10 +230,12 @@ public class GameEnvironment {
 		
 		// Ends the game if there are no more crew members left alive, or if the last day ended
 		if (ship.getCrewMembers().size() == 0 || dayNumber > maxDays) {
+			Object output = inOut.getOutput();
+			while (output != null) {
+				output = inOut.getOutput();
+			}
 			return true; // Indicates that the game has ended
-			//endGame(false);
 		} else {
-			//inOut.print(false); // Indicates that the game has not ended
 			int sumAttackProbability = Arrays.stream(ATTACK_PROBABILITY).sum();
 			int randInt = (new Random()).nextInt(sumAttackProbability);
 			if (randInt < ATTACK_PROBABILITY[0] && inventory.size() > 0) {
@@ -255,7 +257,7 @@ public class GameEnvironment {
 			}
 			inOut.print(false); // Indicates that the random events have no more messages
 			inOut.print("Daily Score: " + ship.getDailyScore());
-			return false; 
+			return false; // Indicates that the game has not ended
 		}
 	}
 	
@@ -390,7 +392,7 @@ public class GameEnvironment {
 		if (isVictory) {
 			inOut.print("Congratulations!");
 			inOut.print("You have piloted the ship " + ship.getName() + " to victory"
-					+ "and found all the missing parts of your ship!");
+					+ " and found all the missing parts of your ship!");
 			inOut.print("Well done!");
 		} else if (ship.getCrewMembers().size() == 0) {
 			inOut.print("Sorry, you lost!");

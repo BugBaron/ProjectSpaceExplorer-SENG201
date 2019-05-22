@@ -61,6 +61,7 @@ public class EndGameScreen extends JPanel {
 		lblTitle.setText(finalOutput);
 		output = inOut.getOutput();
 		finalOutput = (String) output;
+		output = inOut.getOutput();
 		while (output != null) {
 			finalOutput = finalOutput + "\n" + output;
 			output = inOut.getOutput();
@@ -96,7 +97,7 @@ public class EndGameScreen extends JPanel {
 		
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				guiWindow.messagePaneContents = new ArrayList<String>();
+				guiWindow.messagePaneContents.removeAll(guiWindow.messagePaneContents);
 				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Set Up Screen");
 				guiWindow.updatePane();
 			}

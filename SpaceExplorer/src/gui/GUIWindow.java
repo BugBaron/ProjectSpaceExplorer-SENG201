@@ -83,6 +83,10 @@ public class GUIWindow {
 		initialize();
 	}
 	
+	
+	/**
+	 * Updates the information displayed about the selected crew member
+	 */
 	public void updateCrewMemberInfo() {
 		Object item = crewMembersScreen.crewMemberSelection.getSelectedItem();
 		if (item instanceof CrewMember) {
