@@ -24,18 +24,36 @@ import main.GameEnvironment;
 import main.InOutHandler;
 import main.CrewMemberTypes.CrewMember;
 
+/**
+ * A screen to make a crew member use an item
+ * @author Daniel Harris and Rebekah McKinnon
+ *
+ */
 public class UseItemScreen extends JPanel {
 	
+	/* 
+	 * These variables have default visibility so they can be adjusted and/or 
+	 * used to update other widgets 
+	 */
+	/** A message pane to display important information */
 	SpaceMessagePane messagePane;
+	/** A text pane to display information about the selected crew member */
 	JTextPane crewMemberInfo;
 	JComboBox<Consumable> itemSelection;
 	
-	private JTextPane txtpnItemInfo;
+	/** The window holding this panel */
 	private GUIWindow guiWindow;
-	private ArrayList<String> messagePaneContents;
+	/** The game environment that the game is running in */
 	private GameEnvironment gameEnvironment;
+	/** The contents of the message pane */
+	private ArrayList<String> messagePaneContents;
+	/** The object which is handling the input and output of the game environment */
 	private InOutHandler inOut;
+	
+	/** A text pane to display the selected item info */
+	private JTextPane txtpnItemInfo;
 
+	
 	/**
 	 * Creates the panel
 	 * @param guiWindow the window to create this panel for
@@ -66,6 +84,7 @@ public class UseItemScreen extends JPanel {
 		}
 	}
 
+	
 	/**
 	 * Initialize the panel contents
 	 */

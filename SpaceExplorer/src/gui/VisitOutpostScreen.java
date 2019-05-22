@@ -17,14 +17,23 @@ import main.GameEnvironment;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * A screen to either view the shop or the inventory of the ship
+ * @author Daniel Harris and Rebekah McKinnon
+ *
+ */
 public class VisitOutpostScreen extends JPanel {
 
+	/** 
+	 * A message pane to display important information. It must be public to
+	 * allow it to be updated 
+	 */
 	SpaceMessagePane messagePane;
 	
-	private GameEnvironment gameEnvironment;
-	
+	/** The window holding this panel */
 	private GUIWindow guiWindow;
-
+	/** The game environment that the game is running in */
+	private GameEnvironment gameEnvironment;
 
 	/**
 	 * Creates the panel

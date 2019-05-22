@@ -27,20 +27,37 @@ import main.InOutHandler;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * A screen to view and purchase items
+ * @author Daniel Harris and Rebekah McKinnon
+ */
 public class ViewShopScreen extends JPanel {
 
+	/** 
+	 * A message pane to display important information. It must be public to
+	 * allow it to be updated 
+	 */
 	SpaceMessagePane messagePane;
 	
+	/** The window holding this panel */
 	private GUIWindow guiWindow;
-	private ArrayList<String> messagePaneContents;
+	/** The game environment that the game is running in */
 	private GameEnvironment gameEnvironment;
+	/** The contents of the message pane */
+	private ArrayList<String> messagePaneContents;
+	/** The object which is handling the input and output of the game environment */
 	private InOutHandler inOut;
 	
+	/** A label to display the money that the user has available */
 	private SpaceLabel lblMoney;
+	/** A list of shop items which can be selected */
 	private JList<Consumable> listShopItems;
+	/** A button to purchase the item */
 	private SpaceButton btnPurchaseItem;
+	/** A text pane to display information about the item being purchased */
 	private JTextPane txtpnItemInfo;
 
+	
 	/**
 	 * Creates the panel
 	 * @param guiWindow the window to create this panel for

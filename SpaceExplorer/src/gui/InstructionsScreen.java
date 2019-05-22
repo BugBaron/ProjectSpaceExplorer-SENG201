@@ -14,10 +14,16 @@ import main.GameEnvironment;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * An instructions screen to display to help the user play the game
+ * @author Daniel Harris and Rebekah McKinnon
+ *
+ */
 public class InstructionsScreen extends JPanel{
 
+	/** The window holding this panel */
 	private GUIWindow guiWindow;
-	private GameEnvironment gameEnvironment;
+	
 	
 	/**
 	 * Creates the panel
@@ -29,9 +35,9 @@ public class InstructionsScreen extends JPanel{
 		setLayout(null);
 		
 		this.guiWindow = guiWindow;
-		gameEnvironment = guiWindow.gameEnvironment;
 		initialize();
 	}
+	
 
 	/**
 	 * Initialize the panel contents

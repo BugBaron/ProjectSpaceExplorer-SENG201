@@ -12,10 +12,18 @@ import main.GameEnvironment;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * A screen to display the score at the end of every day
+ * @author Daniel Harris and Rebekah McKinnon
+ */
 public class DailyScoreScreen extends JPanel {
 
+	/** The window holding this panel */
 	private GUIWindow guiWindow;
+	/** The game environment that the game is running in */
 	private GameEnvironment gameEnvironment;
+	
+	/** A label to display the score that was achieved in the day */
 	private SpaceLabel lblScore;
 	
 	

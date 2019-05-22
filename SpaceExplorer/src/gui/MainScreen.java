@@ -19,15 +19,29 @@ import main.GameEnvironment;
 import main.InOutHandler;
 import main.CrewMemberTypes.CrewMember;
 
+/**
+ * A screen for the user to choose what they would like to do in the game
+ * @author Daniel Harris and Rebekah McKinnon
+ *
+ */
 public class MainScreen extends JPanel {
 	
+	/* 
+	 * These variables have default visibility so they can be adjusted and/or 
+	 * used to update other widgets 
+	 */
+	/** A message pane to display important information */
 	SpaceMessagePane messagePane;
 	SpaceLabel lblDayNumber;
 	
-	private InOutHandler inOut;
+	/** The window holding this panel */
 	private GUIWindow guiWindow;
-	private ArrayList<String> messagePaneContents;
+	/** The game environment that the game is running in */
 	private GameEnvironment gameEnvironment;
+	/** The contents of the message pane */
+	private ArrayList<String> messagePaneContents;
+	/** The object which is handling the input and output of the game environment */
+	private InOutHandler inOut;
 
 	
 	/**

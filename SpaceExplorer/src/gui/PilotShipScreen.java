@@ -24,17 +24,35 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * A screen to allow the user to pilot their ship to a new planet
+ * @author Daniel Harris and Rebekah McKinnon
+ *
+ */
 public class PilotShipScreen extends JPanel {
 
-	JTextPane crewMemberInfo;
+	/* 
+	 * These variables have default visibility so they can be adjusted and/or 
+	 * used to update other widgets 
+	 */
+	/** A message pane to display important information */
 	SpaceMessagePane messagePane;
+	/** A text pane to display information about the selected crew member */
+	JTextPane crewMemberInfo;
+	/** A combo box to select which other crew member to pilot the ship with */
 	JComboBox<CrewMember> crewMember2Selection;
+	/** A text pane to display information about the other selected crew member */
 	JTextPane crewMember2Info;
 	
+	/** The window holding this panel */
 	private GUIWindow guiWindow;
-	private ArrayList<String> messagePaneContents;
+	/** The game environment that the game is running in */
 	private GameEnvironment gameEnvironment;
+	/** The contents of the message pane */
+	private ArrayList<String> messagePaneContents;
+	/** The object which is handling the input and output of the game environment */
 	private InOutHandler inOut;
+	
 	
 	/**
 	 * Creates the panel

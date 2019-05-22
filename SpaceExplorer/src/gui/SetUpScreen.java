@@ -36,22 +36,35 @@ import javax.swing.JTextField;
 
 public class SetUpScreen extends JPanel {
 
-	
+	/** The window holding this panel */
 	private GUIWindow guiWindow;
+	/** The game environment that the game is running in */
 	private GameEnvironment gameEnvironment;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
-	private JTextField textField_4;
 	
-	private JComboBox<String> comboBox;
-	private JComboBox<String> comboBox_1;
-	private JComboBox<String> comboBox_2;
-	private JComboBox<String> comboBox_3;
+	/** The text field to name the first crew member */
+	private JTextField textFieldCrewName1;
+	/** The text field to name the second crew member */
+	private JTextField textFieldCrewName2;
+	/** The text field to name the third crew member */
+	private JTextField textFieldCrewName3;
+	/** The text field to name the fourth crew member */
+	private JTextField textFieldCrewName4;
+	/** The text field to name the ship */
+	private JTextField textFieldShipName;
 	
+	/** The combo box to choose the type of the first crew member */
+	private JComboBox<String> comboBoxCrewType1;
+	/** The combo box to choose the type of the second crew member */
+	private JComboBox<String> comboBoxCrewType2;
+	/** The combo box to choose the type of the third crew member */
+	private JComboBox<String> comboBoxCrewType3;
+	/** The combo box to choose the type of the fourth crew member */
+	private JComboBox<String> comboBoxCrewType4;
+	
+	/** The ship that this game is being set up with */
 	private Ship ship;
 
+	
 	/**
 	 * Creates the panel
 	 * @param guiWindow the window to create this panel for
@@ -74,7 +87,7 @@ public class SetUpScreen extends JPanel {
 	 * @param numMembers the number of members that should be on the ship
 	 */
 	private void createGame(int maxDays, int numMembers) {
-		String shipName = textField_4.getText();
+		String shipName = textFieldShipName.getText();
 		if (shipName.length() == 0) {
 			ship = new Ship();
 		} else {
@@ -83,16 +96,16 @@ public class SetUpScreen extends JPanel {
 		
 		ArrayList<String> names = new ArrayList<String>();
 		ArrayList<String> selectedMembers = new ArrayList<String>();
-		ship.getCrewMembers().add(createCrewMember((String) comboBox.getSelectedItem(), 
-				textField.getText(), ship, names, selectedMembers));
-		ship.getCrewMembers().add(createCrewMember((String) comboBox_1.getSelectedItem(), 
-				textField_1.getText(), ship, names, selectedMembers));
+		ship.getCrewMembers().add(createCrewMember((String) comboBoxCrewType1.getSelectedItem(), 
+				textFieldCrewName1.getText(), ship, names, selectedMembers));
+		ship.getCrewMembers().add(createCrewMember((String) comboBoxCrewType2.getSelectedItem(), 
+				textFieldCrewName2.getText(), ship, names, selectedMembers));
 		if (numMembers >= 3) {
-			ship.getCrewMembers().add(createCrewMember((String) comboBox_2.getSelectedItem(), 
-					textField_2.getText(), ship, names, selectedMembers));
+			ship.getCrewMembers().add(createCrewMember((String) comboBoxCrewType3.getSelectedItem(), 
+					textFieldCrewName3.getText(), ship, names, selectedMembers));
 			if (numMembers == 4) {
-				ship.getCrewMembers().add(createCrewMember((String) comboBox_3.getSelectedItem(), 
-						textField_3.getText(), ship, names, selectedMembers));
+				ship.getCrewMembers().add(createCrewMember((String) comboBoxCrewType4.getSelectedItem(), 
+						textFieldCrewName4.getText(), ship, names, selectedMembers));
 			}
 		}
 		
@@ -109,7 +122,7 @@ public class SetUpScreen extends JPanel {
 	 * @param ship the ship which the crew member should be created for
 	 * @param names a list of names of all previous crew members
 	 * @param selectedMembers a list of types of all previous crew members
-	 * @return
+	 * @return the new crew member
 	 */
 	private CrewMember createCrewMember(String type, String name, Ship ship, ArrayList<String> names, ArrayList<String> selectedMembers) {
 		CrewMember crewMember;
@@ -199,10 +212,10 @@ public class SetUpScreen extends JPanel {
 		lblCrewMember.setBounds(0, 93, 145, 30);
 		add(lblCrewMember);
 		
-		comboBox = new JComboBox<String>();
-		comboBox.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		comboBox.setBounds(145, 93, 145, 25);
-		add(comboBox);
+		comboBoxCrewType1 = new JComboBox<String>();
+		comboBoxCrewType1.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		comboBoxCrewType1.setBounds(145, 93, 145, 25);
+		add(comboBoxCrewType1);
 		
 		JTextPane textPane = new JTextPane();
 		textPane.setEditable(false);
@@ -213,20 +226,20 @@ public class SetUpScreen extends JPanel {
 		textPane.setBounds(303, 93, 283, 50);
 		add(textPane);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		textField.setBounds(145, 118, 145, 25);
-		add(textField);
-		textField.setColumns(10);
+		textFieldCrewName1 = new JTextField();
+		textFieldCrewName1.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		textFieldCrewName1.setBounds(145, 118, 145, 25);
+		add(textFieldCrewName1);
+		textFieldCrewName1.setColumns(10);
 		
 		SpaceLabel lblCrewMember_1 = new SpaceLabel("Crew Member 2:");
 		lblCrewMember_1.setBounds(0, 157, 145, 30);
 		add(lblCrewMember_1);
 		
-		comboBox_1 = new JComboBox<String>();
-		comboBox_1.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		comboBox_1.setBounds(145, 157, 145, 25);
-		add(comboBox_1);
+		comboBoxCrewType2 = new JComboBox<String>();
+		comboBoxCrewType2.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		comboBoxCrewType2.setBounds(145, 157, 145, 25);
+		add(comboBoxCrewType2);
 		
 		JTextPane textPane_1 = new JTextPane();
 		textPane_1.setEditable(false);
@@ -237,20 +250,20 @@ public class SetUpScreen extends JPanel {
 		textPane_1.setBounds(303, 157, 283, 50);
 		add(textPane_1);
 
-		textField_1 = new JTextField();
-		textField_1.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		textField_1.setBounds(145, 182, 145, 25);
-		add(textField_1);
-		textField_1.setColumns(10);
+		textFieldCrewName2 = new JTextField();
+		textFieldCrewName2.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		textFieldCrewName2.setBounds(145, 182, 145, 25);
+		add(textFieldCrewName2);
+		textFieldCrewName2.setColumns(10);
 		
 		SpaceLabel lblCrewMember_2 = new SpaceLabel("Crew Member 3:");
 		lblCrewMember_2.setBounds(0, 218, 145, 30);
 		add(lblCrewMember_2);
 		
-		comboBox_2 = new JComboBox<String>();
-		comboBox_2.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		comboBox_2.setBounds(145, 218, 145, 25);
-		add(comboBox_2);
+		comboBoxCrewType3 = new JComboBox<String>();
+		comboBoxCrewType3.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		comboBoxCrewType3.setBounds(145, 218, 145, 25);
+		add(comboBoxCrewType3);
 		
 		JTextPane textPane_2 = new JTextPane();
 		textPane_2.setEditable(false);
@@ -261,21 +274,21 @@ public class SetUpScreen extends JPanel {
 		textPane_2.setBounds(303, 218, 283, 50);
 		add(textPane_2);
 
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		textField_2.setBounds(145, 243, 145, 25);
-		add(textField_2);
-		textField_2.setColumns(10);
+		textFieldCrewName3 = new JTextField();
+		textFieldCrewName3.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		textFieldCrewName3.setBounds(145, 243, 145, 25);
+		add(textFieldCrewName3);
+		textFieldCrewName3.setColumns(10);
 		
 		SpaceLabel lblCrewMember_3 = new SpaceLabel("Crew Member 4:");
 		lblCrewMember_3.setBounds(0, 285, 145, 30);
 		add(lblCrewMember_3);
 		
-		comboBox_3 = new JComboBox<String>();
-		comboBox_3.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		comboBox_3.setEnabled(false);
-		comboBox_3.setBounds(145, 285, 145, 25);
-		add(comboBox_3);
+		comboBoxCrewType4 = new JComboBox<String>();
+		comboBoxCrewType4.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		comboBoxCrewType4.setEnabled(false);
+		comboBoxCrewType4.setBounds(145, 285, 145, 25);
+		add(comboBoxCrewType4);
 		
 		JTextPane textPane_3 = new JTextPane();
 		textPane_3.setEditable(false);
@@ -286,23 +299,23 @@ public class SetUpScreen extends JPanel {
 		textPane_3.setBounds(303, 285, 283, 50);
 		add(textPane_3);
 
-		textField_3 = new JTextField();
-		textField_3.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		textField_3.setEnabled(false);
-		textField_3.setBounds(145, 310, 145, 20);
-		add(textField_3);
-		textField_3.setColumns(10);
+		textFieldCrewName4 = new JTextField();
+		textFieldCrewName4.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		textFieldCrewName4.setEnabled(false);
+		textFieldCrewName4.setBounds(145, 310, 145, 20);
+		add(textFieldCrewName4);
+		textFieldCrewName4.setColumns(10);
 		
 		SpaceLabel lblShipName = new SpaceLabel("Ship Name:");
 		lblShipName.setBackground(new Color(25, 25, 112));
 		lblShipName.setBounds(0, 370, 125, 30);
 		add(lblShipName);
 		
-		textField_4 = new JTextField();
-		textField_4.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		textField_4.setBounds(145, 370, 145, 25);
-		add(textField_4);
-		textField_4.setColumns(10);
+		textFieldShipName = new JTextField();
+		textFieldShipName.setFont(new Font("MS Gothic", Font.PLAIN, 20));
+		textFieldShipName.setBounds(145, 370, 145, 25);
+		add(textFieldShipName);
+		textFieldShipName.setColumns(10);
 		
 		SpaceButton btnStartGame = new SpaceButton("Start game");
 		btnStartGame.setBounds(303, 367, 283, 36);
@@ -313,28 +326,28 @@ public class SetUpScreen extends JPanel {
 			public void stateChanged(ChangeEvent e) {
 				int value = slider.getValue();
 				if (value < 4) {
-					comboBox_3.setEnabled(false);
-					textField_3.setEnabled(false);
+					comboBoxCrewType4.setEnabled(false);
+					textFieldCrewName4.setEnabled(false);
 				} else {
-					comboBox_3.setEnabled(true);
-					textField_3.setEnabled(true);
+					comboBoxCrewType4.setEnabled(true);
+					textFieldCrewName4.setEnabled(true);
 				}
 				if (value < 3) {
-					comboBox_2.setEnabled(false);
-					textField_2.setEnabled(false);
+					comboBoxCrewType3.setEnabled(false);
+					textFieldCrewName3.setEnabled(false);
 				} else {
-					comboBox_2.setEnabled(true);
-					textField_2.setEnabled(true);
+					comboBoxCrewType3.setEnabled(true);
+					textFieldCrewName3.setEnabled(true);
 				}
 			}
 		});
 		
-		comboBox.addItemListener(new ItemListener() {
+		comboBoxCrewType1.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				CrewMember human = new Human(ship); CrewMember robot = new Robot(ship);
 				CrewMember cyborg = new Cyborg(ship); CrewMember alien = new Alien(ship);
 				CrewMember lizard = new Lizard(ship); CrewMember unicorn = new Unicorn(ship);
-				switch ((String) comboBox.getSelectedItem()) {
+				switch ((String) comboBoxCrewType1.getSelectedItem()) {
 				case "Human": textPane.setText("Strength: " + human.getTypeInfo().get("Strength") + 
 						"\nWeakness: " + human.getTypeInfo().get("Weakness")); break;
 				case "Robot": textPane.setText("Strength: " + robot.getTypeInfo().get("Strength") + 
@@ -351,12 +364,12 @@ public class SetUpScreen extends JPanel {
 			}
 		});
 		
-		comboBox_1.addItemListener(new ItemListener() {
+		comboBoxCrewType2.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				CrewMember human = new Human(ship); CrewMember robot = new Robot(ship);
 				CrewMember cyborg = new Cyborg(ship); CrewMember alien = new Alien(ship);
 				CrewMember lizard = new Lizard(ship); CrewMember unicorn = new Unicorn(ship);
-				switch ((String) comboBox_1.getSelectedItem()) {
+				switch ((String) comboBoxCrewType2.getSelectedItem()) {
 				case "Human": textPane_1.setText("Strength: " + human.getTypeInfo().get("Strength") + 
 						"\nWeakness: " + human.getTypeInfo().get("Weakness")); break;
 				case "Robot": textPane_1.setText("Strength: " + robot.getTypeInfo().get("Strength") + 
@@ -373,12 +386,12 @@ public class SetUpScreen extends JPanel {
 			}
 		});
 		
-		comboBox_2.addItemListener(new ItemListener() {
+		comboBoxCrewType3.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				CrewMember human = new Human(ship); CrewMember robot = new Robot(ship);
 				CrewMember cyborg = new Cyborg(ship); CrewMember alien = new Alien(ship);
 				CrewMember lizard = new Lizard(ship); CrewMember unicorn = new Unicorn(ship);
-				switch ((String) comboBox_2.getSelectedItem()) {
+				switch ((String) comboBoxCrewType3.getSelectedItem()) {
 				case "Human": textPane_2.setText("Strength: " + human.getTypeInfo().get("Strength") + 
 						"\nWeakness: " + human.getTypeInfo().get("Weakness")); break;
 				case "Robot": textPane_2.setText("Strength: " + robot.getTypeInfo().get("Strength") + 
@@ -395,12 +408,12 @@ public class SetUpScreen extends JPanel {
 			}
 		});
 		
-		comboBox_3.addItemListener(new ItemListener() {
+		comboBoxCrewType4.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				CrewMember human = new Human(ship); CrewMember robot = new Robot(ship);
 				CrewMember cyborg = new Cyborg(ship); CrewMember alien = new Alien(ship);
 				CrewMember lizard = new Lizard(ship); CrewMember unicorn = new Unicorn(ship);
-				switch ((String) comboBox_3.getSelectedItem()) {
+				switch ((String) comboBoxCrewType4.getSelectedItem()) {
 				case "Human": textPane_3.setText("Strength: " + human.getTypeInfo().get("Strength") + 
 						"\nWeakness: " + human.getTypeInfo().get("Weakness")); break;
 				case "Robot": textPane_3.setText("Strength: " + robot.getTypeInfo().get("Strength") + 
@@ -423,18 +436,18 @@ public class SetUpScreen extends JPanel {
 			}
 		});
 		
-		comboBox.setModel(new DefaultComboBoxModel<String>(new String[] {"Human", "Robot", "Cyborg", "Alien", "Lizard", "Unicorn"}));
-		comboBox_1.setModel(new DefaultComboBoxModel<String>(new String[] {"Human", "Robot", "Cyborg", "Alien", "Lizard", "Unicorn"}));
-		comboBox_2.setModel(new DefaultComboBoxModel<String>(new String[] {"Human", "Robot", "Cyborg", "Alien", "Lizard", "Unicorn"}));
-		comboBox_3.setModel(new DefaultComboBoxModel<String>(new String[] {"Human", "Robot", "Cyborg", "Alien", "Lizard", "Unicorn"}));
+		comboBoxCrewType1.setModel(new DefaultComboBoxModel<String>(new String[] {"Human", "Robot", "Cyborg", "Alien", "Lizard", "Unicorn"}));
+		comboBoxCrewType2.setModel(new DefaultComboBoxModel<String>(new String[] {"Human", "Robot", "Cyborg", "Alien", "Lizard", "Unicorn"}));
+		comboBoxCrewType3.setModel(new DefaultComboBoxModel<String>(new String[] {"Human", "Robot", "Cyborg", "Alien", "Lizard", "Unicorn"}));
+		comboBoxCrewType4.setModel(new DefaultComboBoxModel<String>(new String[] {"Human", "Robot", "Cyborg", "Alien", "Lizard", "Unicorn"}));
 		
-		comboBox.setSelectedItem("Robot");
-		comboBox_1.setSelectedItem("Robot");
-		comboBox_2.setSelectedItem("Robot");
-		comboBox_3.setSelectedItem("Robot");
-		comboBox.setSelectedItem("Human");
-		comboBox_1.setSelectedItem("Human");
-		comboBox_2.setSelectedItem("Human");
-		comboBox_3.setSelectedItem("Human");
+		comboBoxCrewType1.setSelectedItem("Robot");
+		comboBoxCrewType2.setSelectedItem("Robot");
+		comboBoxCrewType3.setSelectedItem("Robot");
+		comboBoxCrewType4.setSelectedItem("Robot");
+		comboBoxCrewType1.setSelectedItem("Human");
+		comboBoxCrewType2.setSelectedItem("Human");
+		comboBoxCrewType3.setSelectedItem("Human");
+		comboBoxCrewType4.setSelectedItem("Human");
 	}
 }

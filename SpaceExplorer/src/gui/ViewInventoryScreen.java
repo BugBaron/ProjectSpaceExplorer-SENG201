@@ -17,11 +17,22 @@ import gui.spaceWidgets.SpaceTitle;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * A screen to view the inventory of the ship
+ * @author Daniel Harris and Rebekah McKinnon
+ */
 public class ViewInventoryScreen extends JPanel {
 
+	/* 
+	 * These variables have default visibility so they can be adjusted and/or 
+	 * used to update other widgets 
+	 */
+	/** A message pane to display important information */
 	SpaceMessagePane messagePane;
+	/** A tree to view the items in the inventory, their attributes and their quantity */
 	JTree treeInventoryContainers;
 	
+	/** The window holding this panel */
 	private GUIWindow guiWindow;
 	
 	

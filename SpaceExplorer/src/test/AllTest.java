@@ -6,6 +6,6 @@ import org.junit.runner.RunWith;
 
 @RunWith(JUnitPlatform.class)
 @SelectPackages("test.testingFolder")
-class AllTests {
+class AllTest {
 	
 }

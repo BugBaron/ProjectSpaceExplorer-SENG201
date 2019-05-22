@@ -12,29 +12,55 @@ import main.CrewMemberTypes.CrewMember;
 
 import java.util.ArrayList;
 
+/**
+ * A container to put all frames for running the game. Uses a card layout to do this
+ * @author Daniel Harris and Rebekah McKinnon
+ */
 public class GUIWindow {
 
+	/*
+	 * These variables have default visibility as their attributes are all 
+	 * adjusted and edited by each other
+	 */
+	/** The frame which contains all the components of the GUI */
 	JFrame frame;
+	/** The layout which the frame uses */
 	CardLayout layout;
+	/** The contents of the message pane */
 	ArrayList<String> messagePaneContents = new ArrayList<String>();
+	/** The game environment which the game is running with */
 	GameEnvironment gameEnvironment = new GameEnvironment();
 	
-	SetUpScreen setUpScreen = new SetUpScreen(this);
+	/** The main screen */
 	MainScreen mainScreen = new MainScreen(this);
+	/** The screen where crew members can do actions and be viewed */
 	CrewMembersScreen crewMembersScreen = new CrewMembersScreen(this);
+	/** The screen where items can be used */
 	UseItemScreen useItemScreen = new UseItemScreen(this);
+	/** The screen where the ship can be piloted to a new planet */
 	PilotShipScreen pilotShipScreen = new PilotShipScreen(this);
+	/** The screen where the status of the ship can be seen */
 	ShipStatusScreen shipStatusScreen = new ShipStatusScreen(this);
+	/** The screen where the shop or inventory screen can be opened */
 	VisitOutpostScreen visitOutpostScreen = new VisitOutpostScreen(this);
+	/** The screen where items in the shop can be purchased */
 	ViewShopScreen shopScreen = new ViewShopScreen(this);
+	/** The screen where the inventory can be viewed */
 	ViewInventoryScreen inventoryScreen = new ViewInventoryScreen(this);
+	/** The screen which displays a message when the game ends */
 	EndGameScreen endGameScreen = new EndGameScreen(this);
+	/** The screen which displays the daily score at the end of each day */
 	DailyScoreScreen dailyScoreScreen = new DailyScoreScreen(this);
-	InstructionsScreen instructionsScreen = new InstructionsScreen(this);
+	
+	/** The screen where the game is set up */
+	private SetUpScreen setUpScreen = new SetUpScreen(this);
+	/** The screen where the instructions are shown */
+	private InstructionsScreen instructionsScreen = new InstructionsScreen(this);
 	
 	
 	/**
 	 * Launch the application.
+	 * @param args the arguments to run the application with
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {

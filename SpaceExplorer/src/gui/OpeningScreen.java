@@ -12,8 +12,14 @@ import gui.spaceWidgets.SpaceTitle;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+/**
+ * A screen that is shown when the game is first opened
+ * @author Daniel Harris and Rebbekah McKinnon
+ *
+ */
 public class OpeningScreen extends JPanel{
 
+	/** The window holding this panel */
 	private GUIWindow guiWindow;
 	
 	
@@ -29,6 +35,7 @@ public class OpeningScreen extends JPanel{
 		this.guiWindow = guiWindow;
 		initialize();
 	}
+	
 
 	/**
 	 * Initialize the panel contents

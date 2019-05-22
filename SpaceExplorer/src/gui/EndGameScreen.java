@@ -13,13 +13,25 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
+/**
+ * A screen to display when the game has ended
+ * @author Daniel Harris and Rebekah McKinnon
+ *
+ */
 public class EndGameScreen extends JPanel {
 
+	/** The window holding this panel */
 	private GUIWindow guiWindow;
+	/** The game environment that the game is running in */
 	private GameEnvironment gameEnvironment;
+	/** The object which is handling the input and output of the game environment */
 	private InOutHandler inOut;
+	
+	/** A text pane to display a message after the game has ended */
 	private JTextPane txtpnResultMessage;
+	/** A title for the screen */
 	private SpaceTitle lblTitle;
+	
 	
 	/**
 	 * Creates the panel

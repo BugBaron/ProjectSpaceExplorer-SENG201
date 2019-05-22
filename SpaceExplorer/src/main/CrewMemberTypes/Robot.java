@@ -32,6 +32,7 @@ public class Robot extends CrewMember {
 	 */
 	public Robot(Ship tempShip, String tempName) {
 		super(tempShip);
+		ship = tempShip;
 		createDefaultRobot();
 		if (tempName.matches("[0-9]+")) {
 			tempName = "Robot #" + tempName; 

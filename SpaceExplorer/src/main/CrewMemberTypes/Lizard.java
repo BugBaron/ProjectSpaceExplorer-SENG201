@@ -32,6 +32,7 @@ public class Lizard extends CrewMember {
 	 */
 	public Lizard(Ship tempShip, String tempName) {
 		super(tempShip);
+		ship = tempShip;
 		createDefaultLizard();
 		if (tempName.matches("[0-9]+")) {
 			tempName = "Lizard #" + tempName; 

@@ -55,10 +55,6 @@ public class InventoryTest {
 		assertEquals(1, inventory.get(COFFEE));
 		Consumable newCoffee = new Consumable("Coffee");
 		inventory.addItem(newCoffee);
-		for (Consumable i : inventory.getKeys()) {
-			System.out.println(i.getName());
-		}
-		//assertEquals(2, inventory.get(COFFEE));
 		assertEquals(2, inventory.get(newCoffee));
 	}
 

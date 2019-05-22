@@ -32,6 +32,7 @@ public class Cyborg extends CrewMember {
 	 */
 	public Cyborg(Ship tempShip, String tempName) {
 		super(tempShip);
+		ship = tempShip;
 		createDefaultCyborg();
 		if (tempName.matches("[0-9]+")) {
 			tempName = "Cyborg #" + tempName; 

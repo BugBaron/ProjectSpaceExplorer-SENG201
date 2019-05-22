@@ -1,6 +1,6 @@
 /**
- * @author Daniel Harris
- *
+ * The module-info file. Required for the AllTest file to run
+ * @author Daniel Harris and Rebekah McKinnon
  */
 module SpaceExplorer {
 	requires org.junit.jupiter.api;

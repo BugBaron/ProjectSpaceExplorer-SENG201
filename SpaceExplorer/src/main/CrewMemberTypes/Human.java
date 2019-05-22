@@ -32,6 +32,7 @@ public class Human extends CrewMember {
 	 */
 	public Human(Ship tempShip, String tempName) {
 		super(tempShip);
+		ship = tempShip;
 		createDefaultHuman();
 		if (tempName.matches("[0-9]+")) {
 			tempName = "Human #" + tempName; 

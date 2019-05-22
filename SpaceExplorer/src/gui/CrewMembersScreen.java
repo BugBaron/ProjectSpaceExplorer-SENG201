@@ -26,20 +26,41 @@ import main.GameEnvironment;
 import main.InOutHandler;
 import main.CrewMemberTypes.CrewMember;
 
+/**
+ * A screen to display crew members and to complete actions for each one
+ * @author Daniel Harris and Rebekah McKinnon
+ */
 public class CrewMembersScreen extends JPanel {
 
+	/* 
+	 * These variables have default visibility so they can be adjusted and/or 
+	 * used to update other widgets 
+	 */
+	/** A message pane to display important information */
 	SpaceMessagePane messagePane;
+	/** A combo box to select which crew member to view */
 	JComboBox<CrewMember> crewMemberSelection;
+	/** A text pane to display information about the selected crew member */
 	JTextPane crewMemberInfo;
 	
+	/** The window holding this panel */
 	private GUIWindow guiWindow;
+	/** The game environment that the game is running in */
 	private GameEnvironment gameEnvironment;
+	/** The contents of the message pane */
 	private ArrayList<String> messagePaneContents;
+	/** The object which is handling the input and output of the game environment */
 	private InOutHandler inOut;
+	
+	/** A button to go to the use item screen */
 	private SpaceButton btnUseItem;
+	/** A button to make the selected crew member sleep */
 	private SpaceButton btnSleep;
+	/** A button to make the selected crew member repair the ship */
 	private SpaceButton btnRepairShip;
+	/** A button to make the selected crew member search the planet */
 	private SpaceButton btnSearchPlanet;
+	/** A button to go to the pilot ship screen */
 	private SpaceButton btnPilotShip;
 
 	
@@ -77,6 +98,7 @@ public class CrewMembersScreen extends JPanel {
 		}
 	}
 
+	
 	/**
 	 * Initialize the panel contents
 	 */

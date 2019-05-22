@@ -17,7 +17,6 @@ public class Inventory {
 	
 	/**
 	 * Class constructor, with no additional entries
-	 * @param isShop whether or not to make this a shop inventory
 	 */
 	public Inventory() {
 		items = new HashMap<Consumable, Integer>();

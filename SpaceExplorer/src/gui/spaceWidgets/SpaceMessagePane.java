@@ -20,7 +20,7 @@ public class SpaceMessagePane {
 	
 	/**
 	 * Gets the scroll pane of this class
-	 * @return
+	 * @return the scroll pane
 	 */
 	public JScrollPane getScrollPane() {
 		return scrollPane;
