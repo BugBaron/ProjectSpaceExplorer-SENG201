@@ -20,6 +20,8 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import gui.spaceWidgets.SpaceButton;
+import gui.spaceWidgets.SpaceLabel;
 import main.GameEnvironment;
 import main.Ship;
 import main.CrewMemberTypes.Alien;
@@ -32,7 +34,7 @@ import main.CrewMemberTypes.Unicorn;
 
 import javax.swing.JTextField;
 
-public class GUISetUpScreen extends JPanel {
+public class SetUpScreen extends JPanel {
 
 	
 	private GUIWindow guiWindow;
@@ -54,7 +56,7 @@ public class GUISetUpScreen extends JPanel {
 	 * Creates the panel
 	 * @param guiWindow the window to create this panel for
 	 */
-	public GUISetUpScreen(GUIWindow guiWindow) {
+	public SetUpScreen(GUIWindow guiWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);

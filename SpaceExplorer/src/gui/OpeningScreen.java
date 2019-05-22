@@ -5,10 +5,14 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+
+import gui.spaceWidgets.SpaceButton;
+import gui.spaceWidgets.SpaceTitle;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class GUIOpeningScreen extends JPanel{
+public class OpeningScreen extends JPanel{
 
 	private GUIWindow guiWindow;
 	
@@ -17,7 +21,7 @@ public class GUIOpeningScreen extends JPanel{
 	 * Creates the panel
 	 * @param guiWindow the window to create this panel for
 	 */
-	public GUIOpeningScreen(GUIWindow guiWindow) {
+	public OpeningScreen(GUIWindow guiWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);

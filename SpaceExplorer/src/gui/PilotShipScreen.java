@@ -11,6 +11,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 
+import gui.spaceWidgets.SpaceButton;
+import gui.spaceWidgets.SpaceLabel;
+import gui.spaceWidgets.SpaceMessagePane;
+import gui.spaceWidgets.SpaceTitle;
 import main.GameEnvironment;
 import main.InOutHandler;
 import main.CrewMemberTypes.CrewMember;
@@ -20,7 +24,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
 
-public class GUIPilotShipScreen extends JPanel {
+public class PilotShipScreen extends JPanel {
 
 	JTextPane crewMemberInfo;
 	SpaceMessagePane messagePane;
@@ -36,7 +40,7 @@ public class GUIPilotShipScreen extends JPanel {
 	 * Creates the panel
 	 * @param guiWindow the window to create this panel for
 	 */
-	public GUIPilotShipScreen(GUIWindow guiWindow) {
+	public PilotShipScreen(GUIWindow guiWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);

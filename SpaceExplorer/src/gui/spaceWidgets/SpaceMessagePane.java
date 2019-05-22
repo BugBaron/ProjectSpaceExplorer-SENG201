@@ -1,4 +1,4 @@
-package gui;
+package gui.spaceWidgets;
 
 import java.awt.Color;
 import java.awt.Font;
@@ -7,9 +7,15 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
+/**
+ * A scrollable message pane with specific styling
+ * @author Daniel Harris and Rebekah McKinnon
+ */
 public class SpaceMessagePane {
 	
+	/** The message pane widget */
 	private JTextPane messagePane;
+	/** The scroll pane that the message pane is placed in */
 	private JScrollPane scrollPane;
 	
 	/**
@@ -35,7 +41,7 @@ public class SpaceMessagePane {
 	
 	/**
 	 * Sets the text of the message pane
-	 * @param text the text to set this message pnaes text to
+	 * @param text the text to set this message panes text to
 	 */
 	public void setText(String text) {
 		messagePane.setText(text);
@@ -47,7 +53,7 @@ public class SpaceMessagePane {
 	/**
 	 * Creates a new message pane with specific styling
 	 */
-	SpaceMessagePane() {
+	public SpaceMessagePane() {
 		messagePane = new JTextPane();
 		messagePane.setEditable(false);
 		messagePane.setText("Message pane");

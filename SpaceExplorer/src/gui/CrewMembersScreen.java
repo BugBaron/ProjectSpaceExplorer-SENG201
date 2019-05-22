@@ -17,12 +17,16 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 
+import gui.spaceWidgets.SpaceButton;
+import gui.spaceWidgets.SpaceLabel;
+import gui.spaceWidgets.SpaceMessagePane;
+import gui.spaceWidgets.SpaceTitle;
 import main.Consumable;
 import main.GameEnvironment;
 import main.InOutHandler;
 import main.CrewMemberTypes.CrewMember;
 
-public class GUICrewMembersScreen extends JPanel {
+public class CrewMembersScreen extends JPanel {
 
 	SpaceMessagePane messagePane;
 	JComboBox<CrewMember> crewMemberSelection;
@@ -43,7 +47,7 @@ public class GUICrewMembersScreen extends JPanel {
 	 * Creates the pane
 	 * @param guiWindow the window to create this panel for
 	 */
-	public GUICrewMembersScreen(GUIWindow guiWindow) {
+	public CrewMembersScreen(GUIWindow guiWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);

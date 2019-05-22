@@ -5,11 +5,14 @@ import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import gui.spaceWidgets.SpaceButton;
+import gui.spaceWidgets.SpaceLabel;
+import gui.spaceWidgets.SpaceTitle;
 import main.GameEnvironment;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class GUIDailyScoreScreen extends JPanel {
+public class DailyScoreScreen extends JPanel {
 
 	private GUIWindow guiWindow;
 	private GameEnvironment gameEnvironment;
@@ -20,7 +23,7 @@ public class GUIDailyScoreScreen extends JPanel {
 	 * Creates the panel
 	 * @param guiWindow the window to create this panel for
 	 */
-	public GUIDailyScoreScreen(GUIWindow guiWindow) {
+	public DailyScoreScreen(GUIWindow guiWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);

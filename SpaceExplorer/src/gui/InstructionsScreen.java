@@ -7,12 +7,14 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextPane;
 
+import gui.spaceWidgets.SpaceButton;
+import gui.spaceWidgets.SpaceTitle;
 import main.GameEnvironment;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class GUIInstructions extends JPanel{
+public class InstructionsScreen extends JPanel{
 
 	private GUIWindow guiWindow;
 	private GameEnvironment gameEnvironment;
@@ -21,7 +23,7 @@ public class GUIInstructions extends JPanel{
 	 * Creates the panel
 	 * @param guiWindow the window to create this panel for
 	 */
-	public GUIInstructions(GUIWindow guiWindow) {
+	public InstructionsScreen(GUIWindow guiWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);

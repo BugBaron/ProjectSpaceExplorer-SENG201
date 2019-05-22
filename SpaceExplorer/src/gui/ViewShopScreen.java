@@ -17,13 +17,17 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import gui.spaceWidgets.SpaceButton;
+import gui.spaceWidgets.SpaceLabel;
+import gui.spaceWidgets.SpaceMessagePane;
+import gui.spaceWidgets.SpaceTitle;
 import main.Consumable;
 import main.GameEnvironment;
 import main.InOutHandler;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class GUIViewShop extends JPanel {
+public class ViewShopScreen extends JPanel {
 
 	SpaceMessagePane messagePane;
 	
@@ -41,7 +45,7 @@ public class GUIViewShop extends JPanel {
 	 * Creates the panel
 	 * @param guiWindow the window to create this panel for
 	 */
-	public GUIViewShop(GUIWindow guiWindow) {
+	public ViewShopScreen(GUIWindow guiWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);

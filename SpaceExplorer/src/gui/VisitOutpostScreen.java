@@ -9,12 +9,15 @@ import javax.swing.SwingConstants;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import gui.spaceWidgets.SpaceButton;
+import gui.spaceWidgets.SpaceMessagePane;
+import gui.spaceWidgets.SpaceTitle;
 import main.Consumable;
 import main.GameEnvironment;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class GUIVisitOutpost extends JPanel {
+public class VisitOutpostScreen extends JPanel {
 
 	SpaceMessagePane messagePane;
 	
@@ -27,7 +30,7 @@ public class GUIVisitOutpost extends JPanel {
 	 * Creates the panel
 	 * @param guiWindow the window to create this panel for
 	 */
-	public GUIVisitOutpost(GUIWindow guiWindow) {
+	public VisitOutpostScreen(GUIWindow guiWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);

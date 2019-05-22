@@ -11,11 +11,15 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
+import gui.spaceWidgets.SpaceButton;
+import gui.spaceWidgets.SpaceLabel;
+import gui.spaceWidgets.SpaceMessagePane;
+import gui.spaceWidgets.SpaceTitle;
 import main.GameEnvironment;
 import main.InOutHandler;
 import main.CrewMemberTypes.CrewMember;
 
-public class GUIMainScreen extends JPanel {
+public class MainScreen extends JPanel {
 	
 	SpaceMessagePane messagePane;
 	SpaceLabel lblDayNumber;
@@ -30,7 +34,7 @@ public class GUIMainScreen extends JPanel {
 	 * Creates the panel
 	 * @param guiWindow the window to create this panel for
 	 */
-	public GUIMainScreen(GUIWindow guiWindow) {
+	public MainScreen(GUIWindow guiWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);

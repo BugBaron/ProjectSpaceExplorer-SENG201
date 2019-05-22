@@ -11,7 +11,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextPane;
 import javax.swing.SwingConstants;
 
-public class GUIShipStatusScreen extends JPanel {
+import gui.spaceWidgets.SpaceButton;
+import gui.spaceWidgets.SpaceMessagePane;
+import gui.spaceWidgets.SpaceTitle;
+
+public class ShipStatusScreen extends JPanel {
 	
 	SpaceMessagePane messagePane;
 	JTextPane txtpnShipStatus;
@@ -22,7 +26,7 @@ public class GUIShipStatusScreen extends JPanel {
 	 * Creates the panel
 	 * @param guiWindow the window to create this panel for
 	 */
-	public GUIShipStatusScreen(GUIWindow guiWindow) {
+	public ShipStatusScreen(GUIWindow guiWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);

@@ -5,13 +5,15 @@ import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JTextPane;
 
+import gui.spaceWidgets.SpaceButton;
+import gui.spaceWidgets.SpaceTitle;
 import main.GameEnvironment;
 import main.InOutHandler;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
-public class GUIEndGameScreen extends JPanel {
+public class EndGameScreen extends JPanel {
 
 	private GUIWindow guiWindow;
 	private GameEnvironment gameEnvironment;
@@ -23,7 +25,7 @@ public class GUIEndGameScreen extends JPanel {
 	 * Creates the panel
 	 * @param guiWindow the window to create this panel for
 	 */
-	public GUIEndGameScreen(GUIWindow guiWindow) {
+	public EndGameScreen(GUIWindow guiWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);

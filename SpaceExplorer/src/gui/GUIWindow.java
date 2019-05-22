@@ -19,18 +19,18 @@ public class GUIWindow {
 	ArrayList<String> messagePaneContents = new ArrayList<String>();
 	GameEnvironment gameEnvironment = new GameEnvironment();
 	
-	GUISetUpScreen setUpScreen = new GUISetUpScreen(this);
-	GUIMainScreen mainScreen = new GUIMainScreen(this);
-	GUICrewMembersScreen crewMembersScreen = new GUICrewMembersScreen(this);
-	GUIUseItemScreen useItemScreen = new GUIUseItemScreen(this);
-	GUIPilotShipScreen pilotShipScreen = new GUIPilotShipScreen(this);
-	GUIShipStatusScreen shipStatusScreen = new GUIShipStatusScreen(this);
-	GUIVisitOutpost visitOutpostScreen = new GUIVisitOutpost(this);
-	GUIViewShop shopScreen = new GUIViewShop(this);
-	GUIViewInventory inventoryScreen = new GUIViewInventory(this);
-	GUIEndGameScreen endGameScreen = new GUIEndGameScreen(this);
-	GUIDailyScoreScreen dailyScoreScreen = new GUIDailyScoreScreen(this);
-	GUIInstructions instructionsScreen = new GUIInstructions(this);
+	SetUpScreen setUpScreen = new SetUpScreen(this);
+	MainScreen mainScreen = new MainScreen(this);
+	CrewMembersScreen crewMembersScreen = new CrewMembersScreen(this);
+	UseItemScreen useItemScreen = new UseItemScreen(this);
+	PilotShipScreen pilotShipScreen = new PilotShipScreen(this);
+	ShipStatusScreen shipStatusScreen = new ShipStatusScreen(this);
+	VisitOutpostScreen visitOutpostScreen = new VisitOutpostScreen(this);
+	ViewShopScreen shopScreen = new ViewShopScreen(this);
+	ViewInventoryScreen inventoryScreen = new ViewInventoryScreen(this);
+	EndGameScreen endGameScreen = new EndGameScreen(this);
+	DailyScoreScreen dailyScoreScreen = new DailyScoreScreen(this);
+	InstructionsScreen instructionsScreen = new InstructionsScreen(this);
 	
 	
 	/**
@@ -103,7 +103,7 @@ public class GUIWindow {
 		layout = new CardLayout(20, 20);
 		frame.getContentPane().setLayout(layout);
 		
-		GUIOpeningScreen openingScreen = new GUIOpeningScreen(this);
+		OpeningScreen openingScreen = new OpeningScreen(this);
 		
 		frame.getContentPane().add(openingScreen, "Opening Screen");
 		frame.getContentPane().add(setUpScreen, "Set Up Screen");

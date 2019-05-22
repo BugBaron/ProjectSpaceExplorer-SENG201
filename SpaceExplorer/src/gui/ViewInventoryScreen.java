@@ -9,10 +9,15 @@ import javax.swing.JTree;
 import javax.swing.SwingConstants;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
+import gui.spaceWidgets.SpaceButton;
+import gui.spaceWidgets.SpaceLabel;
+import gui.spaceWidgets.SpaceMessagePane;
+import gui.spaceWidgets.SpaceTitle;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class GUIViewInventory extends JPanel {
+public class ViewInventoryScreen extends JPanel {
 
 	SpaceMessagePane messagePane;
 	JTree treeInventoryContainers;
@@ -24,7 +29,7 @@ public class GUIViewInventory extends JPanel {
 	 * Creates the panel
 	 * @param guiWindow the window to create this panel for
 	 */
-	public GUIViewInventory(GUIWindow guiWindow) {
+	public ViewInventoryScreen(GUIWindow guiWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);
