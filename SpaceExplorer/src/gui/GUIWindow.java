@@ -123,6 +123,7 @@ public class GUIWindow {
 		
 		frame.setMinimumSize(new Dimension(640, 480));
 		frame.setBounds(100, 100, 450, 300);
+		frame.setTitle("Space Explorer: The Game");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	

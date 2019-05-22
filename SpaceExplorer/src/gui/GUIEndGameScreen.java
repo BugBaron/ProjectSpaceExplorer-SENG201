@@ -65,6 +65,7 @@ public class GUIEndGameScreen extends JPanel {
 		add(lblTitle);
 		
 		txtpnResultMessage = new JTextPane();
+		txtpnResultMessage.setEditable(false);
 		txtpnResultMessage.setBackground(new Color(25, 25, 112));
 		txtpnResultMessage.setFont(new Font("MS Gothic", Font.PLAIN, 20));
 		txtpnResultMessage.setForeground(Color.WHITE);

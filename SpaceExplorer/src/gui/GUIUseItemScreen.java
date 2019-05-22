@@ -104,6 +104,7 @@ public class GUIUseItemScreen extends JPanel {
 		add(btnConfirmUseItem);
 		
 		crewMemberInfo = new JTextPane();
+		crewMemberInfo.setEditable(false);
 		crewMemberInfo.setText("Crew member info");
 		crewMemberInfo.setForeground(Color.WHITE);
 		crewMemberInfo.setFont(new Font("MS Gothic", Font.PLAIN, 12));
@@ -112,6 +113,7 @@ public class GUIUseItemScreen extends JPanel {
 		add(crewMemberInfo);
 		
 		txtpnItemInfo = new JTextPane();
+		txtpnItemInfo.setEditable(false);
 		txtpnItemInfo.setText("Item info");
 		txtpnItemInfo.setForeground(Color.WHITE);
 		txtpnItemInfo.setFont(new Font("MS Gothic", Font.PLAIN, 20));
