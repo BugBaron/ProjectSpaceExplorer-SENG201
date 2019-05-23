@@ -9,13 +9,13 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
 /**
- * A button with specific styling
+ * A button with specific styling.
  * @author Daniel Harris and Rebekah McKinnon
  */
 public class SpaceButton extends JButton {
 	
 	/**
-	 * Creates a new JButton with specific styling
+	 * Creates a new JButton with specific styling.
 	 * @param text the text on the button
 	 */
 	public SpaceButton(String text) {

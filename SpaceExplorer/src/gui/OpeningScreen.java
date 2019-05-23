@@ -13,32 +13,32 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
- * A screen that is shown when the game is first opened
+ * A screen that is shown when the game is first opened.
  * @author Daniel Harris and Rebbekah McKinnon
  *
  */
-public class OpeningScreen extends JPanel{
+public class OpeningScreen extends JPanel {
 
-	/** The window holding this panel */
+	/** The window holding this panel. */
 	private GUIWindow guiWindow;
 	
 	
 	/**
-	 * Creates the panel
-	 * @param guiWindow the window to create this panel for
+	 * Creates the panel.
+	 * @param tempWindow the window to create this panel for
 	 */
-	public OpeningScreen(GUIWindow guiWindow) {
+	public OpeningScreen(GUIWindow tempWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);
 		
-		this.guiWindow = guiWindow;
+		guiWindow = tempWindow;
 		initialize();
 	}
 	
 
 	/**
-	 * Initialize the panel contents
+	 * Initialize the panel contents.
 	 */
 	private void initialize() {
 		

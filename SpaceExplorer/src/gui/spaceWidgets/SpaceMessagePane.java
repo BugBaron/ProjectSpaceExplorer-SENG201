@@ -8,18 +8,18 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 
 /**
- * A scrollable message pane with specific styling
+ * A scrollable message pane with specific styling.
  * @author Daniel Harris and Rebekah McKinnon
  */
 public class SpaceMessagePane {
 	
-	/** The message pane widget */
+	/** The message pane widget. */
 	private JTextPane messagePane;
-	/** The scroll pane that the message pane is placed in */
+	/** The scroll pane that the message pane is placed in. */
 	private JScrollPane scrollPane;
 	
 	/**
-	 * Gets the scroll pane of this class
+	 * Gets the scroll pane of this class.
 	 * @return the scroll pane
 	 */
 	public JScrollPane getScrollPane() {
@@ -28,7 +28,7 @@ public class SpaceMessagePane {
 	
 	
 	/**
-	 * Sets the bounds of this message pane
+	 * Sets the bounds of this message pane.
 	 * @param x the desired x position of the pane
 	 * @param y	the desired y position of the pane
 	 * @param width the desired width of the pane
@@ -40,7 +40,7 @@ public class SpaceMessagePane {
 	
 	
 	/**
-	 * Sets the text of the message pane
+	 * Sets the text of the message pane.
 	 * @param text the text to set this message panes text to
 	 */
 	public void setText(String text) {
@@ -51,7 +51,7 @@ public class SpaceMessagePane {
 	
 	
 	/**
-	 * Creates a new message pane with specific styling
+	 * Creates a new message pane with specific styling.
 	 */
 	public SpaceMessagePane() {
 		messagePane = new JTextPane();
@@ -62,5 +62,6 @@ public class SpaceMessagePane {
 		
 		scrollPane = new JScrollPane(messagePane);
 	}
+	
 	
 }

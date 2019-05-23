@@ -25,68 +25,69 @@ import main.InOutHandler;
 import main.CrewMemberTypes.CrewMember;
 
 /**
- * A screen to make a crew member use an item
+ * A screen to make a crew member use an item.
  * @author Daniel Harris and Rebekah McKinnon
  *
  */
 public class UseItemScreen extends JPanel {
 	
 	/* 
-	 * These variables have default visibility so they can be adjusted and/or 
-	 * used to update other widgets 
+	 * These variables have default visibility so they can be adjusted and/or
+	 * used to update other widgets
 	 */
-	/** A message pane to display important information */
+	/** A message pane to display important information. */
 	SpaceMessagePane messagePane;
-	/** A text pane to display information about the selected crew member */
+	/** A text pane to display information about the selected crew member. */
 	JTextPane crewMemberInfo;
+	/** A combo box to choose an item to use. */
 	JComboBox<Consumable> itemSelection;
 	
-	/** The window holding this panel */
+	/** The window holding this panel. */
 	private GUIWindow guiWindow;
-	/** The game environment that the game is running in */
+	/** The game environment that the game is running in. */
 	private GameEnvironment gameEnvironment;
-	/** The contents of the message pane */
+	/** The contents of the message pane. */
 	private ArrayList<String> messagePaneContents;
-	/** The object which is handling the input and output of the game environment */
+	/** The object which is handling the input and output of the game environment. */
 	private InOutHandler inOut;
 	
-	/** A text pane to display the selected item info */
+	/** A text pane to display the selected item info. */
 	private JTextPane txtpnItemInfo;
 
 	
 	/**
-	 * Creates the panel
-	 * @param guiWindow the window to create this panel for
+	 * Creates the panel.
+	 * @param tempWindow the window to create this panel for
 	 */
-	public UseItemScreen(GUIWindow guiWindow) {
+	public UseItemScreen(GUIWindow tempWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);
 		
-		this.guiWindow = guiWindow;
-		gameEnvironment = guiWindow.gameEnvironment;
-		messagePaneContents = guiWindow.messagePaneContents;
+		guiWindow = tempWindow;
+		gameEnvironment = tempWindow.gameEnvironment;
+		messagePaneContents = tempWindow.messagePaneContents;
 		inOut = gameEnvironment.getInOut();
 		initialize();
 	}
 	
 	
 	/**
-	 * Updates the item info pane to show what is selected
+	 * Updates the item info pane to show what is selected.
 	 */
 	public void updateItemInfo() {
 		Object item = itemSelection.getSelectedItem();
 		if (item instanceof Consumable) {
 			Consumable newItem = (Consumable) item;
-			String itemInfo = newItem.getName() + "\n" + newItem.getClassification() + " item\n" + 
-					newItem.getDescription() + "\nQuantity: " + gameEnvironment.getInventory().get(newItem);
+			String itemInfo = newItem.getName() + "\n" + newItem.getClassification() + " item\n"
+					+ newItem.getDescription() + "\nQuantity: " + gameEnvironment.getInventory().get(newItem);
 			txtpnItemInfo.setText(itemInfo);
 		}
 	}
 
 	
 	/**
-	 * Initialize the panel contents
+	 * Initialize the panel contents.
 	 */
 	private void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Use Item");
@@ -116,13 +117,13 @@ public class UseItemScreen extends JPanel {
 					setText(item.getName() + ", Quantity: " + gameEnvironment.getInventory().get(item));
 				}
 				
-				return this;	
+				return this;
 			}
 		});
 		itemSelection.setBounds(60, 80, 526, 36);
 		add(itemSelection);
 		
-		SpaceButton btnConfirmUseItem = new SpaceButton("Use item");;
+		SpaceButton btnConfirmUseItem = new SpaceButton("Use item");
 		btnConfirmUseItem.setBounds(0, 264, 283, 36);
 		add(btnConfirmUseItem);
 		
@@ -149,8 +150,8 @@ public class UseItemScreen extends JPanel {
 				Object item = itemSelection.getSelectedItem();
 				if (item instanceof Consumable) {
 					Consumable newItem = (Consumable) item;
-					String itemInfo = newItem.getName() + "\n" + newItem.getClassification() + " item\n" + 
-							newItem.getDescription() + "\nQuantity: " + gameEnvironment.getInventory().get(newItem);
+					String itemInfo = newItem.getName() + "\n" + newItem.getClassification() + " item\n"
+							+ newItem.getDescription() + "\nQuantity: " + gameEnvironment.getInventory().get(newItem);
 					txtpnItemInfo.setText(itemInfo);
 				}
 			}
@@ -158,7 +159,7 @@ public class UseItemScreen extends JPanel {
 		
 		btnConfirmUseItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gameEnvironment.useItem((CrewMember) guiWindow.crewMembersScreen.crewMemberSelection.getSelectedItem(), 
+				gameEnvironment.useItem((CrewMember) guiWindow.crewMembersScreen.crewMemberSelection.getSelectedItem(),
 						(Consumable) itemSelection.getSelectedItem());
 				messagePaneContents.add((String) inOut.getOutput());
 				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Screen");
@@ -173,4 +174,5 @@ public class UseItemScreen extends JPanel {
 			}
 		});
 	}
+	
 }

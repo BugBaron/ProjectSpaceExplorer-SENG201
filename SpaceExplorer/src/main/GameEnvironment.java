@@ -8,63 +8,63 @@ import java.util.Random;
 import main.CrewMemberTypes.CrewMember;
 
 /**
- * Conducts all game logic to play the Space Explorer game
+ * Conducts all game logic to play the Space Explorer game.
  * @author Daniel Harris and Rebekah McKinnon
  */
 public class GameEnvironment {
 	
-	/** Prints output and recieves input */
+	/** Prints output and receives input. */
 	private InOutHandler inOut;
 	
-	/** The ship used in the game */
+	/** The ship used in the game. */
 	private Ship ship;
-	/** The inventory of items available to the crew in the game */
+	/** The inventory of items available to the crew in the game. */
 	private Inventory inventory;
-	/** The shop on a planet in the game */
+	/** The shop on a planet in the game. */
 	private Inventory shop;
 	
-	/** The parts required to win the game */
+	/** The parts required to win the game. */
 	private int partsToFind;
-	/** The number of parts found so far */
+	/** The number of parts found so far. */
 	private int partsFound;
-	/** Whether or not there are parts on this planet */
+	/** Whether or not there are parts on this planet. */
 	private boolean partsHere;
 	
-	/** The number of days that the game has been played for */
+	/** The number of days that the game has been played for. */
 	private int dayNumber;
-	/** The maximum number of days */
+	/** The maximum number of days. */
 	private int maxDays;
 	
-	/** The index of the Planet Array to get the planet the ship is on */
+	/** The index of the Planet Array to get the planet the ship is on. */
 	private int currentPlanet;
-	/** A list of planets that can be visited */
+	/** A list of planets that can be visited. */
 	private final ArrayList<String> PLANET_ARRAY = new ArrayList<>(Arrays.asList("Europa", "Titan", 
 			"Io", "Callisto", "Oberon", "Umbriel", "Rhea", "Phoebe", "Ananke", "Dactyl"));
 	
 	/** 
-	 * A list of percentage probabilities. At the end of each day, 20% chance to have an item 
-	 * stolen, 20% chance to have a crew member infected, and 60% chance for no special event  
+	 * A list of percentage probabilities. At the end of each day, 20% chance to have an item
+	 * stolen, 20% chance to have a crew member infected, and 60% chance for no special event.
 	 */
 	private final int[] ATTACK_PROBABILITY = {20, 20, 60};
 	/** 
 	 * A list of percentage probabilities. When the ship is piloted, 30% chance to run into
-	 * an Asteroid field, and 70% chance for no special event
+	 * an Asteroid field, and 70% chance for no special event.
 	 */
 	private final int[] ASTEROID_PROBABILITY = {30, 70};
-	/** A list of all the available food items */
-	private final Consumable[] FOOD_ITEMS = {new Consumable("Space Ration"), 
-			new Consumable("Water"), new Consumable("Banana"), 
-			new Consumable("Alien Meat"), new Consumable("Coffee"), 
+	/** A list of all the available food items. */
+	private final Consumable[] FOOD_ITEMS = {new Consumable("Space Ration"),
+			new Consumable("Water"), new Consumable("Banana"),
+			new Consumable("Alien Meat"), new Consumable("Coffee"),
 			new Consumable("Egg")};
-	/** A list of all the available medical items */
+	/** A list of all the available medical items. */
 	private final Consumable[] MEDICAL_ITEMS = {new Consumable("Space Plague Cure"),
 			new Consumable("Band-Aid"), new Consumable("First Aid Kit")};
-	/** A list of all the amounts of money that can be found each time a planet is searched */
+	/** A list of all the amounts of money that can be found each time a planet is searched. */
 	private final Integer[] FINDABLE_MONEY = {10, 20, 30};
 	
 	
 	/**
-	 * Creates a new shop
+	 * Creates a new shop.
 	 * @return a new shop
 	 */
 	public Inventory createShop() {
@@ -86,7 +86,7 @@ public class GameEnvironment {
 	
 	
 	/**
-	 * Class constructor for the GameEnvironment
+	 * Class constructor for the GameEnvironment.
 	 */
 	public GameEnvironment() {
 		inOut = new InOutHandler();
@@ -94,7 +94,7 @@ public class GameEnvironment {
 	
 	
 	/**
-	 * Gets the InOutHandler of this GameEnvironment
+	 * Gets the InOutHandler of this GameEnvironment.
 	 * @return the InOutHandler
 	 */
 	public InOutHandler getInOut() {
@@ -103,26 +103,26 @@ public class GameEnvironment {
 	
 	
 	/**
-	 * Creates a new game with the specified number of days and the specified ship
-	 * with crew members already added to it
-	 * @param maxDays the maximum number of days to repair the ship
-	 * @param ship the ship to create the game with
+	 * Creates a new game with the specified number of days and the 
+	 * specified ship with crew members already added to it.
+	 * @param totalDays the maximum number of days to repair the ship
+	 * @param tempShip the ship to create the game with
 	 */
-	public void createGame(int maxDays, Ship ship) {
+	public void createGame(int totalDays, Ship tempShip) {
 		shop = createShop();
 		inventory = new Inventory();
 		partsHere = true;
 		dayNumber = 1;
 		currentPlanet = 0;
 		
-		this.maxDays = maxDays;
-		partsToFind = 2 * maxDays / 3;
-		this.ship = ship;
+		maxDays = totalDays;
+		partsToFind = 2 * totalDays / 3;
+		ship = tempShip;
 	}
 	
 	
 	/**
-	 * Gets a list containing all the crew members of the ship
+	 * Gets a list containing all the crew members of the ship.
 	 * @return the crew members of the ship
 	 */
 	public ArrayList<CrewMember> getCrewMembers() {
@@ -131,7 +131,7 @@ public class GameEnvironment {
 	
 	
 	/**
-	 * Gets a list containing all crew members with actions in the ship
+	 * Gets a list containing all crew members with actions in the ship.
 	 * @return the crew members with actions in the ship
 	 */
 	public ArrayList<CrewMember> getAvailableMembers() {
@@ -144,18 +144,19 @@ public class GameEnvironment {
 	
 	
 	/**
-	 * Gets a string representing the ship status
+	 * Gets a string representing the ship status.
 	 * @return a string representing the ship status
 	 */
 	public String getShipString() {
-		String returnString = ship.toString() + "\n" + 
-				"Spaceship pieces found: " + partsFound + "/" + partsToFind;
+		String returnString = ship.toString() + "\nSpaceship pieces found: "
+				+ partsFound + "/" + partsToFind;
 		return returnString;
 	}
 	
 	
 	/**
-	 * Gets a string to show the number of days completed and the days remaining
+	 * Gets a string to show the number of days completed and the
+	 * days remaining.
 	 * @return a string of the day number
 	 */
 	public String getDayString() {
@@ -164,7 +165,7 @@ public class GameEnvironment {
 	
 	
 	/**
-	 * Purchases an item from the shop
+	 * Purchases an item from the shop.
 	 * @param item the item to be purchased
 	 */
 	public void purchaseItem(Consumable item) {
@@ -176,7 +177,7 @@ public class GameEnvironment {
 	
 	
 	/**
-	 * Gets the inventory of the ship
+	 * Gets the inventory of the ship.
 	 * @return the inventory of the ship
 	 */
 	public Inventory getInventory() {
@@ -185,7 +186,7 @@ public class GameEnvironment {
 
 
 	/**
-	 * Gets the shop of the planet
+	 * Gets the shop of the planet.
 	 * @return the shop of the planet
 	 */
 	public Inventory getShop() {
@@ -194,7 +195,7 @@ public class GameEnvironment {
 	
 	
 	/**
-	 * Gets the total money collected on the ship
+	 * Gets the total money collected on the ship.
 	 * @return the money on the ship
 	 */
 	public int getMoney() {
@@ -203,7 +204,7 @@ public class GameEnvironment {
 	
 	
 	/**
-	 * Conducts all processes related to ending the day
+	 * Conducts all processes related to ending the day.
 	 * @return whether or not the game ended as a result of this function
 	 */
 	public boolean newDay() {
@@ -213,8 +214,8 @@ public class GameEnvironment {
 		int removedMembers = 0;
 		for (i = 0; i < size; i++) {
 			CrewMember person = ship.getCrewMembers().get(i - removedMembers);
-			HashMap <String, Integer> status = person.getStatus();
-			HashMap <String, Integer> maxStatus = person.getMaxStats();
+			HashMap<String, Integer> status = person.getStatus();
+			HashMap<String, Integer> maxStatus = person.getMaxStats();
 			if (status.get("Health") == maxStatus.get("Health")) ship.addScore(10);
 			if (status.get("Energy") == maxStatus.get("Energy")) ship.addScore(10);
 			if (status.get("Nutrition") == maxStatus.get("Nutrition")) ship.addScore(10);
@@ -223,7 +224,6 @@ public class GameEnvironment {
 				inOut.print("Oh no! " + person.getName() + " has died!");
 				removedMembers = removedMembers + 1;
 			}
-			
 		}
 		dayNumber = dayNumber + 1;
 		ship.addMoney(20);
@@ -240,11 +240,11 @@ public class GameEnvironment {
 			int randInt = (new Random()).nextInt(sumAttackProbability);
 			if (randInt < ATTACK_PROBABILITY[0] && inventory.size() > 0) {
 				Consumable key = (Consumable) pickRandom(inventory.getKeys());
-				inOut.print("Aliens have attacked your ship! They stole your " + 
-						key.getName() + "!");
+				inOut.print("Aliens have attacked your ship! They stole your "
+						+ key.getName() + "!");
 				inventory.removeItem(key);
-				inOut.print("You now have " + (inventory.get(key)) + " " + 
-						key.getName() + "(s) remaining");
+				inOut.print("You now have " + (inventory.get(key)) + " "
+						+ key.getName() + "(s) remaining");
 			} else if (randInt < ATTACK_PROBABILITY[1]) {
 				ArrayList<CrewMember> healthyCrewMembers = new ArrayList<CrewMember>();
 				healthyCrewMembers.addAll(ship.getCrewMembers());
@@ -282,17 +282,15 @@ public class GameEnvironment {
 				partsFound = partsFound + 1;
 				ship.addScore(100);
 				if (partsFound == partsToFind) {
-					//endGame(true);
 					return true;
 				} else {
-					inOut.print("You now have " + partsFound + " out of " + partsToFind + 
-							" parts");
+					inOut.print("You now have " + partsFound + " out of " + partsToFind
+							+ " parts");
 					partsHere = false;
 				}
 			} else {
 				inOut.print(crewMember.getName() + " didn't find anything!");
 			}
-			
 		} else if (randInt < searchProbability[0] + searchProbability[1] + searchProbability[2]) {
 			Consumable foundItem;
 			if (randInt < searchProbability[0] + searchProbability[1]) {
@@ -314,12 +312,11 @@ public class GameEnvironment {
 	
 	
 	/**
-	 * Finds an item to use in the inventory and uses it
+	 * Uses the selected item and reduces the quantity of that item in the inventory.
 	 * @param crewMember the crew member to use the item on
 	 * @param item the item to use
 	 */
 	public void useItem(CrewMember crewMember, Consumable item) {
-		// Uses the selected item and reduces the quantity of that item in the inventory
 		crewMember.completeAction();
 		item.useItem(crewMember);
 		
@@ -329,8 +326,8 @@ public class GameEnvironment {
 	}
 	
 	
-	/** 
-	 * Makes the crew member sleep and gain 4 energy
+	/**
+	 * Makes the crew member sleep and gain 4 energy.
 	 * @param crewMember the crew member to make sleep
 	 */
 	public void sleep(CrewMember crewMember) {
@@ -341,25 +338,25 @@ public class GameEnvironment {
 			crewMember.completeAction();
 			crewMember.addEnergy(5);
 		}
-		inOut.print(crewMember.getName() + " slept and restored to " + 
-				crewMember.getStatus().get("Energy") + " energy");
+		inOut.print(crewMember.getName() + " slept and restored to "
+				+ crewMember.getStatus().get("Energy") + " energy");
 	}
 	
 	
 	/**
-	 * Repairs the ship by the repair amount that the crew member has
+	 * Repairs the ship by the repair amount that the crew member has.
 	 * @param crewMember the crew member to complete the action
 	 */
 	public void repairShip(CrewMember crewMember) {
 		crewMember.completeAction();
 		ship.addShipShields(crewMember.getRepairAmount());
-		inOut.print(crewMember.getName() + " restored the shield levels of " + ship.getName() 
+		inOut.print(crewMember.getName() + " restored the shield levels of " + ship.getName()
 			+ " to " + ship.getShipShields());
 	}
 	
 	
 	/**
-	 * Finds another crew member and pilots the ship to another planet with them
+	 * Finds another crew member and pilots the ship to another planet with them.
 	 * @param crewMember the crew member to complete the action
 	 * @param person the other crew member to complete the action
 	 */
@@ -369,8 +366,8 @@ public class GameEnvironment {
 		
 		currentPlanet++;
 		if (currentPlanet >= PLANET_ARRAY.size()) currentPlanet = 0;
-		inOut.print(crewMember.getName() + " and " + person.getName() + 
-				" flew the ship to " + PLANET_ARRAY.get(currentPlanet));
+		inOut.print(crewMember.getName() + " and " + person.getName()
+				+ " flew the ship to " + PLANET_ARRAY.get(currentPlanet));
 
 		partsHere = true;
 		shop = createShop();
@@ -385,7 +382,7 @@ public class GameEnvironment {
 	
 	/**
 	 * Prints an end game screen for the player after they have found all the parts,
-	 * lost all their crew members or run out of time
+	 * lost all their crew members or run out of time.
 	 * @param isVictory whether or not the player won the game
 	 */
 	public void endGame(boolean isVictory) {
@@ -409,7 +406,7 @@ public class GameEnvironment {
 	
 	
 	/**
-	 * Gets a random crew member from an ArrayList of crew members
+	 * Gets a random crew member from an ArrayList of crew members.
 	 * @param list an ArrayList to chose a crew member from
 	 * @return a random crew member from the list
 	 */
@@ -421,7 +418,7 @@ public class GameEnvironment {
 	
 	
 	/**
-	 * Gets a random item from an Object array
+	 * Gets a random item from an Object array.
 	 * @param list an Object array to chose an item from
 	 * @return a random item from the array
 	 */

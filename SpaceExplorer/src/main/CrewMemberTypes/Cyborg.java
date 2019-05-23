@@ -5,17 +5,17 @@ import java.util.HashMap;
 import main.Ship;
 
 /**
- * A cyborg who has become a crew member
+ * A cyborg who has become a crew member.
  * @author Daniel Harris and Rebekah McKinnon
  */
 public class Cyborg extends CrewMember {
 
-	/** The ship which this cyborg is on */
-	Ship ship;
+	/** The ship which this cyborg is on. */
+	private Ship ship;
 	
 	
 	/**
-	 * Class constructor
+	 * Class constructor.
 	 * @param tempShip the ship to create this crew member for
 	 */
 	public Cyborg(Ship tempShip) {
@@ -23,10 +23,10 @@ public class Cyborg extends CrewMember {
 		ship = tempShip;
 		createDefaultCyborg();
 	}
-		
+	
 	
 	/**
-	 * Class constructor which allows for a custom name for the cyborg
+	 * Class constructor which allows for a custom name for the cyborg.
 	 * @param tempShip the ship to create this crew member for
 	 * @param tempName what the name of the crew member should be
 	 */
@@ -35,22 +35,22 @@ public class Cyborg extends CrewMember {
 		ship = tempShip;
 		createDefaultCyborg();
 		if (tempName.matches("[0-9]+")) {
-			tempName = "Cyborg #" + tempName; 
+			tempName = "Cyborg #" + tempName;
 		}
 		super.name = tempName;
 	}
 	
 
 	/**
-	 * Adjusts all default values to create a new cyborg
+	 * Adjusts all default values to create a new cyborg.
 	 */
 	private void createDefaultCyborg() {
-		HashMap <String, Integer> maxStats = new HashMap <String, Integer>();
+		HashMap<String, Integer> maxStats = new HashMap<String, Integer>();
 		maxStats.put("Health", 10);
 		maxStats.put("Energy", 10);
 		maxStats.put("Nutrition", 10);
 		
-		HashMap <String, String> typeInfo = new HashMap <String, String>();
+		HashMap<String, String> typeInfo = new HashMap<String, String>();
 		typeInfo.put("Type", "Cyborg");
 		typeInfo.put("Strength", "40% chance of finding a part when searching a planet");
 		typeInfo.put("Weakness", "10% chance to find food, medical supplies or money (10% for each)");
@@ -68,8 +68,8 @@ public class Cyborg extends CrewMember {
 	
 	
 	/**
-	 * Completes all character related processes related to ending the day, 
-	 * such as losing health naturally or from having the plague
+	 * Completes all character related processes related to ending the day,
+	 * such as losing health naturally or from having the plague.
 	 */
 	@Override
 	public void endDay() {

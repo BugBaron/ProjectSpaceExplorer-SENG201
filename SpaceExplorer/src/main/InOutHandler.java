@@ -4,21 +4,21 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
- * Handles all input and output sent to it
+ * Handles all input and output sent to it.
  * @author Daniel Harris and Rebekah McKinnon
  *
  */
 public class InOutHandler {
 	
-	/** The scanner to receive input from */
+	/** The scanner to receive input from. */
 	private Scanner scanner;
-	/** The queue where output is sent and collected */
+	/** The queue where output is sent and collected. */
 	private LinkedList<Object> outputList = new LinkedList<Object>();
 	
 	
 	/**
 	 * Creates a new InOutHandler with System.in as the input and
-	 * with System.out as the output
+	 * with System.out as the output.
 	 */
 	public InOutHandler() {
 		scanner = new Scanner(System.in);
@@ -26,7 +26,7 @@ public class InOutHandler {
 	
 	
 	/**
-	 * Adds the specified output to the output queue
+	 * Adds the specified output to the output queue.
 	 * @param output the output to add
 	 */
 	public void print(Object output) {
@@ -36,7 +36,7 @@ public class InOutHandler {
 	
 	/**
 	 * Removes the first added item from the output queue and returns it.
-	 * Returns null if there are no remaining items
+	 * Returns null if there are no remaining items.
 	 * @return the first added item in the output queue
 	 */
 	public Object getOutput() {

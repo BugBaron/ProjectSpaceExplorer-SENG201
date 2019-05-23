@@ -5,17 +5,17 @@ import java.util.HashMap;
 import main.Ship;
 
 /**
- * A giant lizard who has become a crew member
+ * A giant lizard who has become a crew member.
  * @author Daniel Harris and Rebekah McKinnon
  */
 public class Lizard extends CrewMember {
 
-	/** The ship which this lizard is on */
-	Ship ship;
+	/** The ship which this lizard is on. */
+	private Ship ship;
 	
 	
 	/**
-	 * Class constructor
+	 * Class constructor.
 	 * @param tempShip the ship to create this crew member for
 	 */
 	public Lizard(Ship tempShip) {
@@ -23,10 +23,10 @@ public class Lizard extends CrewMember {
 		ship = tempShip;
 		createDefaultLizard();
 	}
-		
+	
 	
 	/**
-	 * Class constructor which allows for a custom name for the lizard
+	 * Class constructor which allows for a custom name for the lizard.
 	 * @param tempShip the ship to create this crew member for
 	 * @param tempName what the name of the crew member should be
 	 */
@@ -35,22 +35,22 @@ public class Lizard extends CrewMember {
 		ship = tempShip;
 		createDefaultLizard();
 		if (tempName.matches("[0-9]+")) {
-			tempName = "Lizard #" + tempName; 
+			tempName = "Lizard #" + tempName;
 		}
 		super.name = tempName;
 	}
 	
 	
 	/**
-	 * Adjusts all default values to create a new lizard
+	 * Adjusts all default values to create a new lizard.
 	 */
 	private void createDefaultLizard() {
-		HashMap <String, Integer> maxStats = new HashMap <String, Integer>();
+		HashMap<String, Integer> maxStats = new HashMap<String, Integer>();
 		maxStats.put("Health", 10);
 		maxStats.put("Energy", 10);
 		maxStats.put("Nutrition", 10);
 		
-		HashMap <String, String> typeInfo = new HashMap <String, String>();
+		HashMap<String, String> typeInfo = new HashMap<String, String>();
 		typeInfo.put("Type", "Lizard");
 		typeInfo.put("Strength", "1 energy and nutrition restored at end of each day");
 		typeInfo.put("Weakness", "Repairs ship shields 1 less");
@@ -66,8 +66,8 @@ public class Lizard extends CrewMember {
 	
 	
 	/**
-	 * Completes all character related processes related to ending the day, 
-	 * such as losing health naturally or from having the plague
+	 * Completes all character related processes related to ending the day,
+	 * such as losing health naturally or from having the plague.
 	 */
 	@Override
 	public void endDay() {

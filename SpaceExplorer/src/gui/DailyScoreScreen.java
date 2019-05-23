@@ -13,37 +13,37 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
- * A screen to display the score at the end of every day
+ * A screen to display the score at the end of every day.
  * @author Daniel Harris and Rebekah McKinnon
  */
 public class DailyScoreScreen extends JPanel {
 
-	/** The window holding this panel */
+	/** The window holding this panel. */
 	private GUIWindow guiWindow;
-	/** The game environment that the game is running in */
+	/** The game environment that the game is running in. */
 	private GameEnvironment gameEnvironment;
 	
-	/** A label to display the score that was achieved in the day */
+	/** A label to display the score that was achieved in the day. */
 	private SpaceLabel lblScore;
 	
 	
 	/**
-	 * Creates the panel
-	 * @param guiWindow the window to create this panel for
+	 * Creates the panel.
+	 * @param tempWindow the window to create this panel for
 	 */
-	public DailyScoreScreen(GUIWindow guiWindow) {
+	public DailyScoreScreen(GUIWindow tempWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);
 		
-		this.guiWindow = guiWindow;
-		gameEnvironment = guiWindow.gameEnvironment;
+		guiWindow = tempWindow;
+		gameEnvironment = tempWindow.gameEnvironment;
 		initialize();
 	}
 	
 	
 	/**
-	 * Sets the labels to display the score
+	 * Sets the labels to display the score.
 	 * @param scoreOutput the score to display
 	 */
 	public void dailyScore(String scoreOutput) {
@@ -53,7 +53,7 @@ public class DailyScoreScreen extends JPanel {
 	
 	
 	/**
-	 * Initialize the panel contents
+	 * Initialize the panel contents.
 	 */
 	private void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Daily Score");
@@ -66,7 +66,7 @@ public class DailyScoreScreen extends JPanel {
 		add(lblScore);
 		
 		SpaceButton btnContinue = new SpaceButton("Continue");
-		btnContinue.setBounds(151, 367, 284, 36);;
+		btnContinue.setBounds(151, 367, 284, 36);
 		add(btnContinue);
 		btnContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

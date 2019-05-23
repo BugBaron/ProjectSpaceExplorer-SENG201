@@ -9,38 +9,37 @@ import javax.swing.JTextPane;
 
 import gui.spaceWidgets.SpaceButton;
 import gui.spaceWidgets.SpaceTitle;
-import main.GameEnvironment;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
- * An instructions screen to display to help the user play the game
+ * An instructions screen to display to help the user play the game.
  * @author Daniel Harris and Rebekah McKinnon
  *
  */
-public class InstructionsScreen extends JPanel{
+public class InstructionsScreen extends JPanel {
 
-	/** The window holding this panel */
+	/** The window holding this panel. */
 	private GUIWindow guiWindow;
 	
 	
 	/**
-	 * Creates the panel
-	 * @param guiWindow the window to create this panel for
+	 * Creates the panel.
+	 * @param tempWindow the window to create this panel for
 	 */
-	public InstructionsScreen(GUIWindow guiWindow) {
+	public InstructionsScreen(GUIWindow tempWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);
 		
-		this.guiWindow = guiWindow;
+		guiWindow = tempWindow;
 		initialize();
 	}
 	
 
 	/**
-	 * Initialize the panel contents
+	 * Initialize the panel contents.
 	 */
 	private void initialize() {
 		
@@ -53,7 +52,7 @@ public class InstructionsScreen extends JPanel{
 		txtpnInstructions.setForeground(new Color(255, 255, 255));
 		txtpnInstructions.setBackground(new Color(25, 25, 112));
 		txtpnInstructions.setFont(new Font("MS Gothic", Font.PLAIN, 20));
-		String InstructionsText = "You are lost in out of space and your space ship is falling apart.\n"
+		String instructionsText = "You are lost in out of space and your space ship is falling apart.\n"
 				+ "In order for your mission to succeed you need to find the missing parts of your space ship "
 				+ "while maintaining the safety of your crew.\n\n"
 				+ "To find your missing space ship parts you must search a planet. There is a maximum of "
@@ -78,7 +77,7 @@ public class InstructionsScreen extends JPanel{
 				+ "have the space plague lose 1 additional health each day.\n\n"
 				+ "The game ends when you are successful in finding all the parts, you run out of days or all of the "
 				+ "crew members die.";
-		txtpnInstructions.setText(InstructionsText);
+		txtpnInstructions.setText(instructionsText);
 		txtpnInstructions.setCaretPosition(0);
 		
 		JScrollPane scrollPane = new JScrollPane(txtpnInstructions);

@@ -10,47 +10,46 @@ import gui.spaceWidgets.SpaceTitle;
 import main.GameEnvironment;
 import main.InOutHandler;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 /**
- * A screen to display when the game has ended
+ * A screen to display when the game has ended.
  * @author Daniel Harris and Rebekah McKinnon
  *
  */
 public class EndGameScreen extends JPanel {
 
-	/** The window holding this panel */
+	/** The window holding this panel. */
 	private GUIWindow guiWindow;
-	/** The game environment that the game is running in */
+	/** The game environment that the game is running in. */
 	private GameEnvironment gameEnvironment;
-	/** The object which is handling the input and output of the game environment */
+	/** The object which is handling the input and output of the game environment. */
 	private InOutHandler inOut;
 	
-	/** A text pane to display a message after the game has ended */
+	/** A text pane to display a message after the game has ended. */
 	private JTextPane txtpnResultMessage;
-	/** A title for the screen */
+	/** A title for the screen. */
 	private SpaceTitle lblTitle;
 	
 	
 	/**
-	 * Creates the panel
-	 * @param guiWindow the window to create this panel for
+	 * Creates the panel.
+	 * @param tempWindow the window to create this panel for
 	 */
-	public EndGameScreen(GUIWindow guiWindow) {
+	public EndGameScreen(GUIWindow tempWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);
 		
-		this.guiWindow = guiWindow;
-		gameEnvironment = guiWindow.gameEnvironment;
+		guiWindow = tempWindow;
+		gameEnvironment = tempWindow.gameEnvironment;
 		inOut = gameEnvironment.getInOut();
 		initialize();
 	}
 	
 	
 	/**
-	 * Runs the processes necessary to show the End Day Screen
+	 * Runs the processes necessary to show the End Day Screen.
 	 * @param isVictory whether or not the game ended as a victory
 	 */
 	public void runEndDay(boolean isVictory) {
@@ -71,7 +70,7 @@ public class EndGameScreen extends JPanel {
 
 	
 	/**
-	 * Initialize the panel contents
+	 * Initialize the panel contents.
 	 */
 	private void initialize() {
 		

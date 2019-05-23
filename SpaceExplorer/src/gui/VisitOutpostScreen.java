@@ -18,7 +18,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 /**
- * A screen to either view the shop or the inventory of the ship
+ * A screen to either view the shop or the inventory of the ship.
  * @author Daniel Harris and Rebekah McKinnon
  *
  */
@@ -26,32 +26,32 @@ public class VisitOutpostScreen extends JPanel {
 
 	/** 
 	 * A message pane to display important information. It must be public to
-	 * allow it to be updated 
+	 * allow it to be updated.
 	 */
 	SpaceMessagePane messagePane;
 	
-	/** The window holding this panel */
+	/** The window holding this panel. */
 	private GUIWindow guiWindow;
-	/** The game environment that the game is running in */
+	/** The game environment that the game is running in. */
 	private GameEnvironment gameEnvironment;
 
 	/**
-	 * Creates the panel
-	 * @param guiWindow the window to create this panel for
+	 * Creates the panel.
+	 * @param tempWindow the window to create this panel for
 	 */
-	public VisitOutpostScreen(GUIWindow guiWindow) {
+	public VisitOutpostScreen(GUIWindow tempWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);
 		
-		this.guiWindow = guiWindow;
-		gameEnvironment = guiWindow.gameEnvironment;
+		guiWindow = tempWindow;
+		gameEnvironment = tempWindow.gameEnvironment;
 		initialize();
 	}
 	
 	
 	/**
-	 * Initialize the panel contents
+	 * Initialize the panel contents.
 	 */
 	private void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Outpost");
@@ -89,18 +89,18 @@ public class VisitOutpostScreen extends JPanel {
 		btnViewInventory.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				guiWindow.inventoryScreen.treeInventoryContainers.setModel(new DefaultTreeModel(
-						new DefaultMutableTreeNode("Inventory") {{
-							DefaultMutableTreeNode node;
-							for (Consumable item : gameEnvironment.getInventory().getKeys()) {
-								node = new DefaultMutableTreeNode(item.getName());
-								node.add(new DefaultMutableTreeNode(item.getClassification() + " item"));
-								node.add(new DefaultMutableTreeNode(item.getDescription()));
-								node.add(new DefaultMutableTreeNode("Quantity: " + gameEnvironment.getInventory().get(item)));
-								add(node);
-							}
-							
-						}}
-					));
+					new DefaultMutableTreeNode("Inventory") {{
+						DefaultMutableTreeNode node;
+						for (Consumable item : gameEnvironment.getInventory().getKeys()) {
+							node = new DefaultMutableTreeNode(item.getName());
+							node.add(new DefaultMutableTreeNode(item.getClassification() + " item"));
+							node.add(new DefaultMutableTreeNode(item.getDescription()));
+							node.add(new DefaultMutableTreeNode("Quantity: " + gameEnvironment.getInventory().get(item)));
+							add(node);
+						}
+						
+					}}
+				));
 				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Inventory Screen");
 				guiWindow.updatePane();
 			}
