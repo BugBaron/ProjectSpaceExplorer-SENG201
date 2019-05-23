@@ -84,7 +84,7 @@ public class Inventory {
 	 * @param item the item to be removed
 	 */
 	public void removeItem(Consumable item) {
-		int value = items.get(item);
+		int value = get(item);
 		if (value > 1) {
 			items.put(item, value - 1);
 		}
