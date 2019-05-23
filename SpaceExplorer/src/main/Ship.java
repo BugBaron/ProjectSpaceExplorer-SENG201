@@ -5,30 +5,30 @@ import java.util.ArrayList;
 import main.CrewMemberTypes.CrewMember;
 
 /**
- * The ship which needs parts for the player to win
+ * The ship which needs parts for the player to win.
  * @author Daniel Harris and Rebekah McKinnon
  */
 public class Ship {
 	
-	/** The name of the ship */
+	/** The name of the ship. */
 	private String shipName;
-	/** The crew members on this ship */
+	/** The crew members on this ship. */
 	private ArrayList<CrewMember> crewMembers;
-	/** The money that the player has on this ship */
+	/** The money that the player has on this ship. */
 	private int money;
-	/** The shield level of this ship */
+	/** The shield level of this ship. */
 	private int shipShields;
-	/** The maximum shield level */
+	/** The maximum shield level. */
 	private final int MAX_SHIP_SHIELDS = 10;
 	
-	/** Total score excluding what was earned today */
+	/** Total score excluding what was earned today. */
 	private int totalScore;
 	/** Daily score. Set to zero when getDailyScore() is called */
 	private int dailyScore;
 	
 	
 	/**
-	 * Class constructor for ship. Creates a ship with the default name 'The Milano'
+	 * Class constructor for ship. Creates a ship with the default name 'The Milano'.
 	 */
 	public Ship() {
 		shipName = "The Milano";
@@ -41,7 +41,7 @@ public class Ship {
 	
 	
 	/**
-	 * Class constructor for ship with the ship name as the specified string
+	 * Class constructor for ship with the ship name as the specified string.
 	 * @param name the name of the ship
 	 */
 	public Ship(String name) {
@@ -55,7 +55,7 @@ public class Ship {
 
 
 	/**
-	 * Gets the name of this ship
+	 * Gets the name of this ship.
 	 * @return the name of this ship
 	 */
 	public String getName() {
@@ -64,7 +64,7 @@ public class Ship {
 	
 	
 	/**
-	 * Gets the amount of money that this ship is currently holding
+	 * Gets the amount of money that this ship is currently holding.
 	 * @return the current amount of money
 	 */
 	public int getMoney() {
@@ -73,7 +73,7 @@ public class Ship {
 	
 	
 	/**
-	 * Adds money to this ship
+	 * Adds money to this ship.
 	 * @param amount the amount of money to add, can be negative to take money away
 	 */
 	public void addMoney(int amount) {
@@ -86,7 +86,7 @@ public class Ship {
 	
 	
 	/**
-	 * Gets a list containing all the crew members
+	 * Gets a list containing all the crew members.
 	 * @return the list of crew members
 	 */
 	public ArrayList<CrewMember> getCrewMembers() {
@@ -95,7 +95,7 @@ public class Ship {
 	
 	
 	/**
-	 * Gets the shield level of the ship
+	 * Gets the shield level of the ship.
 	 * @return the shield level of the ship
 	 */
 	public int getShipShields() {
@@ -104,7 +104,7 @@ public class Ship {
 	
 	
 	/**
-	 * Adds ship shields to this ship
+	 * Adds ship shields to this ship.
 	 * @param amount the amount to increase the shields by, can be negative to decrease shields
 	 */
 	public void addShipShields(int amount) {
@@ -115,12 +115,11 @@ public class Ship {
 		} else {
 			shipShields = MAX_SHIP_SHIELDS;
 		}
-		
 	}
 
 
 	/**
-	 * Gets the score obtained by this ship today and resets it to zero for a new day
+	 * Gets the score obtained by this ship today and resets it to zero for a new day.
 	 * @return the current score
 	 */
 	public int getDailyScore() {
@@ -132,7 +131,7 @@ public class Ship {
 	
 	
 	/**
-	 * Gets the total score currently obtained by this ship
+	 * Gets the total score currently obtained by this ship.
 	 * @return the total score
 	 */
 	public int getTotalScore() {
@@ -141,7 +140,7 @@ public class Ship {
 	
 	
 	/**
-	 * Increases the score by a certain amount
+	 * Increases the score by a certain amount.
 	 * @param amount the amount to increase the score
 	 */
 	public void addScore(int amount) {
@@ -150,7 +149,7 @@ public class Ship {
 
 	
 	/**
-	 * A string representation of the ship including its name and shield level
+	 * A string representation of the ship including its name and shield level.
 	 * @return a string representation of the ship
 	 */
 	public String toString() {

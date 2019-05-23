@@ -5,17 +5,17 @@ import java.util.HashMap;
 import main.Ship;
 
 /**
- * A human who has become a crew member
+ * A human who has become a crew member.
  * @author Daniel Harris and Rebekah McKinnon
  */
 public class Human extends CrewMember {
 
-	/** The ship which this human is on */
-	Ship ship;
+	/** The ship which this human is on. */
+	private Ship ship;
 	
 	
 	/**
-	 * Class constructor
+	 * Class constructor.
 	 * @param tempShip the ship to create this crew member for
 	 */
 	public Human(Ship tempShip) {
@@ -23,10 +23,10 @@ public class Human extends CrewMember {
 		ship = tempShip;
 		createDefaultHuman();
 	}
-		
+	
 	
 	/**
-	 * Class constructor which allows for a custom name for the human
+	 * Class constructor which allows for a custom name for the human.
 	 * @param tempShip the ship to create this crew member for
 	 * @param tempName what the name of the crew member should be
 	 */
@@ -35,22 +35,22 @@ public class Human extends CrewMember {
 		ship = tempShip;
 		createDefaultHuman();
 		if (tempName.matches("[0-9]+")) {
-			tempName = "Human #" + tempName; 
+			tempName = "Human #" + tempName;
 		}
 		super.name = tempName;
 	}
 	
 	
 	/**
-	 * Adjusts all default values to create a new human
+	 * Adjusts all default values to create a new human.
 	 */
 	private void createDefaultHuman() {
-		HashMap <String, Integer> maxStats = new HashMap <String, Integer>();
+		HashMap<String, Integer> maxStats = new HashMap<String, Integer>();
 		maxStats.put("Health", 8);
 		maxStats.put("Energy", 10);
 		maxStats.put("Nutrition", 10);
 		
-		HashMap <String, String> typeInfo = new HashMap <String, String>();
+		HashMap<String, String> typeInfo = new HashMap<String, String>();
 		typeInfo.put("Type", "Human");
 		typeInfo.put("Strength", "1 health restored at end of each day");
 		typeInfo.put("Weakness", "2 less maximum health (8 Health)");
@@ -66,8 +66,8 @@ public class Human extends CrewMember {
 	
 	
 	/**
-	 * Completes all character related processes related to ending the day, 
-	 * such as losing health naturally or from having the plague
+	 * Completes all character related processes related to ending the day,
+	 * such as losing health naturally or from having the plague.
 	 */
 	@Override
 	public void endDay() {

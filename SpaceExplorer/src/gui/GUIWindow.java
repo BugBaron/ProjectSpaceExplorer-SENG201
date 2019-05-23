@@ -13,48 +13,48 @@ import main.CrewMemberTypes.CrewMember;
 import java.util.ArrayList;
 
 /**
- * A container to put all frames for running the game. Uses a card layout to do this
+ * A container to put all frames for running the game. Uses a card layout to do this.
  * @author Daniel Harris and Rebekah McKinnon
  */
 public class GUIWindow {
 
 	/*
-	 * These variables have default visibility as their attributes are all 
+	 * These variables have default visibility as their attributes are all
 	 * adjusted and edited by each other
 	 */
-	/** The frame which contains all the components of the GUI */
+	/** The frame which contains all the components of the GUI. */
 	JFrame frame;
-	/** The layout which the frame uses */
+	/** The layout which the frame uses. */
 	CardLayout layout;
-	/** The contents of the message pane */
+	/** The contents of the message pane. */
 	ArrayList<String> messagePaneContents = new ArrayList<String>();
-	/** The game environment which the game is running with */
+	/** The game environment which the game is running with. */
 	GameEnvironment gameEnvironment = new GameEnvironment();
 	
-	/** The main screen */
+	/** The main screen. */
 	MainScreen mainScreen = new MainScreen(this);
-	/** The screen where crew members can do actions and be viewed */
+	/** The screen where crew members can do actions and be viewed. */
 	CrewMembersScreen crewMembersScreen = new CrewMembersScreen(this);
-	/** The screen where items can be used */
+	/** The screen where items can be used. */
 	UseItemScreen useItemScreen = new UseItemScreen(this);
-	/** The screen where the ship can be piloted to a new planet */
+	/** The screen where the ship can be piloted to a new planet. */
 	PilotShipScreen pilotShipScreen = new PilotShipScreen(this);
-	/** The screen where the status of the ship can be seen */
+	/** The screen where the status of the ship can be seen. */
 	ShipStatusScreen shipStatusScreen = new ShipStatusScreen(this);
-	/** The screen where the shop or inventory screen can be opened */
+	/** The screen where the shop or inventory screen can be opened. */
 	VisitOutpostScreen visitOutpostScreen = new VisitOutpostScreen(this);
-	/** The screen where items in the shop can be purchased */
+	/** The screen where items in the shop can be purchased. */
 	ViewShopScreen shopScreen = new ViewShopScreen(this);
-	/** The screen where the inventory can be viewed */
+	/** The screen where the inventory can be viewed. */
 	ViewInventoryScreen inventoryScreen = new ViewInventoryScreen(this);
-	/** The screen which displays a message when the game ends */
+	/** The screen which displays a message when the game ends. */
 	EndGameScreen endGameScreen = new EndGameScreen(this);
-	/** The screen which displays the daily score at the end of each day */
+	/** The screen which displays the daily score at the end of each day. */
 	DailyScoreScreen dailyScoreScreen = new DailyScoreScreen(this);
 	
-	/** The screen where the game is set up */
+	/** The screen where the game is set up. */
 	private SetUpScreen setUpScreen = new SetUpScreen(this);
-	/** The screen where the instructions are shown */
+	/** The screen where the instructions are shown. */
 	private InstructionsScreen instructionsScreen = new InstructionsScreen(this);
 	
 	
@@ -83,6 +83,10 @@ public class GUIWindow {
 		initialize();
 	}
 	
+	
+	/**
+	 * Updates the information displayed about the selected crew member.
+	 */
 	public void updateCrewMemberInfo() {
 		Object item = crewMembersScreen.crewMemberSelection.getSelectedItem();
 		if (item instanceof CrewMember) {
@@ -97,7 +101,7 @@ public class GUIWindow {
 	
 	
 	/**
-	 * Update the text for the specified message pane
+	 * Update the text for the specified message pane.
 	 */
 	public void updatePane() {
 		String text = "";

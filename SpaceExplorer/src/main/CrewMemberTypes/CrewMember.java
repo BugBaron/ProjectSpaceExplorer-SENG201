@@ -4,53 +4,57 @@ import java.util.HashMap;
 import main.Ship;
 
 /**
- * A member of the crew stranded on the ship
+ * A member of the crew stranded on the ship.
  * @author Daniel Harris and Rebekah McKinnon
  */
 public abstract class CrewMember {
 	
-	/** The ship that this crew member is on */
+	/** The ship that this crew member is on. */
 	private Ship ship;
+	
+	
 	/** 
-	 * The status of this crew member, stored in a Map, from strings (Health, Energy and Nutrition)
-	 * to the relevant integer value of the status value
+	 * The status of this crew member, stored in a Map, from strings
+	 * (Health, Energy and Nutrition) to the relevant integer value
+	 * of the status value.
 	 */
-	private HashMap <String, Integer> status;
-	/** The number of actions that this crew member has available */
+	private HashMap<String, Integer> status;
+	/** The number of actions that this crew member has available. */
 	private int numActions;
 	
 	// Variables which are modified in sub-class constructors
-	// All-caps variables are not modified after the sub-class is constructed
-	/** Whether or not this member has the space plague */
+	// All-caps variables are not changed after the sub-class is constructed
+	/** Whether or not this member has the space plague. */
 	boolean spacePlague = false;
-	/** The name of this crew member */
+	/** The name of this crew member. */
 	String name;
 	
-	/** The maximum value of each status value. Stored identically to the status variable */
-	HashMap <String, Integer> MAX_STAT;
-	/** The amount by which this crew member can repair the ship */
+	/** The maximum value of each status value. Stored identically to the status variable. */
+	HashMap<String, Integer> MAX_STAT;
+	/** The amount by which this crew member can repair the ship. */
 	int REPAIR_AMOUNT = 2;
 	/** 
-	 * Descriptions of the type of crew member this is. A map from strings (Type, Strength, Weakness)
-	 * to the relevant description
+	 * Descriptions of the type of crew member this is. A map from strings
+	 * (Type, Strength, Weakness) to the relevant description.
 	 */
-	HashMap <String, String> TYPE_INFO;
-	/** The percentage chance of finding a part, food item, medical item, money and nothing, respectively */
+	HashMap<String, String> TYPE_INFO;
+	/** The percentage chance of finding a part, food item, medical item, money and nothing, respectively. */
 	int[] SEARCHING_PROBABILITIES = {20, 20, 20, 20, 20};
 	
 	
 	/**
-	 * Initialize the class as default with a certain ship. Called by subclasses
+	 * Initialize the class as default with a certain ship. Called by subclasses.
+	 * @param currentShip the ship that this crew member is on
 	 */
 	CrewMember(Ship currentShip) {
 		ship = currentShip;
-		status = new HashMap <String, Integer>();
+		status = new HashMap<String, Integer>();
 		numActions = 2;
 	}
 	
 	
 	/**
-	 * Does all things related to ending the day, such as losing health, 
+	 * Does all things related to ending the day, such as losing health,
 	 * energy, and other actions which are class specific.
 	 * Defined in the subclass
 	 */
@@ -58,18 +62,19 @@ public abstract class CrewMember {
 	
 	
 	/**
-	 * Retrieves the status of the crew member
+	 * Retrieves the status of the crew member.
 	 * @return a map containing the "Health", "Nutrition" and "Energy" of the 
 	 * crew member
 	 */
-	public HashMap <String, Integer> getStatus() {
+	public HashMap<String, Integer> getStatus() {
 		return status;
 	}
 	
 	
 	/**
-	 * A helper function for addHealth, addEnergy and addNutrition
+	 * A helper function for addHealth, addEnergy and addNutrition.
 	 * @param amount the amount to add. Can be negative to decrease the stat
+	 * @param stat the statistic to change
 	 */
 	private void addStats(int amount, String stat) {
 		int newStat = amount + status.get(stat);
@@ -93,7 +98,7 @@ public abstract class CrewMember {
 	
 	
 	/**
-	 * Adds health to this crew member
+	 * Adds health to this crew member.
 	 * @param amount the amount to increase the health by, can be negative to decrease health
 	 */
 	public void addHealth(int amount) {
@@ -102,7 +107,7 @@ public abstract class CrewMember {
 	
 	
 	/**
-	 * Adds energy to this crew member
+	 * Adds energy to this crew member.
 	 * @param amount the amount to increase the energy by, can be negative to decrease energy
 	 */
 	public void addEnergy(int amount) {
@@ -111,7 +116,7 @@ public abstract class CrewMember {
 	
 	
 	/**
-	 * Adds nutrition to this crew member
+	 * Adds nutrition to this crew member.
 	 * @param amount the amount to increase the nutrition by, can be negative to decrease nutrition
 	 */
 	public void addNutrition(int amount) {
@@ -120,7 +125,7 @@ public abstract class CrewMember {
 	
 	
 	/**
-	 * Gets the number of remaining actions of the crew member
+	 * Gets the number of remaining actions of the crew member.
 	 * @return the number of remaining actions
 	 */
 	public int getActions() {
@@ -130,7 +135,7 @@ public abstract class CrewMember {
 	
 	/**
 	 * Gets a list containing the probabilities of finding each
-	 * kind of item when searching a planet
+	 * kind of item when searching a planet.
 	 * @return a list of probabilities
 	 */
 	public int[] getSearchingProbabilities() {
@@ -139,7 +144,7 @@ public abstract class CrewMember {
 	
 	
 	/**
-	 * Gets the amount by which this crew member repairs the ship by
+	 * Gets the amount by which this crew member repairs the ship by.
 	 * @return the repair amount
 	 */
 	public int getRepairAmount() {
@@ -148,7 +153,7 @@ public abstract class CrewMember {
 
 	
 	/**
-	 * Completes an action for the crew member
+	 * Completes an action for the crew member.
 	 */
 	public void completeAction() {
 		numActions--;
@@ -158,7 +163,7 @@ public abstract class CrewMember {
 	
 	
 	/**
-	 * Gets the crew members name
+	 * Gets the crew members name.
 	 * @return the crew members name
 	 */
 	public String getName() {
@@ -167,7 +172,7 @@ public abstract class CrewMember {
 	
 	
 	/**
-	 * Finds if the crew member has the space plague
+	 * Finds if the crew member has the space plague.
 	 * @return a boolean whether or not they have the space plague
 	 */
 	public boolean getHasSpacePlague() {
@@ -176,7 +181,7 @@ public abstract class CrewMember {
 	
 	
 	/**
-	 * Sets whether or not the crew member has the space plague
+	 * Sets whether or not the crew member has the space plague.
 	 * @param value a boolean to determine whether or not they have the space plague
 	 */
 	public void setHasSpacePlague(boolean value) {
@@ -185,25 +190,25 @@ public abstract class CrewMember {
 	
 	
 	/** 
-	 * Gets a map to describe the type of crew member this is
+	 * Gets a map to describe the type of crew member this is.
 	 * @return a map containing the crew members "Type", "Strength" and "Weakness"
 	 */
-	public HashMap <String, String> getTypeInfo() {
+	public HashMap<String, String> getTypeInfo() {
 		return TYPE_INFO;
 	}
 	
 	
 	/**
-	 * Gets a map to describe the maximum stats of the crew member
+	 * Gets a map to describe the maximum stats of the crew member.
 	 * @return a map containing the crew members maximum "Health", "Energy" and "Nutrition"
 	 */
-	public HashMap <String, Integer> getMaxStats() {
+	public HashMap<String, Integer> getMaxStats() {
 		return MAX_STAT;
 	}
 	
 	
 	/**
-	 * Kills this crew member
+	 * Kills this crew member.
 	 */
 	private void kill() {
 		ship.getCrewMembers().remove(this);
@@ -211,7 +216,7 @@ public abstract class CrewMember {
 	
 	
 	/**
-	 * Gets a string representation for the crew member
+	 * Gets a string representation for the crew member.
 	 * @return a string representing the class
 	 */
 	public String toString() {
@@ -229,7 +234,7 @@ public abstract class CrewMember {
 	
 	
 	/**
-	 * Sets the number of actions available for this crew member
+	 * Sets the number of actions available for this crew member.
 	 * @param actions the number of actions the crew member should have
 	 */
 	void setActions(int actions) {

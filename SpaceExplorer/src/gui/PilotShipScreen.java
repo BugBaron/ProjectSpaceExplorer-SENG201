@@ -25,7 +25,7 @@ import java.awt.event.ItemListener;
 import java.awt.event.ActionEvent;
 
 /**
- * A screen to allow the user to pilot their ship to a new planet
+ * A screen to allow the user to pilot their ship to a new planet.
  * @author Daniel Harris and Rebekah McKinnon
  *
  */
@@ -35,44 +35,44 @@ public class PilotShipScreen extends JPanel {
 	 * These variables have default visibility so they can be adjusted and/or 
 	 * used to update other widgets 
 	 */
-	/** A message pane to display important information */
+	/** A message pane to display important information. */
 	SpaceMessagePane messagePane;
-	/** A text pane to display information about the selected crew member */
+	/** A text pane to display information about the selected crew member. */
 	JTextPane crewMemberInfo;
-	/** A combo box to select which other crew member to pilot the ship with */
+	/** A combo box to select which other crew member to pilot the ship with. */
 	JComboBox<CrewMember> crewMember2Selection;
-	/** A text pane to display information about the other selected crew member */
+	/** A text pane to display information about the other selected crew member. */
 	JTextPane crewMember2Info;
 	
-	/** The window holding this panel */
+	/** The window holding this panel. */
 	private GUIWindow guiWindow;
-	/** The game environment that the game is running in */
+	/** The game environment that the game is running in. */
 	private GameEnvironment gameEnvironment;
-	/** The contents of the message pane */
+	/** The contents of the message pane. */
 	private ArrayList<String> messagePaneContents;
-	/** The object which is handling the input and output of the game environment */
+	/** The object which is handling the input and output of the game environment. */
 	private InOutHandler inOut;
 	
 	
 	/**
-	 * Creates the panel
-	 * @param guiWindow the window to create this panel for
+	 * Creates the panel.
+	 * @param tempWindow the window to create this panel for
 	 */
-	public PilotShipScreen(GUIWindow guiWindow) {
+	public PilotShipScreen(GUIWindow tempWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);
 		
-		this.guiWindow = guiWindow;
-		gameEnvironment = guiWindow.gameEnvironment;
-		messagePaneContents = guiWindow.messagePaneContents;
+		guiWindow = tempWindow;
+		gameEnvironment = tempWindow.gameEnvironment;
+		messagePaneContents = tempWindow.messagePaneContents;
 		inOut = gameEnvironment.getInOut();
 		initialize();
 	}
 	
 	
 	/**
-	 * Initialize the panel contents
+	 * Initialize the panel contents.
 	 */
 	private void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Pilot Ship");
@@ -132,7 +132,8 @@ public class PilotShipScreen extends JPanel {
 		
 		btnConfirmPilotShip.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				gameEnvironment.pilotShip((CrewMember) guiWindow.crewMembersScreen.crewMemberSelection.getSelectedItem(), 
+				gameEnvironment.pilotShip((CrewMember) 
+						guiWindow.crewMembersScreen.crewMemberSelection.getSelectedItem(), 
 						(CrewMember) crewMember2Selection.getSelectedItem());
 				Object output = inOut.getOutput();
 				while (output != null) {

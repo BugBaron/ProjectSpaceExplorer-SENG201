@@ -6,13 +6,13 @@ import java.awt.Font;
 import javax.swing.JLabel;
 
 /**
- * A label with specific styling
+ * A label with specific styling.
  * @author Daniel Harris and Rebekah McKinnon
  */
 public class SpaceLabel extends JLabel {
 	
 	/**
-	 * Creates a new JLabel with specific styling
+	 * Creates a new JLabel with specific styling.
 	 * @param text the text to display on the label
 	 */
 	public SpaceLabel(String text) {

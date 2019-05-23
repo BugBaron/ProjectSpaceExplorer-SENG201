@@ -27,7 +27,7 @@ import main.InOutHandler;
 import main.CrewMemberTypes.CrewMember;
 
 /**
- * A screen to display crew members and to complete actions for each one
+ * A screen to display crew members and to complete actions for each one.
  * @author Daniel Harris and Rebekah McKinnon
  */
 public class CrewMembersScreen extends JPanel {
@@ -36,53 +36,53 @@ public class CrewMembersScreen extends JPanel {
 	 * These variables have default visibility so they can be adjusted and/or 
 	 * used to update other widgets 
 	 */
-	/** A message pane to display important information */
+	/** A message pane to display important information. */
 	SpaceMessagePane messagePane;
-	/** A combo box to select which crew member to view */
+	/** A combo box to select which crew member to view. */
 	JComboBox<CrewMember> crewMemberSelection;
-	/** A text pane to display information about the selected crew member */
+	/** A text pane to display information about the selected crew member. */
 	JTextPane crewMemberInfo;
 	
-	/** The window holding this panel */
+	/** The window holding this panel. */
 	private GUIWindow guiWindow;
-	/** The game environment that the game is running in */
+	/** The game environment that the game is running in. */
 	private GameEnvironment gameEnvironment;
-	/** The contents of the message pane */
+	/** The contents of the message pane. */
 	private ArrayList<String> messagePaneContents;
-	/** The object which is handling the input and output of the game environment */
+	/** The object which is handling the input and output of the game environment. */
 	private InOutHandler inOut;
 	
-	/** A button to go to the use item screen */
+	/** A button to go to the use item screen. */
 	private SpaceButton btnUseItem;
-	/** A button to make the selected crew member sleep */
+	/** A button to make the selected crew member sleep. */
 	private SpaceButton btnSleep;
-	/** A button to make the selected crew member repair the ship */
+	/** A button to make the selected crew member repair the ship. */
 	private SpaceButton btnRepairShip;
-	/** A button to make the selected crew member search the planet */
+	/** A button to make the selected crew member search the planet. */
 	private SpaceButton btnSearchPlanet;
-	/** A button to go to the pilot ship screen */
+	/** A button to go to the pilot ship screen. */
 	private SpaceButton btnPilotShip;
 
 	
 	/**
-	 * Creates the pane
-	 * @param guiWindow the window to create this panel for
+	 * Creates the pane.
+	 * @param tempWindow the window to create this panel for
 	 */
-	public CrewMembersScreen(GUIWindow guiWindow) {
+	public CrewMembersScreen(GUIWindow tempWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);
 		
-		this.guiWindow = guiWindow;
-		gameEnvironment = guiWindow.gameEnvironment;
-		messagePaneContents = guiWindow.messagePaneContents;
+		guiWindow = tempWindow;
+		gameEnvironment = tempWindow.gameEnvironment;
+		messagePaneContents = tempWindow.messagePaneContents;
 		inOut = gameEnvironment.getInOut();
 		initialize();
 	}
 	
 	
 	/**
-	 * Updates the buttons and related crew member info on the crew member screen
+	 * Updates the buttons and related crew member info on the crew member screen.
 	 */
 	public void updateCrewMembers() {
 		Object item = crewMemberSelection.getSelectedItem();
@@ -100,7 +100,7 @@ public class CrewMembersScreen extends JPanel {
 
 	
 	/**
-	 * Initialize the panel contents
+	 * Initialize the panel contents.
 	 */
 	private void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Crew Members");
@@ -152,7 +152,7 @@ public class CrewMembersScreen extends JPanel {
 					setText(text);
 				}
 				
-				return this;	
+				return this;
 			}
 		});
 		crewMemberSelection.setBounds(135, 80, 441, 36);
@@ -173,11 +173,9 @@ public class CrewMembersScreen extends JPanel {
 				guiWindow.updatePane();
 				
 				ArrayList<Consumable> keys = gameEnvironment.getInventory().getKeys();
-				Consumable[] items = new Consumable[keys.size()];
-				for (int i = 0; i < keys.size(); i++) {
-					items[i] = keys.get(i);
-				}
-				guiWindow.useItemScreen.itemSelection.setModel(new DefaultComboBoxModel<Consumable>(items));
+				Vector<Consumable> items = new Vector<Consumable>(keys);
+				guiWindow.useItemScreen.itemSelection.setModel(
+						new DefaultComboBoxModel<Consumable>(items));
 				guiWindow.useItemScreen.updateItemInfo();
 			}
 		});
@@ -202,34 +200,39 @@ public class CrewMembersScreen extends JPanel {
 		
 		btnSearchPlanet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				boolean result = gameEnvironment.searchPlanet((CrewMember) crewMemberSelection.getSelectedItem());
+				boolean result = gameEnvironment.searchPlanet(
+						(CrewMember) crewMemberSelection.getSelectedItem());
 				Object output = inOut.getOutput();
 				while (output != null) {
 					messagePaneContents.add((String) output);
 					output = inOut.getOutput();
 				}
-				if (result == false) {
+				if (!result) {
 					guiWindow.layout.show(guiWindow.frame.getContentPane(), "Main Screen");
 					guiWindow.updatePane();
 				} else { // If the game has now ended
 					guiWindow.endGameScreen.runEndDay(true);
 					guiWindow.layout.show(guiWindow.frame.getContentPane(), "End Game Screen");
-					guiWindow.updatePane();
 				}
 			}
 		});
 		
 		btnPilotShip.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Vector<CrewMember> availableMembers = new Vector<CrewMember>(gameEnvironment.getAvailableMembers());
+				Vector<CrewMember> availableMembers = new Vector<CrewMember>(
+						gameEnvironment.getAvailableMembers());
 				availableMembers.remove((CrewMember) crewMemberSelection.getSelectedItem());
-				guiWindow.pilotShipScreen.crewMember2Selection.setModel(new DefaultComboBoxModel<CrewMember>(availableMembers));
+				guiWindow.pilotShipScreen.crewMember2Selection.setModel(
+						new DefaultComboBoxModel<CrewMember>(availableMembers));
+				
 				Object item = guiWindow.pilotShipScreen.crewMember2Selection.getSelectedItem();
 				if (item instanceof CrewMember) {
 					CrewMember crewMember = (CrewMember) item;
-					String crewMemberInfo = crewMember.toString() + "\nActions: " + crewMember.getActions();
-					crewMemberInfo = crewMemberInfo.substring(crewMemberInfo.indexOf("\n") + 1);
-					guiWindow.pilotShipScreen.crewMember2Info.setText(crewMemberInfo);
+					String tempCrewMemberInfo = crewMember.toString()
+							+ "\nActions: " + crewMember.getActions();
+					tempCrewMemberInfo = tempCrewMemberInfo.substring(
+							tempCrewMemberInfo.indexOf("\n") + 1);
+					guiWindow.pilotShipScreen.crewMember2Info.setText(tempCrewMemberInfo);
 				}
 				
 				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Pilot Ship");

@@ -16,39 +16,40 @@ import gui.spaceWidgets.SpaceMessagePane;
 import gui.spaceWidgets.SpaceTitle;
 
 /**
- * A screen to display the status of the ship
+ * A screen to display the status of the ship.
  * @author Daniel Harris and Rebekah McKinnon
  */
 public class ShipStatusScreen extends JPanel {
 	
-	/* 
-	 * These variables have default visibility so they can be adjusted and/or 
-	 * used to update other widgets 
+	/*
+	 * These variables have default visibility so they can be adjusted and/or
+	 * used to update other widgets
 	 */
-	/** A message pane to display important information */
+	/** A message pane to display important information. */
 	SpaceMessagePane messagePane;
+	/** A text pane to display the ship status. */
 	JTextPane txtpnShipStatus;
 	
-	/** The window holding this panel */
+	/** The window holding this panel. */
 	private GUIWindow guiWindow;
 
 	
 	/**
-	 * Creates the panel
-	 * @param guiWindow the window to create this panel for
+	 * Creates the panel.
+	 * @param tempWindow the window to create this panel for
 	 */
-	public ShipStatusScreen(GUIWindow guiWindow) {
+	public ShipStatusScreen(GUIWindow tempWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);
 		
-		this.guiWindow = guiWindow;
+		guiWindow = tempWindow;
 		initialize();
 	}
 
 	
 	/**
-	 * Initialize the panel contents
+	 * Initialize the panel contents.
 	 */
 	public void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Ship Status");
@@ -84,4 +85,5 @@ public class ShipStatusScreen extends JPanel {
 			}
 		});
 	}
+	
 }

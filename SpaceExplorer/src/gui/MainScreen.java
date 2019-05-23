@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -20,49 +21,49 @@ import main.InOutHandler;
 import main.CrewMemberTypes.CrewMember;
 
 /**
- * A screen for the user to choose what they would like to do in the game
+ * A screen for the user to choose what they would like to do in the game.
  * @author Daniel Harris and Rebekah McKinnon
- *
  */
 public class MainScreen extends JPanel {
 	
-	/* 
-	 * These variables have default visibility so they can be adjusted and/or 
-	 * used to update other widgets 
+	/*
+	 * These variables have default visibility so they can be adjusted and/or
+	 * used to update other widgets
 	 */
-	/** A message pane to display important information */
+	/** A message pane to display important information. */
 	SpaceMessagePane messagePane;
+	/** A label to display the day number. */
 	SpaceLabel lblDayNumber;
 	
-	/** The window holding this panel */
+	/** The window holding this panel. */
 	private GUIWindow guiWindow;
-	/** The game environment that the game is running in */
+	/** The game environment that the game is running in. */
 	private GameEnvironment gameEnvironment;
-	/** The contents of the message pane */
+	/** The contents of the message pane. */
 	private ArrayList<String> messagePaneContents;
-	/** The object which is handling the input and output of the game environment */
+	/** The object which is handling the input and output of the game environment. */
 	private InOutHandler inOut;
 
 	
 	/**
-	 * Creates the panel
-	 * @param guiWindow the window to create this panel for
+	 * Creates the panel.
+	 * @param tempWindow the window to create this panel for
 	 */
-	public MainScreen(GUIWindow guiWindow) {
+	public MainScreen(GUIWindow tempWindow) {
 		super();
 		setBackground(new Color(25, 25, 112));
 		setLayout(null);
 		
-		this.guiWindow = guiWindow;
-		gameEnvironment = guiWindow.gameEnvironment;
-		messagePaneContents = guiWindow.messagePaneContents;
+		guiWindow = tempWindow;
+		gameEnvironment = tempWindow.gameEnvironment;
+		messagePaneContents = tempWindow.messagePaneContents;
 		inOut = gameEnvironment.getInOut();
 		initialize();
 	}
 	
 	
 	/**
-	 * Initialize the panel contents
+	 * Initialize the panel contents.
 	 */
 	public void initialize() {
 		SpaceTitle lblTitle = new SpaceTitle("Control Panel");
@@ -107,11 +108,9 @@ public class MainScreen extends JPanel {
 		btnViewCrewMember.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ArrayList<CrewMember> crewMembers = gameEnvironment.getCrewMembers();
-				CrewMember[] newMembers = new CrewMember[crewMembers.size()];
-				for (int i = 0; i < crewMembers.size(); i++) {
-					newMembers[i] = crewMembers.get(i);
-				}
-				guiWindow.crewMembersScreen.crewMemberSelection.setModel(new DefaultComboBoxModel<CrewMember>(newMembers));
+				Vector<CrewMember> newMembers = new Vector<CrewMember>(crewMembers);
+				guiWindow.crewMembersScreen.crewMemberSelection.setModel(
+						new DefaultComboBoxModel<CrewMember>(newMembers));
 				guiWindow.crewMembersScreen.updateCrewMembers();
 				
 				guiWindow.layout.show(guiWindow.frame.getContentPane(), "Crew Members");
@@ -137,7 +136,7 @@ public class MainScreen extends JPanel {
 		btnContinue.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				boolean result = gameEnvironment.newDay();
-				if (result == true) {
+				if (result) {
 					guiWindow.endGameScreen.runEndDay(false);
 					guiWindow.layout.show(guiWindow.frame.getContentPane(), "End Game Screen");
 					guiWindow.updatePane();
