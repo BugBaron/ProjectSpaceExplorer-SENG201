@@ -117,6 +117,7 @@ public class TextGameEnvironment {
 		partsHere = true;
 		dayNumber = 1;
 		currentPlanet = 0;
+		partsFound = 0;
 		
 		inOut.print("How many in-game days would you like the game to last? (3-10)");
 		maxDays = inOut.collectInt(3, 10);

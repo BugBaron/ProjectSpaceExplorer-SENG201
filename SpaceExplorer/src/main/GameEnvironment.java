@@ -114,6 +114,7 @@ public class GameEnvironment {
 		partsHere = true;
 		dayNumber = 1;
 		currentPlanet = 0;
+		partsFound = 0;
 		
 		maxDays = totalDays;
 		partsToFind = 2 * totalDays / 3;
