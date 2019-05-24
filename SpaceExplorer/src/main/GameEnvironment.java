@@ -394,7 +394,7 @@ public class GameEnvironment {
 		} else if (ship.getCrewMembers().size() == 0) {
 			inOut.print("Sorry, you lost!");
 			inOut.print("Oh no! All of the members of your crew have died!");
-			inOut.print("The " + ship.getName() + " repair mission ends in tragedy.");
+			inOut.print("The repair of " + ship.getName() + " ends in tragedy.");
 		} else {
 			inOut.print("Sorry, you lost!");
 			inOut.print("It has been " + maxDays + " days.");

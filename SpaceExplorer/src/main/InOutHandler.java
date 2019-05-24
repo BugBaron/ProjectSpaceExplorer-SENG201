@@ -6,7 +6,6 @@ import java.util.Scanner;
 /**
  * Handles all input and output sent to it.
  * @author Daniel Harris and Rebekah McKinnon
- *
  */
 public class InOutHandler {
 	
