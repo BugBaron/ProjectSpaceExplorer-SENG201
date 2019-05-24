@@ -14,6 +14,11 @@ import main.CrewMemberTypes.Lizard;
 import main.CrewMemberTypes.Robot;
 import main.CrewMemberTypes.Unicorn;
 
+/**
+ * Conducts all game logic to play the Space Explorer game.
+ * Runs using input and output from the console.
+ * @author Daniel Harris and Rebekah McKinnon
+ */
 public class TextGameEnvironment {
 	
 	/** Prints output and receives input. */
@@ -105,8 +110,6 @@ public class TextGameEnvironment {
 	/**
 	 * Creates a new game with the specified number of days and the 
 	 * specified ship with crew members already added to it.
-	 * @param totalDays the maximum number of days to repair the ship
-	 * @param tempShip the ship to create the game with
 	 */
 	public void createGame() {
 		shop = createShop();
@@ -325,8 +328,6 @@ public class TextGameEnvironment {
 		inOut.print((i + 1) + ") Back to Outpost");
 		int choice = inOut.collectInt(1, i + 1);
 		
-		
-		// TODO this is a real mess of a section
 		if (choice != i + 1) {
 			Consumable item = keys.get(choice - 1);
 			boolean isPurchasing = true;
@@ -602,8 +603,7 @@ public class TextGameEnvironment {
 		}
 		
 		inOut.print((index + 1) + ") Back to Crew Member Actions");
-
-		// Collects the user input
+		
 		int choice = inOut.collectInt(1, index + 1);
 		
 		// Completes the action for this crew member and the other chosen one
