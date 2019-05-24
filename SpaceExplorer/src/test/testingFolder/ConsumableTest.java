@@ -65,7 +65,7 @@ public class ConsumableTest {
 		String waterDescription = "Restores 2 Nutrition";
 		String bananaDescription = "Restores 2 Nutrition";
 		String alienMeatDescription = "Restores 5 Nutrition";
-		String coffeeDescription = "Restores 2 Nutrition and 1 Energy";
+		String coffeeDescription = "Restores 2 Nutrition\nand 1 Energy";
 		String eggDescription = "Restores 3 Nutrition";
 		assertEquals(spaceRationDescription, spaceRation.getDescription());
 		assertEquals(waterDescription, water.getDescription());
