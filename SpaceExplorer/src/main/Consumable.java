@@ -80,7 +80,8 @@ public class Consumable {
 		case "Coffee": price = 13;
 			nutritionRestore = 2;
 			energyRestore = 1;
-			description = "Restores 2 Nutrition and 1 Energy";
+			description = "Restores 2 Nutrition\n"
+					+ "and 1 Energy";
 			classification = "Food";
 			break;
 		//Set up egg

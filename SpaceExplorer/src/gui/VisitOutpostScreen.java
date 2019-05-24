@@ -94,7 +94,13 @@ public class VisitOutpostScreen extends JPanel {
 						for (Consumable item : gameEnvironment.getInventory().getKeys()) {
 							node = new DefaultMutableTreeNode(item.getName());
 							node.add(new DefaultMutableTreeNode(item.getClassification() + " item"));
-							node.add(new DefaultMutableTreeNode(item.getDescription()));
+							if (item.getName() == "Coffee") {
+								String[] desc = item.getDescription().split("\n");
+								node.add(new DefaultMutableTreeNode(desc[0]));
+								node.add(new DefaultMutableTreeNode(desc[1]));
+							} else {
+								node.add(new DefaultMutableTreeNode(item.getDescription()));
+							}
 							node.add(new DefaultMutableTreeNode("Quantity: " + gameEnvironment.getInventory().get(item)));
 							add(node);
 						}
